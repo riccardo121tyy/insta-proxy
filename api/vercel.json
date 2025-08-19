@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "functions": {
+    "api/insta-check.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
