@@ -1,0 +1,2058 @@
+<style>
+.template-page h1.main-page-title,
+.template-page .page-title,
+.template-page .section-header__title,
+.template-page .main-page-title,
+.template-page .page-width > h1:first-child {
+  display: none !important;
+}
+
+.came-app-page,
+.came-app-page *,
+.came-app-page *::before,
+.came-app-page *::after {
+  box-sizing: border-box;
+}
+
+.came-app-page {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  padding: 0 18px 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+}
+
+.came-app-page::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(233,28,249,.28), rgba(0,216,255,.18), transparent 68%);
+  filter: blur(95px);
+  opacity: .75;
+  pointer-events: none;
+}
+
+.came-app-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 70%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 70%);
+  pointer-events: none;
+}
+
+.came-app-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding-top: 28px;
+}
+
+/* ---------- App Store style hero ---------- */
+
+.came-store-hero {
+  padding: 26px 20px 24px;
+  text-align: left;
+}
+
+.came-store-header {
+  display: grid;
+  grid-template-columns: 96px minmax(0,1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.came-store-icon-lg {
+  width: 96px;
+  height: 96px;
+  border-radius: 24px;
+  object-fit: cover;
+  display: block;
+  background: #08080a;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.came-store-titles h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(23px, 5.4vw, 30px);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -.03em;
+}
+
+.came-store-subtitle {
+  margin: 6px 0 16px;
+  color: #9b9ba3;
+  font-size: 14.5px;
+  line-height: 1.35;
+  font-weight: 650;
+}
+
+.came-store-get-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  height: 34px;
+  min-width: 92px;
+  padding: 0 22px;
+  border-radius: 999px;
+  color: #fff;
+  background: #0A84FF;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(10,132,255,.28);
+}
+
+.came-store-get-btn:active {
+  transform: scale(.97);
+}
+
+.came-store-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  text-align: center;
+}
+
+.came-store-stat {
+  padding: 0 6px;
+  border-right: 1px solid rgba(255,255,255,.09);
+}
+
+.came-store-stat:last-child {
+  border-right: 0;
+}
+
+.came-store-stat-label {
+  color: #8e8e93;
+  font-size: 10.5px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.came-store-stat-value {
+  margin-top: 9px;
+  color: #fff;
+  font-size: 21px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.came-store-stat-sub {
+  margin-top: 7px;
+  color: #9b9ba3;
+  font-size: 11.5px;
+  line-height: 1.2;
+  font-weight: 650;
+}
+
+.came-store-stat-icon {
+  margin: 9px auto 0;
+  width: 22px;
+  height: 22px;
+  color: #fff;
+}
+
+.came-store-stat-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.came-store-stars {
+  position: relative;
+  display: inline-block;
+  margin-top: 8px;
+  width: 96px;
+  height: 16px;
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,.22);
+}
+
+.came-store-stars::before {
+  content: "\2605\2605\2605\2605\2605";
+  position: absolute;
+  inset: 0;
+}
+
+.came-store-stars::after {
+  content: "\2605\2605\2605\2605\2605";
+  position: absolute;
+  inset: 0;
+  width: var(--fill, 100%);
+  overflow: hidden;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.came-store-stars--lg {
+  width: 148px;
+  height: 26px;
+  font-size: 25px;
+  letter-spacing: 3px;
+}
+
+.came-store-screens {
+  display: flex;
+  gap: 13px;
+  margin-top: 24px;
+  padding-bottom: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.came-store-screens::-webkit-scrollbar {
+  display: none;
+}
+
+.came-store-screens img {
+  flex: 0 0 auto;
+  width: 168px;
+  height: auto;
+  border-radius: 20px;
+  scroll-snap-align: start;
+  background: #111;
+  border: 1px solid rgba(255,255,255,.09);
+  display: block;
+}
+
+.came-store-compat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  color: #c7c7cc;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.came-store-compat-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.came-store-description {
+  margin: 18px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  color: #c7c7d0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.came-app-mini-note {
+  display: grid;
+  grid-template-columns: 34px minmax(0,1fr);
+  gap: 10px;
+  align-items: center;
+  margin: 18px 0 0;
+  padding: 14px;
+  border-radius: 20px;
+  text-align: left;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.came-app-mini-note-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: 17px;
+}
+
+.came-app-mini-note p {
+  margin: 0;
+  color: rgba(235,235,245,.72);
+  font-size: 13.5px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.came-app-section {
+  margin-top: 26px;
+}
+
+.came-app-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    linear-gradient(#070707, #070707) padding-box,
+    linear-gradient(135deg, rgba(233,28,249,.92), rgba(0,216,255,.92)) border-box;
+  border: 1px solid transparent;
+  box-shadow:
+    0 24px 80px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+.came-app-card-soft {
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(12,12,14,.96);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 22px 70px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* ---------- Ratings & Reviews ---------- */
+
+.came-app-ratings {
+  padding: 28px 22px;
+  text-align: center;
+}
+
+.came-app-ratings h2 {
+  margin: 0 0 20px;
+  color: #fff;
+  font-size: clamp(22px, 4.4vw, 30px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+
+.came-app-ratings-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.came-app-rating-number {
+  color: #fff;
+  font-size: 60px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -.03em;
+}
+
+.came-app-rating-stars-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 340px;
+  text-align: left;
+}
+
+.came-app-rating-stars-wrap p {
+  margin: 0;
+  color: #9b9ba3;
+  font-size: 13.5px;
+  line-height: 1.4;
+  font-weight: 650;
+}
+
+/* ---------- Info list ---------- */
+
+.came-app-info {
+  padding: 28px 22px;
+  text-align: center;
+}
+
+.came-app-info h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(22px, 4.4vw, 30px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+
+.came-app-info-list {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.came-app-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: 14.5px;
+}
+
+.came-app-info-row:last-child {
+  border-bottom: 0;
+}
+
+.came-app-info-row span:first-child {
+  color: #8e8e93;
+  font-weight: 700;
+}
+
+.came-app-info-row span:last-child {
+  color: #fff;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* ---------- Scopri anche (strumenti / app) ---------- */
+
+.came-app-more {
+  padding: 28px 22px;
+  text-align: center;
+}
+
+.came-app-more h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(22px, 4.4vw, 30px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+
+.came-app-more p {
+  max-width: 640px;
+  margin: 12px auto 0;
+  color: #9b9ba3;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.came-app-more-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+  text-align: left;
+}
+
+.came-app-more-item {
+  display: grid;
+  grid-template-columns: 54px minmax(0,1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 13px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.08);
+  text-decoration: none;
+}
+
+.came-app-more-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #E91CF9, #00D8FF);
+  color: #fff;
+  font-size: 22px;
+  flex: none;
+}
+
+.came-app-more-title {
+  color: #fff;
+  font-size: 15.5px;
+  line-height: 1.15;
+  font-weight: 850;
+  letter-spacing: -.03em;
+}
+
+.came-app-more-sub {
+  margin-top: 3px;
+  color: rgba(235,235,245,.6);
+  font-size: 12.5px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.came-app-more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(10,132,255,.14);
+  border: 1px solid rgba(10,132,255,.35);
+  color: #0A84FF;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ---------- Device selector & tutorials (procedura da mantenere) ---------- */
+
+.came-app-device-selector {
+  padding: 26px 20px;
+  text-align: center;
+}
+
+.came-app-device-selector h2,
+.came-app-tutorial h2,
+.came-app-benefits h2,
+.came-app-help h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(26px, 5vw, 44px);
+  line-height: 1.04;
+  font-weight: 930;
+  letter-spacing: -1.5px;
+}
+
+.came-app-device-selector p,
+.came-app-benefits p,
+.came-app-help p {
+  max-width: 680px;
+  margin: 14px auto 0;
+  color: #c7c7d0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.came-app-device-tabs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.came-app-device-tab {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(255,255,255,.10);
+  min-height: 74px;
+  display: grid;
+  grid-template-columns: 44px minmax(0,1fr);
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  padding: 13px;
+  border-radius: 22px;
+  color: #fff;
+  background: rgba(255,255,255,.055);
+  cursor: pointer;
+}
+
+.came-app-device-tab.is-active {
+  background:
+    linear-gradient(#111, #111) padding-box,
+    linear-gradient(135deg, #E91CF9, #00D8FF) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 16px 42px rgba(0,216,255,.12);
+}
+
+.came-app-device-tab img {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  object-fit: contain;
+  background: rgba(255,255,255,.07);
+  padding: 7px;
+}
+
+.came-app-device-tab strong {
+  display: block;
+  font-size: 15.5px;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+}
+
+.came-app-device-tab span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(235,235,245,.62);
+  font-size: 12.5px;
+  line-height: 1.2;
+}
+
+.came-app-tutorial {
+  display: none;
+  padding: 22px;
+  margin-top: 22px;
+  scroll-margin-top: 90px;
+}
+
+.came-app-tutorial.is-active {
+  display: block;
+}
+
+.came-app-tutorial-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.came-app-tutorial-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(#111, #111) padding-box,
+    linear-gradient(135deg, #E91CF9, #00D8FF) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 0 28px rgba(0,216,255,.16);
+}
+
+.came-app-tutorial-icon img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.came-app-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.came-app-step {
+  display: grid;
+  grid-template-columns: 38px minmax(0,1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.came-app-step-number {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(to left, #00D8FF 0%, #7E5BFF 48%, #E91CF9 100%);
+  font-size: 15px;
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(0,216,255,.18);
+}
+
+.came-app-step p {
+  margin: 0;
+  color: #d3d3dc;
+  font-size: 15px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.came-app-step strong {
+  color: #fff;
+  font-weight: 900;
+}
+
+.came-app-step a {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(0,216,255,.75);
+}
+
+.came-app-step-tag {
+  display: inline-flex;
+  margin-left: 5px;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #E91CF9, #00D8FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.came-app-image {
+  margin: 16px 0 18px;
+  padding: 12px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.09);
+}
+
+.came-app-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 17px;
+  background: #111;
+}
+
+.came-app-benefits {
+  padding: 28px 20px;
+  margin-top: 22px;
+  text-align: center;
+}
+
+.came-app-benefit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.came-app-benefit {
+  padding: 18px;
+  border-radius: 22px;
+  text-align: left;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.came-app-benefit-icon {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 13px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(233,28,249,.22), rgba(0,216,255,.18));
+  color: #fff;
+  font-size: 20px;
+}
+
+.came-app-benefit h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.15;
+  letter-spacing: -.04em;
+}
+
+.came-app-benefit p {
+  margin: 9px 0 0;
+  color: rgba(235,235,245,.68);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.came-app-help {
+  padding: 28px 20px;
+  margin-top: 22px;
+  text-align: center;
+}
+
+.came-app-help-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.came-app-cta,
+.came-app-secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 15px 22px;
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+
+.came-app-cta {
+  background: linear-gradient(135deg, #E91CF9, #00D8FF);
+  box-shadow: 0 12px 34px rgba(0,216,255,.18);
+}
+
+.came-app-secondary-cta {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+/* ---------- Install guide sheet (stile Apple) ---------- */
+
+.came-app-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+  background: rgba(0,0,0,.66);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.came-app-sheet-backdrop.is-open {
+  display: flex;
+}
+
+.came-app-sheet {
+  width: 100%;
+  max-width: 760px;
+  height: min(88dvh, 780px);
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 12px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 34px 34px 0 0;
+  background: #1c1c1e;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 -22px 80px rgba(0,0,0,.45);
+  transform: translateY(100%);
+  animation: cameAppSheetUp .42s cubic-bezier(.18,.88,.24,1) forwards;
+}
+
+@keyframes cameAppSheetUp {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.came-app-sheet-handle {
+  width: 42px;
+  height: 5px;
+  border-radius: 999px;
+  margin: 12px auto 0;
+  background: rgba(255,255,255,.16);
+  flex: none;
+}
+
+.came-app-sheet-top {
+  height: 62px;
+  display: grid;
+  grid-template-columns: 54px minmax(0,1fr) 54px;
+  align-items: center;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  flex: none;
+}
+
+.came-app-sheet-close {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.came-app-sheet-close span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 21px;
+  height: 2.4px;
+  border-radius: 999px;
+  background: #0A84FF;
+  transform-origin: center;
+}
+
+.came-app-sheet-close span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.came-app-sheet-close span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.came-app-sheet-title {
+  color: #fff;
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -.02em;
+}
+
+.came-app-sheet-body {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.came-app-sheet-head {
+  display: grid;
+  grid-template-columns: 54px minmax(0,1fr);
+  gap: 13px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.came-app-sheet-head img {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #111;
+  box-shadow: 0 8px 20px rgba(0,0,0,.28);
+}
+
+.came-app-sheet-head h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(20px, 5vw, 28px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -.05em;
+}
+
+.came-app-sheet-head p {
+  margin: 5px 0 0;
+  color: rgba(235,235,245,.62);
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.came-app-sheet-view {
+  display: none;
+}
+
+.came-app-sheet-view.is-active {
+  display: block;
+}
+
+.came-app-phone-demo,
+.came-app-android-demo,
+.came-app-safari-demo {
+  width: min(100%, 610px);
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(90,90,96,.72), rgba(42,42,46,.82));
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.13), 0 18px 34px rgba(0,0,0,.28);
+}
+
+.came-app-phone-screen {
+  min-height: 248px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 23px;
+  background: linear-gradient(180deg, #f7f7fb 0%, #fff 46%, #e9e9ef 100%);
+}
+
+.came-app-demo-logo {
+  width: 58px;
+  height: 58px;
+  margin: 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #E91CF9, #00D8FF);
+}
+
+.came-app-demo-line {
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(60,60,67,.12);
+  margin: 15px 22px 0;
+}
+
+.came-app-demo-line.long {
+  width: 72%;
+}
+
+.came-app-demo-line.mid {
+  width: 48%;
+}
+
+.came-app-safari-bar {
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 11px;
+  height: 54px;
+  display: grid;
+  grid-template-columns: 42px minmax(0,1fr) 46px;
+  align-items: center;
+  gap: 7px;
+}
+
+.came-app-safari-button,
+.came-app-safari-dots {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.86);
+  color: #0A84FF;
+  box-shadow: 0 3px 12px rgba(0,0,0,.10);
+}
+
+.came-app-safari-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3.3px;
+  animation: cameAppBluePulse 1.6s ease-in-out infinite;
+}
+
+.came-app-safari-dots span {
+  width: 4.6px;
+  height: 4.6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+@keyframes cameAppBluePulse {
+  0%,100% {
+    box-shadow: 0 0 0 0 rgba(10,132,255,0), 0 3px 12px rgba(0,0,0,.10);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(10,132,255,.16), 0 3px 12px rgba(0,0,0,.10);
+    transform: scale(1.04);
+  }
+}
+
+.came-app-address {
+  height: 42px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  border-radius: 999px;
+  color: #1c1c1e;
+  background: rgba(255,255,255,.88);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.came-app-sheet-steps {
+  width: min(100%, 610px);
+  margin: 14px auto 0;
+  display: grid;
+  gap: 10px;
+}
+
+.came-app-sheet-step {
+  display: grid;
+  grid-template-columns: 36px minmax(0,1fr);
+  gap: 11px;
+  align-items: center;
+}
+
+.came-app-sheet-step span {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #0A84FF;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.came-app-sheet-step p {
+  margin: 0;
+  color: rgba(235,235,245,.82);
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 750;
+  letter-spacing: -.03em;
+}
+
+.came-app-android-address {
+  height: 52px;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 50px;
+  align-items: center;
+  gap: 9px;
+  padding-left: 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.92);
+  color: #111;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.came-app-android-menu {
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  color: #0A84FF;
+  background: rgba(10,132,255,.10);
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 900;
+  animation: cameAppBluePulse 1.6s ease-in-out infinite;
+}
+
+.came-app-android-card {
+  margin-top: 15px;
+  padding: 13px;
+  border-radius: 23px;
+  background: rgba(242,242,247,.94);
+}
+
+.came-app-android-line {
+  width: 72%;
+  height: 13px;
+  border-radius: 999px;
+  background: rgba(60,60,67,.14);
+  margin: 12px 10px;
+}
+
+.came-app-android-line.small {
+  width: 48%;
+}
+
+.came-app-android-row {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  border-radius: 17px;
+  color: #111;
+  background: #fff;
+  font-size: 15.5px;
+  font-weight: 800;
+  animation: cameAppHighlight 1.7s ease-in-out infinite;
+}
+
+@keyframes cameAppHighlight {
+  0%,100% {
+    box-shadow: inset 0 0 0 0 rgba(10,132,255,0);
+  }
+  50% {
+    box-shadow: inset 0 0 0 3px rgba(10,132,255,.28);
+  }
+}
+
+.came-app-plus {
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.2px solid currentColor;
+  font-size: 21px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.came-app-safari-demo {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 22px;
+}
+
+.came-app-safari-compass,
+.came-app-safari-mini-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  flex: 0 0 68px;
+}
+
+.came-app-safari-compass svg {
+  width: 48px;
+  height: 48px;
+  fill: none;
+  stroke: #0A84FF;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.came-app-safari-mini-icon {
+  object-fit: cover;
+  background: #111;
+}
+
+.came-app-arrow-motion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+}
+
+.came-app-arrow-motion span {
+  width: 10px;
+  height: 10px;
+  border-top: 2.6px solid rgba(255,255,255,.7);
+  border-right: 2.6px solid rgba(255,255,255,.7);
+  transform: rotate(45deg);
+  animation: cameAppArrow 1.2s ease-in-out infinite;
+}
+
+.came-app-arrow-motion span:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.came-app-arrow-motion span:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+@keyframes cameAppArrow {
+  0%,100% {
+    opacity: .25;
+    transform: translateX(0) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(6px) rotate(45deg);
+  }
+}
+
+html.came-app-lock,
+html.came-app-lock body {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+@media (min-width: 760px) {
+  .came-app-page {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .came-app-device-tabs,
+  .came-app-benefit-grid,
+  .came-app-help-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .came-app-device-selector,
+  .came-app-benefits,
+  .came-app-help,
+  .came-app-ratings,
+  .came-app-info,
+  .came-app-more {
+    padding: 34px;
+  }
+
+  .came-app-tutorial {
+    padding: 30px;
+  }
+
+  .came-store-hero {
+    padding: 34px;
+  }
+}
+
+@media (max-width: 430px) {
+  .came-app-page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .came-store-hero {
+    border-radius: 25px;
+    padding: 22px 16px 20px;
+  }
+
+  .came-store-header {
+    grid-template-columns: 78px minmax(0,1fr);
+    gap: 14px;
+  }
+
+  .came-store-icon-lg {
+    width: 78px;
+    height: 78px;
+    border-radius: 20px;
+  }
+
+  .came-app-card,
+  .came-app-card-soft {
+    border-radius: 25px;
+  }
+
+  .came-app-tutorial-header {
+    align-items: flex-start;
+  }
+
+  .came-app-tutorial h2 {
+    font-size: 25px;
+  }
+
+  .came-app-step {
+    padding: 13px;
+  }
+
+  .came-app-sheet {
+    height: min(88dvh, 780px);
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 10px);
+  }
+
+  .came-app-sheet-body {
+    padding: 15px 17px calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .came-app-sheet-head {
+    margin-bottom: 13px;
+  }
+
+  .came-app-phone-screen {
+    min-height: 238px;
+  }
+
+  .came-app-safari-demo {
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .came-app-safari-compass,
+  .came-app-safari-mini-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    flex-basis: 58px;
+  }
+
+  .came-app-safari-compass svg {
+    width: 42px;
+    height: 42px;
+  }
+}
+</style>
+
+<section class="came-app-page" id="came-app-page">
+  <div class="came-app-container">
+
+    <div class="came-store-hero came-app-card">
+      <div class="came-store-header">
+        <img class="came-store-icon-lg" src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/74E85672-D220-472F-881B-1E099B93F7CB_2b076800-b8a3-4896-b0e3-1f383adcf5a9.png?v=1773451516" alt="CAME COMPANY" loading="eager">
+
+        <div>
+          <h1>CAME COMPANY</h1>
+          <p class="came-store-subtitle" data-came-app-device-text>Aggiungi alla schermata Home</p>
+          <button class="came-store-get-btn" type="button" data-came-open-guide>Ottieni</button>
+        </div>
+      </div>
+
+      <div class="came-store-stats">
+        <div class="came-store-stat">
+          <div class="came-store-stat-label">Valutazioni</div>
+          <div class="came-store-stat-value">4,8</div>
+          <div class="came-store-stars" style="--fill:96%"></div>
+        </div>
+
+        <div class="came-store-stat">
+          <div class="came-store-stat-label">Classificazione</div>
+          <div class="came-store-stat-value">18+</div>
+          <div class="came-store-stat-sub">Contenuti per adulti</div>
+        </div>
+
+        <div class="came-store-stat">
+          <div class="came-store-stat-label">Categoria</div>
+          <div class="came-store-stat-icon">
+            <svg viewbox="0 0 24 24" aria-hidden="true">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+          </div>
+          <div class="came-store-stat-sub">Social</div>
+        </div>
+      </div>
+
+      <div class="came-store-screens">
+        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG_4561.webp" alt="Screenshot CAME COMPANY" loading="lazy">
+        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG_4563.webp" alt="Screenshot CAME COMPANY" loading="lazy">
+        <img src="https://www.camecompany.com/cdn/shop/files/IMG_4564.jpg" alt="Screenshot CAME COMPANY" loading="lazy">
+        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/2A55FE1B-E03F-4337-94DD-2FC4B1062805.webp" alt="Screenshot CAME COMPANY" loading="lazy">
+        <img src="https://www.camecompany.com/cdn/shop/files/01EFF27D-F249-4430-AADD-0FE192758609.jpg" alt="Screenshot CAME COMPANY" loading="lazy">
+        <img src="https://www.camecompany.com/cdn/shop/files/58D050FB-8A11-44BF-A272-8B1FAD7AEA6E.jpg" alt="Screenshot CAME COMPANY" loading="lazy">
+      </div>
+
+      <div class="came-store-compat">
+        <span class="came-store-compat-icon">&#128241;</span>
+        iPhone, iPad e Android
+      </div>
+
+      <p class="came-store-description">
+        Aggiungi CAME COMPANY alla schermata Home del tuo smartphone e apri il sito come una vera app, senza passare dallo store. Ricevi un accesso rapido, ordinato e sempre aggiornato a tutti i contenuti e gli strumenti del sito, con un'icona dedicata proprio come una normale applicazione.
+      </p>
+
+      <div class="came-app-mini-note">
+        <div class="came-app-mini-note-icon">&#8599;</div>
+        <p>
+          Il sistema riconosce il dispositivo e ti mostra le istruzioni corrette per iPhone, iPad o Android
+        </p>
+      </div>
+    </div>
+
+    <div class="came-app-section came-app-card-soft came-app-ratings">
+      <h2>Valutazioni e recensioni</h2>
+
+      <div class="came-app-ratings-row">
+        <div class="came-app-rating-number">4,8</div>
+
+        <div class="came-app-rating-stars-wrap">
+          <div class="came-store-stars came-store-stars--lg" style="--fill:96%"></div>
+          <p>Il giudizio complessivo di chi usa CAME COMPANY ogni giorno dalla schermata Home</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="came-app-section came-app-card-soft came-app-device-selector">
+      <h2>Scegli il tuo dispositivo</h2>
+
+      <p>
+        Puoi seguire la guida automatica oppure aprire direttamente il tutorial completo per il tuo smartphone
+      </p>
+
+      <div class="came-app-device-tabs">
+        <button class="came-app-device-tab is-active" type="button" data-came-tab="ios">
+          <img src="https://www.camecompany.com/cdn/shop/files/IMG_4580.png" alt="iOS Apple" loading="lazy">
+          <span>
+            <strong>iPhone e iPad</strong>
+            <span>Safari, Condividi, Aggiungi alla schermata Home</span>
+          </span>
+        </button>
+
+        <button class="came-app-device-tab" type="button" data-came-tab="android">
+          <img src="https://www.camecompany.com/cdn/shop/files/IMG_4581.webp" alt="Android" loading="lazy">
+          <span>
+            <strong>Android</strong>
+            <span>Chrome, menu, Installa app o Aggiungi alla schermata Home</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="came-app-tutorial came-app-card-soft is-active" data-came-tutorial="ios" id="tutorial-ios">
+      <div class="came-app-tutorial-header">
+        <div class="came-app-tutorial-icon">
+          <img src="https://www.camecompany.com/cdn/shop/files/IMG_4580.png" alt="iOS Apple" loading="lazy">
+        </div>
+
+        <h2>Tutorial iOS Apple</h2>
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">1</div>
+          <p>Apri <strong>Safari</strong> sul tuo iPhone o iPad</p>
+        </div>
+
+        <div class="came-app-step">
+          <div class="came-app-step-number">2</div>
+          <p>Vai sulla home del sito <a href="/" target="_blank" rel="noopener">www.camecompany.com</a></p>
+        </div>
+
+        <div class="came-app-step">
+          <div class="came-app-step-number">3</div>
+          <p>Tocca l'icona <strong>Condividi</strong> nella parte inferiore dello schermo <span class="came-app-step-tag">vedi immagine</span></p>
+        </div>
+      </div>
+
+      <div class="came-app-image">
+        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG_4561.webp" alt="Tutorial iOS CAME COMPANY" loading="lazy">
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">4</div>
+          <p>Scorri verso il basso e tocca <strong>Aggiungi alla schermata Home</strong></p>
+        </div>
+      </div>
+
+      <div class="came-app-image">
+        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG_4563.webp" alt="Aggiungi alla schermata Home iOS" loading="lazy">
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">5</div>
+          <p>Lascia il nome standard oppure inserisci il nome che preferisci</p>
+        </div>
+      </div>
+
+      <div class="came-app-image">
+        <img src="https://www.camecompany.com/cdn/shop/files/IMG_4564.jpg" alt="Nome app iOS CAME COMPANY" loading="lazy">
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">6</div>
+          <p>Tocca <strong>Aggiungi</strong> in alto a destra. L'icona comparirà sulla schermata Home</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="came-app-tutorial came-app-card-soft" data-came-tutorial="android" id="tutorial-android">
+      <div class="came-app-tutorial-header">
+        <div class="came-app-tutorial-icon">
+          <img src="https://www.camecompany.com/cdn/shop/files/IMG_4581.webp" alt="Android" loading="lazy">
+        </div>
+
+        <h2>Tutorial Android</h2>
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">1</div>
+          <p>Apri <strong>Chrome</strong> sul tuo smartphone Android</p>
+        </div>
+
+        <div class="came-app-step">
+          <div class="came-app-step-number">2</div>
+          <p>Vai sulla home del sito <a href="/" target="_blank" rel="noopener">www.camecompany.com</a></p>
+        </div>
+
+        <div class="came-app-step">
+          <div class="came-app-step-number">3</div>
+          <p>Apri il menu di Chrome toccando i <strong>tre punti verticali</strong> in alto a destra <span class="came-app-step-tag">vedi immagine</span></p>
+        </div>
+      </div>
+
+      <div class="came-app-image">
+        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/2A55FE1B-E03F-4337-94DD-2FC4B1062805.webp" alt="Menu Chrome Android" loading="lazy">
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">4</div>
+          <p>Tocca <strong>Aggiungi alla schermata iniziale</strong> oppure <strong>Installa app</strong></p>
+        </div>
+      </div>
+
+      <div class="came-app-image">
+        <img src="https://www.camecompany.com/cdn/shop/files/01EFF27D-F249-4430-AADD-0FE192758609.jpg" alt="Aggiungi alla schermata iniziale Android" loading="lazy">
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">5</div>
+          <p>Controlla l'anteprima dell'icona e tocca <strong>Aggiungi</strong> o <strong>Installa</strong></p>
+        </div>
+      </div>
+
+      <div class="came-app-image">
+        <img src="https://www.camecompany.com/cdn/shop/files/58D050FB-8A11-44BF-A272-8B1FAD7AEA6E.jpg" alt="Installa app Android" loading="lazy">
+      </div>
+
+      <div class="came-app-steps">
+        <div class="came-app-step">
+          <div class="came-app-step-number">6</div>
+          <p>Tocca <strong>Aggiungi automaticamente</strong> per posizionare l'icona sulla schermata iniziale</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="came-app-section came-app-card-soft came-app-benefits">
+      <h2>Perché aggiungerla alla Home?</h2>
+
+      <p>
+        È una scorciatoia semplice, ma rende l'accesso più rapido e ordinato da smartphone
+      </p>
+
+      <div class="came-app-benefit-grid">
+        <div class="came-app-benefit">
+          <div class="came-app-benefit-icon">&#9095;</div>
+          <h3>Apertura più veloce</h3>
+          <p>Apri CAME COMPANY direttamente dall'icona, senza cercare il sito ogni volta</p>
+        </div>
+
+        <div class="came-app-benefit">
+          <div class="came-app-benefit-icon">&#9744;</div>
+          <h3>Esperienza più pulita</h3>
+          <p>La pagina si apre in modo più ordinato e comodo da smartphone</p>
+        </div>
+
+        <div class="came-app-benefit">
+          <div class="came-app-benefit-icon">&#8599;</div>
+          <h3>Nessuno store</h3>
+          <p>Non devi passare da App Store o Play Store. Ti basta il browser</p>
+        </div>
+
+        <div class="came-app-benefit">
+          <div class="came-app-benefit-icon">&#10003;</div>
+          <h3>Sempre aggiornata</h3>
+          <p>Aprendo il sito dalla Home, usi sempre la versione aggiornata di CAME COMPANY</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="came-app-section came-app-card-soft came-app-info">
+      <h2>Informazioni</h2>
+
+      <div class="came-app-info-list">
+        <div class="came-app-info-row">
+          <span>Categoria</span>
+          <span>Social</span>
+        </div>
+        <div class="came-app-info-row">
+          <span>Compatibilità</span>
+          <span>iPhone, iPad, Android</span>
+        </div>
+        <div class="came-app-info-row">
+          <span>Lingua</span>
+          <span>Italiano</span>
+        </div>
+        <div class="came-app-info-row">
+          <span>Età</span>
+          <span>18+</span>
+        </div>
+        <div class="came-app-info-row">
+          <span>Sviluppatore</span>
+          <span>CAME COMPANY</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="came-app-section came-app-card-soft came-app-more">
+      <h2>Scopri anche</h2>
+
+      <p>
+        Altri strumenti gratuiti di CAME COMPANY, sempre a portata di mano
+      </p>
+
+      <div class="came-app-more-list">
+        <a class="came-app-more-item" href="https://www.camecompany.com/pages/tutti-i-tool-gratuiti" target="_blank" rel="noopener">
+          <div class="came-app-more-icon">&#128736;</div>
+          <div>
+            <div class="came-app-more-title">Strumenti Gratuiti</div>
+            <div class="came-app-more-sub">Tutti i tool e calcolatori gratuiti del sito</div>
+          </div>
+          <span class="came-app-more-btn">Apri</span>
+        </a>
+
+        <a class="came-app-more-item" href="https://www.camecompany.com/pages/app" target="_blank" rel="noopener">
+          <div class="came-app-more-icon">&#128241;</div>
+          <div>
+            <div class="came-app-more-title">App CAME COMPANY</div>
+            <div class="came-app-more-sub">Scopri tutte le applicazioni disponibili</div>
+          </div>
+          <span class="came-app-more-btn">Apri</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="came-app-section came-app-card came-app-help">
+      <h2>Hai bisogno di aiuto?</h2>
+
+      <p>
+        Se non trovi l'opzione corretta sul tuo dispositivo, puoi contattarci e ti aiutiamo a completare l'installazione
+      </p>
+
+      <div class="came-app-help-actions">
+        <a class="came-app-cta" href="https://wa.me/393518151137?text=Ciao%20CAME%20COMPANY%2C%20ho%20bisogno%20di%20aiuto%20per%20installare%20l%E2%80%99app%20sullo%20smartphone" target="_blank" rel="noopener">
+          Scrivici su WhatsApp
+        </a>
+
+        <a class="came-app-secondary-cta" href="/" target="_blank" rel="noopener">
+          Vai alla home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="came-app-sheet-backdrop" data-came-sheet-backdrop aria-hidden="true">
+    <div class="came-app-sheet" role="dialog" aria-modal="true" aria-label="Guida installazione CAME COMPANY">
+      <div class="came-app-sheet-handle"></div>
+
+      <div class="came-app-sheet-top">
+        <button class="came-app-sheet-close" type="button" data-came-close-guide aria-label="Chiudi guida">
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="came-app-sheet-title" data-came-sheet-title>Installa app</div>
+
+        <span></span>
+      </div>
+
+      <div class="came-app-sheet-body">
+        <div class="came-app-sheet-head">
+          <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/74E85672-D220-472F-881B-1E099B93F7CB_2b076800-b8a3-4896-b0e3-1f383adcf5a9.png?v=1773451516" alt="CAME COMPANY app" loading="eager">
+
+          <div>
+            <h3 data-came-sheet-heading>Installa CAME COMPANY</h3>
+            <p data-came-sheet-subtitle>Segui i passaggi indicati per il tuo dispositivo</p>
+          </div>
+        </div>
+
+        <div class="came-app-sheet-view" data-came-sheet-view="ios-safari">
+          <div class="came-app-phone-demo">
+            <div class="came-app-phone-screen">
+              <div class="came-app-demo-logo"></div>
+              <div class="came-app-demo-line long"></div>
+              <div class="came-app-demo-line mid"></div>
+
+              <div class="came-app-safari-bar">
+                <div class="came-app-safari-button">&#8249;</div>
+                <div class="came-app-address">camecompany.com</div>
+                <div class="came-app-safari-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="came-app-sheet-steps">
+            <div class="came-app-sheet-step">
+              <span>1</span>
+              <p>Tocca i tre punti nella barra di Safari</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>2</span>
+              <p>Tocca "Condividi"</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>3</span>
+              <p>Tocca "Aggiungi alla schermata Home"</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>4</span>
+              <p>Conferma con "Aggiungi"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="came-app-sheet-view" data-came-sheet-view="ios-other">
+          <div class="came-app-safari-demo">
+            <div class="came-app-safari-compass">
+              <svg viewbox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="27"></circle>
+                <path d="m39 16-6 17-8 15 6-17 8-15Z"></path>
+                <circle cx="32" cy="32" r="4"></circle>
+              </svg>
+            </div>
+
+            <div class="came-app-arrow-motion">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <img class="came-app-safari-mini-icon" src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/74E85672-D220-472F-881B-1E099B93F7CB_2b076800-b8a3-4896-b0e3-1f383adcf5a9.png?v=1773451516" alt="CAME COMPANY" loading="eager">
+          </div>
+
+          <div class="came-app-sheet-steps">
+            <div class="came-app-sheet-step">
+              <span>1</span>
+              <p>Apri questa pagina con Safari</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>2</span>
+              <p>Tocca il menu di Safari</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>3</span>
+              <p>Tocca "Aggiungi alla schermata Home"</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>4</span>
+              <p>Conferma con "Aggiungi"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="came-app-sheet-view" data-came-sheet-view="android">
+          <div class="came-app-android-demo">
+            <div class="came-app-android-address">
+              <span>camecompany.com</span>
+              <button type="button" class="came-app-android-menu" aria-label="Menu Chrome">&#8942;</button>
+            </div>
+
+            <div class="came-app-android-card">
+              <div class="came-app-android-line small"></div>
+              <div class="came-app-android-line"></div>
+
+              <div class="came-app-android-row">
+                <span class="came-app-plus">+</span>
+                <span>Installa app</span>
+              </div>
+
+              <div class="came-app-android-line"></div>
+            </div>
+          </div>
+
+          <div class="came-app-sheet-steps">
+            <div class="came-app-sheet-step">
+              <span>1</span>
+              <p>Tocca i tre punti del browser</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>2</span>
+              <p>Seleziona "Installa app" o "Aggiungi alla schermata Home"</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>3</span>
+              <p>Conferma l'installazione</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="came-app-sheet-view" data-came-sheet-view="generic">
+          <div class="came-app-android-demo">
+            <div class="came-app-android-card">
+              <div class="came-app-android-row">
+                <span class="came-app-plus">+</span>
+                <span>Aggiungi alla schermata Home</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="came-app-sheet-steps">
+            <div class="came-app-sheet-step">
+              <span>1</span>
+              <p>Apri il menu del browser</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>2</span>
+              <p>Cerca "Aggiungi alla schermata Home" o "Installa app"</p>
+            </div>
+
+            <div class="came-app-sheet-step">
+              <span>3</span>
+              <p>Conferma l'installazione</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var page = document.getElementById('came-app-page');
+  if (!page) return;
+
+  var openButton = page.querySelector('[data-came-open-guide]');
+  var closeButton = page.querySelector('[data-came-close-guide]');
+  var backdrop = page.querySelector('[data-came-sheet-backdrop]');
+  var deviceText = page.querySelector('[data-came-app-device-text]');
+  var sheetTitle = page.querySelector('[data-came-sheet-title]');
+  var sheetHeading = page.querySelector('[data-came-sheet-heading]');
+  var sheetSubtitle = page.querySelector('[data-came-sheet-subtitle]');
+  var sheetViews = page.querySelectorAll('[data-came-sheet-view]');
+  var tabs = page.querySelectorAll('[data-came-tab]');
+  var tutorials = page.querySelectorAll('[data-came-tutorial]');
+  var deferredPrompt = null;
+
+  function ua() {
+    return navigator.userAgent || '';
+  }
+
+  function isIOS() {
+    var platform = navigator.platform || '';
+    var iPadOS = platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+    return /iPhone|iPad|iPod/i.test(ua()) || iPadOS;
+  }
+
+  function isAndroid() {
+    return /Android/i.test(ua());
+  }
+
+  function isSafari() {
+    return /^((?!chrome|crios|fxios|edgios|opr|opios|samsung|android).)*safari/i.test(ua());
+  }
+
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+
+  function currentView() {
+    if (isAndroid()) return 'android';
+    if (isIOS() && !isSafari()) return 'ios-other';
+    if (isIOS()) return 'ios-safari';
+    return 'generic';
+  }
+
+  function setSheetView(viewName) {
+    sheetViews.forEach(function (view) {
+      view.classList.toggle('is-active', view.getAttribute('data-came-sheet-view') === viewName);
+    });
+
+    if (viewName === 'android') {
+      sheetTitle.textContent = 'Installa app';
+      sheetHeading.textContent = 'Installa CAME COMPANY su Android';
+      sheetSubtitle.textContent = 'Usa il menu del browser e seleziona l’opzione di installazione';
+      deviceText.textContent = 'Installa app su Android';
+      return;
+    }
+
+    if (viewName === 'ios-other') {
+      sheetTitle.textContent = 'Apri con Safari';
+      sheetHeading.textContent = 'Usa Safari per installare l’app';
+      sheetSubtitle.textContent = 'Su iPhone e iPad l’aggiunta alla Home funziona da Safari';
+      deviceText.textContent = 'Apri con Safari';
+      return;
+    }
+
+    if (viewName === 'ios-safari') {
+      sheetTitle.textContent = 'Installa app';
+      sheetHeading.textContent = 'Aggiungi CAME COMPANY alla Home';
+      sheetSubtitle.textContent = 'Tocca il menu, poi Condividi e aggiungi alla schermata Home';
+      deviceText.textContent = 'Aggiungi alla schermata Home';
+      return;
+    }
+
+    sheetTitle.textContent = 'Installa app';
+    sheetHeading.textContent = 'Aggiungi CAME COMPANY alla Home';
+    sheetSubtitle.textContent = 'Usa il menu del browser per salvare il sito sul dispositivo';
+    deviceText.textContent = 'Aggiungi alla schermata Home';
+  }
+
+  function openSheet(viewName) {
+    setSheetView(viewName || currentView());
+    backdrop.classList.add('is-open');
+    backdrop.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('came-app-lock');
+  }
+
+  function closeSheet() {
+    backdrop.classList.remove('is-open');
+    backdrop.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('came-app-lock');
+  }
+
+  function setTutorial(name) {
+    tabs.forEach(function (tab) {
+      tab.classList.toggle('is-active', tab.getAttribute('data-came-tab') === name);
+    });
+
+    tutorials.forEach(function (tutorial) {
+      tutorial.classList.toggle('is-active', tutorial.getAttribute('data-came-tutorial') === name);
+    });
+
+    var activeTutorial = page.querySelector('[data-came-tutorial="' + name + '"]');
+    if (activeTutorial) {
+      activeTutorial.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    deferredPrompt = event;
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    closeSheet();
+    if (deviceText) {
+      deviceText.textContent = 'App installata';
+    }
+  });
+
+  if (openButton) {
+    openButton.addEventListener('click', function () {
+      var viewName = currentView();
+
+      if (isStandalone()) {
+        if (deviceText) {
+          deviceText.textContent = 'App già installata';
+        }
+        return;
+      }
+
+      if (isAndroid() && deferredPrompt) {
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then(function () {
+          deferredPrompt = null;
+        }).catch(function () {
+          deferredPrompt = null;
+          openSheet('android');
+        });
+
+        return;
+      }
+
+      openSheet(viewName);
+    });
+  }
+
+  if (closeButton) {
+    closeButton.addEventListener('click', closeSheet);
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', function (event) {
+      if (event.target === backdrop) {
+        closeSheet();
+      }
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      setTutorial(tab.getAttribute('data-came-tab'));
+    });
+  });
+
+  setSheetView(currentView());
+
+  if (isAndroid()) {
+    tabs.forEach(function (tab) {
+      var isAndroidTab = tab.getAttribute('data-came-tab') === 'android';
+      tab.classList.toggle('is-active', isAndroidTab);
+    });
+
+    tutorials.forEach(function (tutorial) {
+      var isAndroidTutorial = tutorial.getAttribute('data-came-tutorial') === 'android';
+      tutorial.classList.toggle('is-active', isAndroidTutorial);
+    });
+  }
+})();
+</script>
