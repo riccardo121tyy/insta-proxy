@@ -1,0 +1,1088 @@
+{% paginate blog.articles by 9 %}
+
+{% assign current_label = '' %}
+{% assign current_handle = '' %}
+
+{% if current_tags and current_tags.size > 0 %}
+  {% assign current_label = current_tags.first %}
+  {% assign current_handle = current_label | handleize %}
+{% endif %}
+
+{% assign page_title = 'Guide CAME' %}
+{% assign page_intro = 'Guide pratiche su social, servizi digitali, recensioni e strumenti gratuiti. Cerca o filtra per argomento per trovare subito quella che ti serve' %}
+
+{% if current_label != blank %}
+  {% assign page_title = current_label %}
+  {% assign page_intro = 'Stai vedendo solo le guide taggate con questo argomento. Rimuovi il filtro per tornare all’archivio completo' %}
+{% endif %}
+
+<style>
+  .came-blog-page,
+  .came-blog-page * {
+    box-sizing: border-box;
+  }
+
+  .came-blog-page {
+    --came-bg: #000;
+    --came-card: #101014;
+    --came-card-2: #15151b;
+    --came-text: #fff;
+    --came-muted: #d5d5df;
+    --came-soft: #9b9baa;
+    --came-border: rgba(255,255,255,.12);
+    --came-grad: linear-gradient(135deg,#E91CF9 0%,#00D8FF 100%);
+    --came-shadow: 0 18px 58px rgba(0,0,0,.48);
+    width: 100%;
+    overflow: hidden;
+    background: var(--came-bg);
+    color: var(--came-text);
+    font-family: inherit;
+    padding-bottom: 100px;
+  }
+
+  .came-blog-wrap {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  .came-blog-section {
+    padding: 20px 0;
+  }
+
+  /* ---------- header ---------- */
+
+  .came-page-head {
+    padding: 28px 0 4px;
+  }
+
+  .came-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: var(--came-soft);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .came-breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .came-blog-h1 {
+    margin: 0;
+    max-width: 760px;
+    color: #fff;
+    font-size: clamp(36px, 6.4vw, 64px);
+    line-height: .94;
+    letter-spacing: -.07em;
+    font-weight: 950;
+    text-transform: capitalize;
+  }
+
+  .came-page-intro {
+    margin: 14px 0 0;
+    max-width: 660px;
+    color: var(--came-muted);
+    font-size: clamp(15px, 2.2vw, 17px);
+    line-height: 1.5;
+  }
+
+  .came-active-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    margin-top: 18px;
+    padding: 0 8px 0 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.14);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  .came-active-filter span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.12);
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  /* ---------- toolbar: search + filters, sticky ---------- */
+
+  .came-toolbar {
+    position: sticky;
+    top: 12px;
+    z-index: 8;
+    margin: 20px 0 28px;
+    border-radius: 20px;
+    background: rgba(12,12,16,.86);
+    border: 1px solid rgba(255,255,255,.13);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 12px;
+  }
+
+  .came-search-box {
+    position: relative;
+  }
+
+  .came-search-box input {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.055);
+    color: #fff;
+    padding: 0 18px 0 46px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .came-search-box input::placeholder {
+    color: rgba(255,255,255,.5);
+  }
+
+  .came-search-box svg {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.2;
+    pointer-events: none;
+  }
+
+  .came-topic-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 2px 4px;
+    margin-top: 10px;
+    scrollbar-width: thin;
+    overscroll-behavior-x: contain;
+  }
+
+  .came-topic-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .came-topic-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.22);
+    border-radius: 999px;
+  }
+
+  .came-topic-pill {
+    min-height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 850;
+    flex: 0 0 auto;
+  }
+
+  .came-topic-pill.is-active {
+    background: var(--came-grad);
+    border-color: transparent;
+  }
+
+  .came-topic-pill-count {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.32);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 950;
+    padding: 0 6px;
+  }
+
+  .came-toolbar-meta {
+    margin: 12px 2px 0;
+    color: var(--came-soft);
+    font-size: 12px;
+    font-weight: 750;
+  }
+
+  /* ---------- hero (featured article) ---------- */
+
+  .came-hero-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 24px;
+    background: var(--came-card);
+    border: 1px solid var(--came-border);
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .came-hero-media {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--came-card-2);
+  }
+
+  .came-hero-media img,
+  .came-card-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .came-img-fallback {
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 22% 24%, rgba(233,28,249,.46), transparent 34%),
+      radial-gradient(circle at 78% 76%, rgba(0,216,255,.42), transparent 38%),
+      linear-gradient(135deg,#111118,#050505);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .came-img-fallback:before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.14);
+  }
+
+  .came-img-fallback span {
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .came-tag:before {
+    content: "";
+    width: 20px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    flex: 0 0 auto;
+  }
+
+  .came-latest-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 26px;
+    padding: 0 11px;
+    margin-bottom: 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .came-latest-badge:before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--came-grad);
+  }
+
+  .came-hero-title {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(26px, 3.6vw, 38px);
+    line-height: 1.02;
+    letter-spacing: -.05em;
+    font-weight: 950;
+    overflow-wrap: anywhere;
+  }
+
+  .came-hero-excerpt,
+  .came-card-text {
+    margin: 11px 0 0;
+    color: var(--came-muted);
+    font-size: 14px;
+    line-height: 1.46;
+  }
+
+  .came-article-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px 12px;
+    margin-top: 13px;
+    color: var(--came-soft);
+    font-size: 12px;
+    font-weight: 760;
+  }
+
+  .came-article-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .came-article-meta span:before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    flex: 0 0 auto;
+  }
+
+  .came-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 15px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 950;
+  }
+
+  .came-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex: 0 0 auto;
+  }
+
+  /* ---------- grid ---------- */
+
+  .came-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .came-article-card {
+    display: block;
+    min-width: 0;
+    border-radius: 22px;
+    background: var(--came-card);
+    border: 1px solid var(--came-border);
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .came-article-card.is-hidden,
+  .came-hero-card.is-hidden {
+    display: none;
+  }
+
+  .came-card-media {
+    height: 160px;
+    background: var(--came-card-2);
+    overflow: hidden;
+  }
+
+  .came-card-body {
+    padding: 14px 16px 18px;
+    min-width: 0;
+  }
+
+  .came-card-title {
+    margin: 5px 0 0;
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    font-weight: 950;
+    overflow-wrap: anywhere;
+  }
+
+  .came-archive-empty {
+    display: none;
+    border-radius: 20px;
+    border: 1px solid var(--came-border);
+    background: rgba(255,255,255,.04);
+    padding: 26px;
+    text-align: center;
+    color: var(--came-muted);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .came-archive-empty.is-visible {
+    display: block;
+  }
+
+  .came-archive-empty a {
+    color: #fff;
+    font-weight: 900;
+    text-decoration: underline;
+  }
+
+  /* ---------- pagination ---------- */
+
+  .came-pagination {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    padding: 26px 0 8px;
+  }
+
+  .came-pagination-info {
+    color: var(--came-soft);
+    font-size: 12px;
+    font-weight: 850;
+  }
+
+  .came-pagination-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .came-pagination a,
+  .came-pagination span {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--came-border);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 850;
+    font-size: 13px;
+    padding: 0 14px;
+    background: rgba(255,255,255,.035);
+  }
+
+  .came-pagination .current {
+    background: var(--came-grad);
+    border-color: transparent;
+  }
+
+  /* ---------- explore band ---------- */
+
+  .came-explore {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--came-border);
+  }
+
+  .came-explore-label {
+    width: 100%;
+    color: var(--came-soft);
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 2px;
+  }
+
+  .came-explore-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.05);
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .came-explore-pill:hover {
+    background: rgba(255,255,255,.09);
+  }
+
+  /* ---------- bottom CTA row ---------- */
+
+  .came-cta-row {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .came-press-card,
+  .came-news-card {
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(233,28,249,.16), transparent 34%),
+      radial-gradient(circle at 90% 80%, rgba(0,216,255,.13), transparent 38%),
+      linear-gradient(135deg,#15151b,#070709);
+    border: 1px solid var(--came-border);
+    padding: 26px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .came-press-card:before,
+  .came-news-card:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: 24px;
+    background: var(--came-grad);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: .45;
+    pointer-events: none;
+  }
+
+  .came-press-card > *,
+  .came-news-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .came-eyebrow {
+    display: inline-flex;
+    margin-bottom: 9px;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-press-card h2,
+  .came-news-card h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(24px, 3.2vw, 32px);
+    line-height: 1;
+    letter-spacing: -.05em;
+    font-weight: 950;
+  }
+
+  .came-press-card p,
+  .came-news-card p {
+    margin: 11px 0 0;
+    max-width: 480px;
+    color: var(--came-muted);
+    font-size: 14px;
+    line-height: 1.44;
+  }
+
+  .came-news-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .came-news-form input[type="email"] {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.075);
+    color: #fff;
+    padding: 0 16px;
+    outline: none;
+    font-size: 13px;
+    font-family: inherit;
+  }
+
+  .came-news-form input[type="email"]::placeholder {
+    color: rgba(255,255,255,.55);
+  }
+
+  .came-news-form button {
+    min-height: 46px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0 20px;
+    background: var(--came-grad);
+    color: #fff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .came-form-status,
+  .came-form-note {
+    margin-top: 9px;
+    color: var(--came-soft);
+    font-size: 11px;
+    line-height: 1.36;
+  }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 1100px) {
+    .came-archive-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 980px) {
+    .came-hero-card,
+    .came-cta-row {
+      grid-template-columns: 1fr;
+    }
+
+    .came-hero-media {
+      aspect-ratio: 16 / 9.4;
+    }
+
+    .came-archive-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .came-blog-wrap {
+      width: min(100% - 24px, 1180px);
+    }
+
+    .came-blog-section {
+      padding: 16px 0;
+    }
+
+    .came-blog-h1 {
+      font-size: clamp(32px, 10vw, 44px);
+    }
+
+    .came-toolbar {
+      top: 8px;
+      border-radius: 18px;
+    }
+
+    .came-hero-card {
+      border-radius: 20px;
+      padding: 12px;
+    }
+
+    .came-hero-title {
+      font-size: clamp(24px, 7.4vw, 30px);
+    }
+
+    .came-archive-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .came-explore {
+      padding: 14px;
+    }
+
+    .came-news-form {
+      flex-direction: column;
+    }
+
+    .came-news-form button {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="came-blog-page">
+  <div class="came-blog-wrap">
+
+    {% if blog.articles.size > 0 %}
+
+      <header class="came-page-head">
+        <div class="came-breadcrumb">
+          <a href="{{ routes.root_url }}">Home</a>
+          <span>›</span>
+          {% if current_label != blank %}
+            <a href="{{ blog.url }}">{{ blog.title }}</a>
+            <span>›</span>
+            <span>{{ current_label }}</span>
+          {% else %}
+            <span>{{ blog.title }}</span>
+          {% endif %}
+        </div>
+
+        <h1 class="came-blog-h1">{{ page_title }}</h1>
+        <p class="came-page-intro">{{ page_intro }}</p>
+
+        {% if current_label != blank %}
+          <a class="came-active-filter" href="{{ blog.url }}">
+            Filtro: {{ current_label }} <span>✕</span>
+          </a>
+        {% endif %}
+      </header>
+
+      <div class="came-toolbar">
+        <label class="came-search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+          <input type="search" placeholder="Cerca tra le guide di questa pagina" data-came-search>
+        </label>
+
+        <div class="came-topic-scroll">
+          {% if current_label != blank %}
+            <a class="came-topic-pill" href="{{ blog.url }}">Tutti gli argomenti</a>
+          {% else %}
+            <span class="came-topic-pill is-active">Tutti gli argomenti</span>
+          {% endif %}
+
+          {% assign filter_list = 'instagram,tiktok,youtube,facebook,spotify,linkedin,pinterest,onlyfans,recensioni-google,trustpilot,tripadvisor,amazon,guide-operative,strumenti-gratuiti,assistenza,ordini,sicurezza,aggiornamenti-piattaforme,aziende,creator,articoli-press-custom' | split: ',' %}
+
+          {% for filter_handle in filter_list %}
+            {% assign matched_tag = '' %}
+
+            {% for tag in blog.all_tags %}
+              {% assign tag_handle = tag | handleize %}
+              {% if tag_handle == filter_handle %}
+                {% assign matched_tag = tag %}
+              {% endif %}
+            {% endfor %}
+
+            {% if matched_tag != blank %}
+              {% if current_handle == filter_handle %}
+                <span class="came-topic-pill is-active">{{ matched_tag }}</span>
+              {% else %}
+                <a class="came-topic-pill" href="{{ blog.url }}/tagged/{{ matched_tag | handleize }}" data-came-count-url="{{ blog.url }}/tagged/{{ matched_tag | handleize }}">
+                  {{ matched_tag }}
+                  <span class="came-topic-pill-count" data-came-count>···</span>
+                </a>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="came-toolbar-meta">
+          Pagina {{ paginate.current_page }} di {{ paginate.pages }} · {{ paginate.items }} guide {% if current_label != blank %}in questo argomento{% else %}in totale{% endif %}
+        </div>
+      </div>
+
+      {% assign hero_article = blog.articles.first %}
+      {% assign hero_words = hero_article.content | strip_html | split: ' ' | size %}
+      {% assign hero_read_min = hero_words | divided_by: 200 %}
+      {% if hero_read_min < 1 %}{% assign hero_read_min = 1 %}{% endif %}
+      {% assign hero_search = hero_article.title | append: ' ' | append: hero_article.tags | append: ' ' | append: hero_article.excerpt | strip_html | downcase | escape %}
+
+      <a class="came-hero-card" href="{{ hero_article.url }}" data-came-article-search="{{ hero_search }}">
+        <div class="came-hero-media">
+          {% assign hero_image = '' %}
+          {% if hero_article.image %}
+            {% assign hero_image = hero_article.image | img_url: '900x' %}
+          {% elsif hero_article.featured_image %}
+            {% assign hero_image = hero_article.featured_image | img_url: '900x' %}
+          {% else %}
+            {% assign hero_img_parts = hero_article.content | split: '<img' %}
+            {% if hero_img_parts.size > 1 %}
+              {% assign hero_src_part = hero_img_parts[1] | split: 'src="' %}
+              {% if hero_src_part.size > 1 %}
+                {% assign hero_image = hero_src_part[1] | split: '"' | first %}
+              {% else %}
+                {% assign hero_src_part_single = hero_img_parts[1] | split: "src='" %}
+                {% if hero_src_part_single.size > 1 %}
+                  {% assign hero_image = hero_src_part_single[1] | split: "'" | first %}
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endif %}
+
+          {% if hero_image != blank %}
+            <img src="{{ hero_image }}" alt="{{ hero_article.title | escape }}" loading="eager">
+          {% else %}
+            <div class="came-img-fallback"><span>CAME GUIDE</span></div>
+          {% endif %}
+        </div>
+
+        <div>
+          {% if hero_article.id == blog.articles.first.id and paginate.current_page == 1 and current_label == blank %}
+            <span class="came-latest-badge">Ultimo pubblicato</span>
+          {% endif %}
+
+          <div class="came-tag">
+            {% if hero_article.tags.size > 0 %}{{ hero_article.tags.first }}{% else %}Guide{% endif %}
+          </div>
+
+          <h2 class="came-hero-title">{{ hero_article.title }}</h2>
+
+          {% if hero_article.excerpt != blank %}
+            <p class="came-hero-excerpt">{{ hero_article.excerpt | strip_html | truncatewords: 26 }}</p>
+          {% else %}
+            <p class="came-hero-excerpt">{{ hero_article.content | strip_html | truncatewords: 26 }}</p>
+          {% endif %}
+
+          <div class="came-article-meta">
+            <span>{{ hero_article.published_at | date: "%d/%m/%Y" }}</span>
+            <span>{{ hero_read_min }} min di lettura</span>
+          </div>
+
+          <span class="came-read-more">Leggi la guida <i class="came-arrow">›</i></span>
+        </div>
+      </a>
+
+      <div class="came-archive-grid" data-came-archive-grid>
+        {% for article in blog.articles offset: 1 %}
+          {% assign card_words = article.content | strip_html | split: ' ' | size %}
+          {% assign card_read_min = card_words | divided_by: 200 %}
+          {% if card_read_min < 1 %}{% assign card_read_min = 1 %}{% endif %}
+          {% assign card_search = article.title | append: ' ' | append: article.tags | append: ' ' | append: article.excerpt | strip_html | downcase | escape %}
+
+          <a class="came-article-card" href="{{ article.url }}" data-came-article-search="{{ card_search }}">
+            <div class="came-card-media">
+              {% assign card_image = '' %}
+              {% if article.image %}
+                {% assign card_image = article.image | img_url: '650x' %}
+              {% elsif article.featured_image %}
+                {% assign card_image = article.featured_image | img_url: '650x' %}
+              {% else %}
+                {% assign card_img_parts = article.content | split: '<img' %}
+                {% if card_img_parts.size > 1 %}
+                  {% assign card_src_part = card_img_parts[1] | split: 'src="' %}
+                  {% if card_src_part.size > 1 %}
+                    {% assign card_image = card_src_part[1] | split: '"' | first %}
+                  {% else %}
+                    {% assign card_src_part_single = card_img_parts[1] | split: "src='" %}
+                    {% if card_src_part_single.size > 1 %}
+                      {% assign card_image = card_src_part_single[1] | split: "'" | first %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+
+              {% if card_image != blank %}
+                <img src="{{ card_image }}" alt="{{ article.title | escape }}" loading="lazy">
+              {% else %}
+                <div class="came-img-fallback"><span>CAME</span></div>
+              {% endif %}
+            </div>
+
+            <div class="came-card-body">
+              <div class="came-tag">
+                {% if article.tags.size > 0 %}{{ article.tags.first }}{% else %}Guide{% endif %}
+              </div>
+
+              <h3 class="came-card-title">{{ article.title }}</h3>
+
+              {% if article.excerpt != blank %}
+                <p class="came-card-text">{{ article.excerpt | strip_html | truncatewords: 16 }}</p>
+              {% else %}
+                <p class="came-card-text">{{ article.content | strip_html | truncatewords: 16 }}</p>
+              {% endif %}
+
+              <div class="came-article-meta">
+                <span>{{ article.published_at | date: "%d/%m/%Y" }}</span>
+                <span>{{ card_read_min }} min</span>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      <div class="came-archive-empty" data-came-empty-search>
+        Nessuna guida trovata in questa pagina con questo termine. <a href="{{ blog.url }}">Vedi tutte le guide</a> oppure prova un altro argomento
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="came-pagination" role="navigation" aria-label="Paginazione blog">
+          <div class="came-pagination-info">Pagina {{ paginate.current_page }} di {{ paginate.pages }}</div>
+
+          <div class="came-pagination-row">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}">Precedente</a>
+            {% endif %}
+
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}">{{ part.title }}</a>
+              {% else %}
+                <span class="{% if part.title == paginate.current_page %}current{% endif %}">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}">Successiva</a>
+            {% endif %}
+          </div>
+        </nav>
+      {% endif %}
+
+      <section class="came-blog-section">
+        <div class="came-explore">
+          <span class="came-explore-label">Continua da qui</span>
+          <a class="came-explore-pill" href="https://www.camecompany.com/pages/tutti-i-tool-gratuiti">Strumenti gratuiti ›</a>
+          <a class="came-explore-pill" href="https://www.camecompany.com/pages/assistenza-clienti-istantanea">Assistenza ›</a>
+          <a class="came-explore-pill" href="https://www.camecompany.com/pages/f-a-q">Domande frequenti ›</a>
+          <a class="came-explore-pill" href="https://www.camecompany.com/pages/richiedi-un-servizio">Richiedi un servizio ›</a>
+        </div>
+      </section>
+
+      <section class="came-blog-section">
+        <div class="came-cta-row">
+          <a class="came-press-card" href="https://www.camecompany.com/collections/articoli-press-custom" style="text-decoration:none;">
+            <span class="came-eyebrow">Articoli press custom</span>
+            <h2>Vuoi un articolo su di te o sulla tua azienda?</h2>
+            <p>Richiedi un contenuto editoriale dedicato a una persona, un brand, un evento o un progetto</p>
+            <span class="came-read-more">Scopri di più <i class="came-arrow">›</i></span>
+          </a>
+
+          <div class="came-news-card">
+            <span class="came-eyebrow">Newsletter</span>
+            <h2>Ricevi le nuove guide via email</h2>
+            <p>Nuovi articoli, strumenti e aggiornamenti sulle piattaforme, senza spam</p>
+
+            {% form 'customer', id: 'came_blog_newsletter' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="came-news-form">
+                <input type="email" name="contact[email]" placeholder="La tua email" autocorrect="off" autocapitalize="off" required>
+                <button type="submit">Iscrivimi</button>
+              </div>
+              {% if form.posted_successfully? %}
+                <div class="came-form-status">Iscrizione ricevuta correttamente</div>
+              {% endif %}
+              {% if form.errors %}
+                <div class="came-form-status">{{ form.errors | default_errors }}</div>
+              {% endif %}
+            {% endform %}
+
+            <div class="came-form-note">La tua privacy è importante</div>
+          </div>
+        </div>
+      </section>
+
+    {% else %}
+      <section class="came-blog-section">
+        <div class="came-news-card">
+          <h1 class="came-blog-h1" style="font-size: clamp(28px, 5vw, 40px);">{{ blog.title }}</h1>
+          <p class="came-page-intro">Al momento non ci sono guide pubblicate</p>
+        </div>
+      </section>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !root.classList.contains('came-blog-page')) {
+      root = document.querySelector('.came-blog-page');
+    }
+    if (!root) return;
+
+    var input = root.querySelector('[data-came-search]');
+    var grid = root.querySelector('[data-came-archive-grid]');
+    var hero = root.querySelector('.came-hero-card');
+    var empty = root.querySelector('[data-came-empty-search]');
+
+    if (input) {
+      var cards = Array.prototype.slice.call(root.querySelectorAll('[data-came-article-search]'));
+
+      input.addEventListener('input', function () {
+        var query = input.value.trim().toLowerCase();
+        var visible = 0;
+
+        cards.forEach(function (card) {
+          var text = card.getAttribute('data-came-article-search') || '';
+          var match = !query || text.indexOf(query) !== -1;
+          card.classList.toggle('is-hidden', !match);
+          if (match) visible++;
+        });
+
+        if (empty) {
+          empty.classList.toggle('is-visible', visible === 0);
+        }
+      });
+    }
+
+    var countLinks = Array.prototype.slice.call(root.querySelectorAll('[data-came-count-url]'));
+    if (!countLinks.length || !window.fetch || !window.DOMParser) return;
+
+    setTimeout(function () {
+      countLinks.forEach(function (link) {
+        var countEl = link.querySelector('[data-came-count]');
+        if (!countEl) return;
+
+        fetch(link.getAttribute('data-came-count-url'), { credentials: 'same-origin' })
+          .then(function (res) { return res.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var meta = doc.querySelector('.came-toolbar-meta');
+            var match = meta && meta.textContent.match(/·\s*([\d.,]+)\s*guide/);
+            if (match) countEl.textContent = match[1];
+            else countEl.textContent = '';
+          })
+          .catch(function () {
+            countEl.textContent = '';
+          });
+      });
+    }, 700);
+  })();
+</script>
+
+{% endpaginate %}
