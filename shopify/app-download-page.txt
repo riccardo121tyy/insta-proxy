@@ -1383,7 +1383,6 @@ html.came-app-lock body {
       </div>
 
       <div class="came-store-screens">
-        <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG-7495.png?v=1784853782" alt="Screenshot CAME COMPANY" loading="lazy">
         <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG-7496.png?v=1784853782" alt="Screenshot CAME COMPANY" loading="lazy">
         <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG-7497.png?v=1784853782" alt="Screenshot CAME COMPANY" loading="lazy">
         <img src="https://cdn.shopify.com/s/files/1/0556/2040/3265/files/IMG-7498.png?v=1784853782" alt="Screenshot CAME COMPANY" loading="lazy">
