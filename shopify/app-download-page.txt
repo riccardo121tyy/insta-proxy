@@ -1282,6 +1282,55 @@ html.came-app-lock body {
   box-shadow: 0 30px 90px rgba(0,0,0,.6);
   background: #111;
   object-fit: contain;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.came-app-lightbox-nav {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  cursor: pointer;
+}
+
+.came-app-lightbox-nav svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.came-app-lightbox-nav--prev {
+  left: 14px;
+}
+
+.came-app-lightbox-nav--next {
+  right: 14px;
+}
+
+.came-app-lightbox-counter {
+  position: absolute;
+  left: 50%;
+  bottom: max(22px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.75);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
 }
 
 .came-app-lightbox-close {
@@ -1914,7 +1963,21 @@ html.came-app-lock body {
       <span></span>
     </button>
 
+    <button class="came-app-lightbox-nav came-app-lightbox-nav--prev" type="button" data-came-lightbox-prev aria-label="Screenshot precedente">
+      <svg viewbox="0 0 24 24" aria-hidden="true">
+        <path d="m15 6-6 6 6 6"></path>
+      </svg>
+    </button>
+
     <img class="came-app-lightbox-img" data-came-lightbox-img src="" alt="">
+
+    <button class="came-app-lightbox-nav came-app-lightbox-nav--next" type="button" data-came-lightbox-next aria-label="Screenshot successivo">
+      <svg viewbox="0 0 24 24" aria-hidden="true">
+        <path d="m9 6 6 6-6 6"></path>
+      </svg>
+    </button>
+
+    <div class="came-app-lightbox-counter" data-came-lightbox-counter></div>
   </div>
 </section>
 
@@ -1942,6 +2005,9 @@ html.came-app-lock body {
   var lightboxBackdrop = page.querySelector('[data-came-lightbox-backdrop]');
   var lightboxImg = page.querySelector('[data-came-lightbox-img]');
   var lightboxClose = page.querySelector('[data-came-lightbox-close]');
+  var lightboxPrev = page.querySelector('[data-came-lightbox-prev]');
+  var lightboxNext = page.querySelector('[data-came-lightbox-next]');
+  var lightboxCounter = page.querySelector('[data-came-lightbox-counter]');
   var deferredPrompt = null;
 
   if (backdrop && backdrop.parentElement !== document.body) {
@@ -2044,10 +2110,34 @@ html.came-app-lock body {
     sheetHandle.addEventListener('pointercancel', endDrag);
   }
 
-  function openLightbox(src, alt) {
+  var lightboxItems = Array.prototype.map.call(screenshotImgs, function (img) {
+    return { src: img.currentSrc || img.src, alt: img.alt };
+  });
+  var lightboxIndex = 0;
+
+  function renderLightbox() {
+    if (!lightboxImg || !lightboxItems.length) return;
+    var item = lightboxItems[lightboxIndex];
+    lightboxImg.src = item.src;
+    lightboxImg.alt = item.alt || '';
+    if (lightboxCounter) {
+      lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + lightboxItems.length;
+    }
+  }
+
+  function showLightboxIndex(index) {
+    if (!lightboxItems.length) return;
+    lightboxIndex = (index + lightboxItems.length) % lightboxItems.length;
+    renderLightbox();
+  }
+
+  function openLightbox(index) {
     if (!lightboxBackdrop || !lightboxImg) return;
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+    var showNav = lightboxItems.length > 1;
+    if (lightboxPrev) lightboxPrev.style.display = showNav ? '' : 'none';
+    if (lightboxNext) lightboxNext.style.display = showNav ? '' : 'none';
+    if (lightboxCounter) lightboxCounter.style.display = showNav ? '' : 'none';
+    showLightboxIndex(index);
     watchFront(lightboxBackdrop);
     lightboxBackdrop.classList.add('is-open');
     lightboxBackdrop.setAttribute('aria-hidden', 'false');
@@ -2062,9 +2152,9 @@ html.came-app-lock body {
     unwatchFront(lightboxBackdrop);
   }
 
-  screenshotImgs.forEach(function (img) {
+  screenshotImgs.forEach(function (img, index) {
     img.addEventListener('click', function () {
-      openLightbox(img.currentSrc || img.src, img.alt);
+      openLightbox(index);
     });
   });
 
@@ -2072,11 +2162,46 @@ html.came-app-lock body {
     lightboxClose.addEventListener('click', closeLightbox);
   }
 
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', function (event) {
+      event.stopPropagation();
+      showLightboxIndex(lightboxIndex - 1);
+    });
+  }
+
+  if (lightboxNext) {
+    lightboxNext.addEventListener('click', function (event) {
+      event.stopPropagation();
+      showLightboxIndex(lightboxIndex + 1);
+    });
+  }
+
   if (lightboxBackdrop) {
     lightboxBackdrop.addEventListener('click', function (event) {
       if (event.target === lightboxBackdrop) {
         closeLightbox();
       }
+    });
+  }
+
+  if (lightboxImg) {
+    var lightboxDragStartX = null;
+
+    lightboxImg.addEventListener('pointerdown', function (event) {
+      lightboxDragStartX = event.clientX;
+    });
+
+    lightboxImg.addEventListener('pointerup', function (event) {
+      if (lightboxDragStartX === null) return;
+      var delta = event.clientX - lightboxDragStartX;
+      lightboxDragStartX = null;
+      if (Math.abs(delta) > 50) {
+        showLightboxIndex(lightboxIndex + (delta < 0 ? 1 : -1));
+      }
+    });
+
+    lightboxImg.addEventListener('pointercancel', function () {
+      lightboxDragStartX = null;
     });
   }
 
