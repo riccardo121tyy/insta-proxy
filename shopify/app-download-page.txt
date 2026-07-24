@@ -242,8 +242,7 @@
 .came-store-screens img {
   flex: 0 0 auto;
   width: 210px;
-  aspect-ratio: 9 / 19.5;
-  object-fit: contain;
+  height: auto;
   border-radius: 22px;
   scroll-snap-align: start;
   background: #111;
@@ -1885,19 +1884,33 @@ html.came-app-lock body {
     return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   }
 
-  function openSheet() {
+  var stackObserver = null;
+
+  function keepOnTop() {
     if (backdrop.parentElement !== document.body || backdrop !== document.body.lastElementChild) {
       document.body.appendChild(backdrop);
     }
+  }
+
+  function openSheet() {
+    keepOnTop();
     backdrop.classList.add('is-open');
     backdrop.setAttribute('aria-hidden', 'false');
     document.documentElement.classList.add('came-app-lock');
+
+    if (!stackObserver) {
+      stackObserver = new MutationObserver(keepOnTop);
+    }
+    stackObserver.observe(document.body, { childList: true });
   }
 
   function closeSheet() {
     backdrop.classList.remove('is-open');
     backdrop.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('came-app-lock');
+    if (stackObserver) {
+      stackObserver.disconnect();
+    }
     if (sheet) {
       sheet.style.transition = '';
       sheet.style.transform = '';
