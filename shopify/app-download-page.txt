@@ -1251,6 +1251,74 @@ html.came-app-lock body {
   touch-action: none !important;
 }
 
+.came-store-screens img {
+  cursor: zoom-in;
+}
+
+.came-app-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+  padding: 30px 20px;
+  background: rgba(0,0,0,.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.came-app-lightbox-backdrop.is-open {
+  display: flex;
+}
+
+.came-app-lightbox-img {
+  max-width: min(92vw, 460px);
+  max-height: 86dvh;
+  width: auto;
+  height: auto;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 30px 90px rgba(0,0,0,.6);
+  background: #111;
+  object-fit: contain;
+}
+
+.came-app-lightbox-close {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  top: max(20px, env(safe-area-inset-top, 0px));
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  cursor: pointer;
+}
+
+.came-app-lightbox-close span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 19px;
+  height: 2.2px;
+  border-radius: 999px;
+  background: #fff;
+  transform-origin: center;
+}
+
+.came-app-lightbox-close span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.came-app-lightbox-close span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 @media (min-width: 760px) {
   .came-app-page {
     padding-left: 28px;
@@ -1841,6 +1909,15 @@ html.came-app-lock body {
       </div>
     </div>
   </div>
+
+  <div class="came-app-lightbox-backdrop" data-came-lightbox-backdrop aria-hidden="true">
+    <button class="came-app-lightbox-close" type="button" data-came-lightbox-close aria-label="Chiudi anteprima">
+      <span></span>
+      <span></span>
+    </button>
+
+    <img class="came-app-lightbox-img" data-came-lightbox-img src="" alt="">
+  </div>
 </section>
 
 <script>
@@ -1863,6 +1940,10 @@ html.came-app-lock body {
   var deviceText = page.querySelector('[data-came-app-device-text]');
   var tabs = page.querySelectorAll('[data-came-tab]');
   var tutorials = page.querySelectorAll('[data-came-tutorial]');
+  var screenshotImgs = page.querySelectorAll('.came-store-screens img');
+  var lightboxBackdrop = page.querySelector('[data-came-lightbox-backdrop]');
+  var lightboxImg = page.querySelector('[data-came-lightbox-img]');
+  var lightboxClose = page.querySelector('[data-came-lightbox-close]');
   var deferredPrompt = null;
 
   if (backdrop && backdrop.parentElement !== document.body) {
@@ -1884,33 +1965,48 @@ html.came-app-lock body {
     return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   }
 
-  var stackObserver = null;
+  var frontElements = [];
 
-  function keepOnTop() {
-    if (backdrop.parentElement !== document.body || backdrop !== document.body.lastElementChild) {
-      document.body.appendChild(backdrop);
+  function bringToFront(el) {
+    if (el.parentElement !== document.body || el !== document.body.lastElementChild) {
+      document.body.appendChild(el);
+    }
+  }
+
+  var stackObserver = new MutationObserver(function () {
+    frontElements.forEach(bringToFront);
+  });
+
+  function watchFront(el) {
+    if (frontElements.indexOf(el) === -1) {
+      frontElements.push(el);
+    }
+    bringToFront(el);
+    stackObserver.observe(document.body, { childList: true });
+  }
+
+  function unwatchFront(el) {
+    var index = frontElements.indexOf(el);
+    if (index !== -1) {
+      frontElements.splice(index, 1);
+    }
+    if (frontElements.length === 0) {
+      stackObserver.disconnect();
     }
   }
 
   function openSheet() {
-    keepOnTop();
+    watchFront(backdrop);
     backdrop.classList.add('is-open');
     backdrop.setAttribute('aria-hidden', 'false');
     document.documentElement.classList.add('came-app-lock');
-
-    if (!stackObserver) {
-      stackObserver = new MutationObserver(keepOnTop);
-    }
-    stackObserver.observe(document.body, { childList: true });
   }
 
   function closeSheet() {
     backdrop.classList.remove('is-open');
     backdrop.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('came-app-lock');
-    if (stackObserver) {
-      stackObserver.disconnect();
-    }
+    unwatchFront(backdrop);
     if (sheet) {
       sheet.style.transition = '';
       sheet.style.transform = '';
@@ -1948,6 +2044,42 @@ html.came-app-lock body {
 
     sheetHandle.addEventListener('pointerup', endDrag);
     sheetHandle.addEventListener('pointercancel', endDrag);
+  }
+
+  function openLightbox(src, alt) {
+    if (!lightboxBackdrop || !lightboxImg) return;
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    watchFront(lightboxBackdrop);
+    lightboxBackdrop.classList.add('is-open');
+    lightboxBackdrop.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('came-app-lock');
+  }
+
+  function closeLightbox() {
+    if (!lightboxBackdrop) return;
+    lightboxBackdrop.classList.remove('is-open');
+    lightboxBackdrop.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('came-app-lock');
+    unwatchFront(lightboxBackdrop);
+  }
+
+  screenshotImgs.forEach(function (img) {
+    img.addEventListener('click', function () {
+      openLightbox(img.currentSrc || img.src, img.alt);
+    });
+  });
+
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', closeLightbox);
+  }
+
+  if (lightboxBackdrop) {
+    lightboxBackdrop.addEventListener('click', function (event) {
+      if (event.target === lightboxBackdrop) {
+        closeLightbox();
+      }
+    });
   }
 
   function setTutorial(name) {
