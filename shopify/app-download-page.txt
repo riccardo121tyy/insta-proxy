@@ -1272,6 +1272,13 @@ html.came-app-lock body {
   display: flex;
 }
 
+.came-app-lightbox-frame {
+  position: relative;
+  display: inline-flex;
+  max-width: min(92vw, 460px);
+  max-height: 86dvh;
+}
+
 .came-app-lightbox-img {
   max-width: min(92vw, 460px);
   max-height: 86dvh;
@@ -1285,6 +1292,7 @@ html.came-app-lock body {
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  display: block;
 }
 
 .came-app-lightbox-nav {
@@ -1337,14 +1345,17 @@ html.came-app-lock body {
   appearance: none;
   -webkit-appearance: none;
   position: absolute;
-  top: max(20px, env(safe-area-inset-top, 0px));
-  right: 20px;
-  width: 42px;
-  height: 42px;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
   border: 0;
   border-radius: 50%;
-  background: rgba(255,255,255,.12);
+  background: rgba(20,20,22,.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   cursor: pointer;
+  z-index: 1;
 }
 
 .came-app-lightbox-close span {
@@ -1958,18 +1969,20 @@ html.came-app-lock body {
   </div>
 
   <div class="came-app-lightbox-backdrop" data-came-lightbox-backdrop aria-hidden="true">
-    <button class="came-app-lightbox-close" type="button" data-came-lightbox-close aria-label="Chiudi anteprima">
-      <span></span>
-      <span></span>
-    </button>
-
     <button class="came-app-lightbox-nav came-app-lightbox-nav--prev" type="button" data-came-lightbox-prev aria-label="Screenshot precedente">
       <svg viewbox="0 0 24 24" aria-hidden="true">
         <path d="m15 6-6 6 6 6"></path>
       </svg>
     </button>
 
-    <img class="came-app-lightbox-img" data-came-lightbox-img src="" alt="">
+    <div class="came-app-lightbox-frame">
+      <img class="came-app-lightbox-img" data-came-lightbox-img src="" alt="">
+
+      <button class="came-app-lightbox-close" type="button" data-came-lightbox-close aria-label="Chiudi anteprima">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
 
     <button class="came-app-lightbox-nav came-app-lightbox-nav--next" type="button" data-came-lightbox-next aria-label="Screenshot successivo">
       <svg viewbox="0 0 24 24" aria-hidden="true">
