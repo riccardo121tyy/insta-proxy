@@ -911,12 +911,23 @@
 }
 
 .came-app-sheet-handle {
+  width: 64px;
+  height: 20px;
+  margin: 8px auto 0;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  cursor: grab;
+}
+
+.came-app-sheet-handle::before {
+  content: "";
   width: 42px;
   height: 5px;
   border-radius: 999px;
-  margin: 12px auto 0;
   background: rgba(255,255,255,.16);
-  flex: none;
 }
 
 .came-app-sheet-top {
@@ -1716,7 +1727,7 @@ html.came-app-lock body {
 
   <div class="came-app-sheet-backdrop" data-came-sheet-backdrop aria-hidden="true">
     <div class="came-app-sheet" role="dialog" aria-modal="true" aria-label="Guida installazione CAME COMPANY">
-      <div class="came-app-sheet-handle"></div>
+      <div class="came-app-sheet-handle" data-came-sheet-handle></div>
 
       <div class="came-app-sheet-top">
         <button class="came-app-sheet-close" type="button" data-came-close-guide aria-label="Chiudi guida">
@@ -1853,6 +1864,13 @@ html.came-app-lock body {
   var tutorials = page.querySelectorAll('[data-came-tutorial]');
   var deferredPrompt = null;
 
+  if (backdrop && backdrop.parentElement !== document.body) {
+    document.body.appendChild(backdrop);
+  }
+
+  var sheet = backdrop ? backdrop.querySelector('.came-app-sheet') : null;
+  var sheetHandle = backdrop ? backdrop.querySelector('[data-came-sheet-handle]') : null;
+
   function ua() {
     return navigator.userAgent || '';
   }
@@ -1875,6 +1893,43 @@ html.came-app-lock body {
     backdrop.classList.remove('is-open');
     backdrop.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('came-app-lock');
+    if (sheet) {
+      sheet.style.transition = '';
+      sheet.style.transform = '';
+    }
+  }
+
+  if (sheet && sheetHandle) {
+    var dragStartY = null;
+
+    sheetHandle.addEventListener('pointerdown', function (event) {
+      dragStartY = event.clientY;
+      sheet.style.transition = 'none';
+      sheetHandle.setPointerCapture(event.pointerId);
+    });
+
+    sheetHandle.addEventListener('pointermove', function (event) {
+      if (dragStartY === null) return;
+      var delta = event.clientY - dragStartY;
+      if (delta < 0) delta = 0;
+      sheet.style.transform = 'translateY(' + delta + 'px)';
+    });
+
+    function endDrag(event) {
+      if (dragStartY === null) return;
+      var delta = event.clientY - dragStartY;
+      dragStartY = null;
+      sheet.style.transition = '';
+
+      if (delta > 110) {
+        closeSheet();
+      } else {
+        sheet.style.transform = '';
+      }
+    }
+
+    sheetHandle.addEventListener('pointerup', endDrag);
+    sheetHandle.addEventListener('pointercancel', endDrag);
   }
 
   function setTutorial(name) {
