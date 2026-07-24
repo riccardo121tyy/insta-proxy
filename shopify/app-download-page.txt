@@ -899,13 +899,11 @@
   border: 1px solid rgba(255,255,255,.10);
   box-shadow: 0 -22px 80px rgba(0,0,0,.45);
   transform: translateY(100%);
-  animation: cameAppSheetUp .42s cubic-bezier(.18,.88,.24,1) forwards;
+  transition: transform .42s cubic-bezier(.18,.88,.24,1);
 }
 
-@keyframes cameAppSheetUp {
-  to {
-    transform: translateY(0);
-  }
+.came-app-sheet-backdrop.is-open .came-app-sheet {
+  transform: translateY(0);
 }
 
 .came-app-sheet-handle {
