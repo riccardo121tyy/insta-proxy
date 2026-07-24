@@ -218,6 +218,83 @@
   {% endpaginate %}
 {% endif %}
 
+{% comment %}
+  Inline promo banners: split the article body on paragraph breaks and
+  interleave at most 2 non-modal banners promoting CAME's free tools,
+  support chat or custom-service page. Only kicks in on long enough
+  articles so short guides stay banner-free.
+{% endcomment %}
+
+{% assign banner_every = 5 %}
+{% assign banner_max = 2 %}
+{% assign para_split = article.content | split: '</p>' %}
+{% assign para_count = para_split.size %}
+
+{% if para_count > 6 %}
+  {% assign promo_variants = 'tools,support,custom' | split: ',' %}
+  {% assign promo_start = article.id | modulo: 3 %}
+  {% assign banners_inserted = 0 %}
+  {% assign article_body = '' %}
+
+  {% for part in para_split %}
+    {% assign is_last = forloop.last %}
+    {% if is_last %}
+      {% assign article_body = article_body | append: part %}
+    {% else %}
+      {% assign article_body = article_body | append: part | append: '</p>' %}
+    {% endif %}
+
+    {% assign idx_mod = forloop.index | modulo: banner_every %}
+    {% if idx_mod == 0 and banners_inserted < banner_max and is_last == false %}
+      {% assign banners_inserted = banners_inserted | plus: 1 %}
+      {% assign variant_index = promo_start | plus: banners_inserted %}
+      {% assign variant_index = variant_index | modulo: 3 %}
+      {% assign variant = promo_variants[variant_index] %}
+
+      {% case variant %}
+        {% when 'tools' %}
+          {% assign promo_eyebrow = 'Strumento gratuito CAME' %}
+          {% if primary_tag != blank %}
+            {% assign promo_title = 'Scopri i nostri strumenti gratuiti per ' | append: primary_tag %}
+          {% else %}
+            {% assign promo_title = 'Scopri i nostri strumenti gratuiti' %}
+          {% endif %}
+          {% assign promo_text = 'Nessuna registrazione richiesta, risultato immediato.' %}
+          {% assign promo_cta = 'Prova ora' %}
+          {% assign promo_url = 'https://www.camecompany.com/pages/tutti-i-tool-gratuiti' %}
+        {% when 'support' %}
+          {% assign promo_eyebrow = 'Assistenza CAME' %}
+          {% assign promo_title = 'Hai un dubbio su questa guida?' %}
+          {% assign promo_text = 'Scrivici in chat, rispondiamo subito e senza bot.' %}
+          {% assign promo_cta = 'Contattaci' %}
+          {% assign promo_url = 'https://www.camecompany.com/pages/assistenza-clienti-istantanea' %}
+        {% when 'custom' %}
+          {% assign promo_eyebrow = 'Su misura' %}
+          {% assign promo_title = 'Serve qualcosa che non trovi in questa guida?' %}
+          {% assign promo_text = 'Richiedi un servizio personalizzato in due minuti.' %}
+          {% assign promo_cta = 'Richiedi ora' %}
+          {% assign promo_url = 'https://www.camecompany.com/pages/richiedi-un-servizio' %}
+      {% endcase %}
+
+      {% capture promo_banner %}
+        <aside class="came-inline-promo">
+          <div class="came-inline-promo-mark"></div>
+          <div class="came-inline-promo-body">
+            <span class="came-inline-promo-eyebrow">{{ promo_eyebrow }}</span>
+            <p class="came-inline-promo-title">{{ promo_title }}</p>
+            <p class="came-inline-promo-text">{{ promo_text }}</p>
+          </div>
+          <a class="came-inline-promo-cta" href="{{ promo_url }}">{{ promo_cta }} <i class="came-arrow">›</i></a>
+        </aside>
+      {% endcapture %}
+
+      {% assign article_body = article_body | append: promo_banner %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+  {% assign article_body = article.content %}
+{% endif %}
+
 <style>
   .came-article-page,
   .came-article-page * {
@@ -500,6 +577,92 @@
     margin: 32px 0;
   }
 
+  .came-arrow {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-style: normal;
+    flex: 0 0 auto;
+  }
+
+  .came-inline-promo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--came-border);
+  }
+
+  .came-inline-promo-mark {
+    width: 5px;
+    align-self: stretch;
+    border-radius: 999px;
+    background: var(--came-grad);
+    flex: 0 0 auto;
+  }
+
+  .came-inline-promo-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .came-inline-promo-eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-inline-promo-title {
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.32;
+  }
+
+  .came-inline-promo-text {
+    margin: 4px 0 0;
+    color: var(--came-muted);
+    font-size: 13px;
+    line-height: 1.42;
+  }
+
+  .came-inline-promo-cta {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.16);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .came-inline-promo-cta:hover {
+    background: rgba(255,255,255,.12);
+  }
+
   .came-tag-row {
     display: flex;
     flex-wrap: wrap;
@@ -754,6 +917,22 @@
       font-size: 16px;
     }
 
+    .came-inline-promo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .came-inline-promo-mark {
+      width: 100%;
+      height: 4px;
+    }
+
+    .came-inline-promo-cta {
+      width: 100%;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
     .came-author-card-top {
       flex-direction: column;
       align-items: center;
@@ -812,7 +991,7 @@
 
     <div class="came-article-narrow">
       <div class="came-prose">
-        {{ article.content }}
+        {{ article_body }}
       </div>
 
       {% if article.tags.size > 0 %}
