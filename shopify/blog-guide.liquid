@@ -879,6 +879,9 @@
           {% endif %}
 
           <div class="came-article-meta">
+            {% if hero_article.author != blank %}
+              <span>Di {{ hero_article.author }}</span>
+            {% endif %}
             <span>{{ hero_article.published_at | date: "%d/%m/%Y" }}</span>
             <span>{{ hero_read_min }} min di lettura</span>
             <span>{{ hero_readers }} lettori</span>
@@ -939,6 +942,9 @@
               {% endif %}
 
               <div class="came-article-meta">
+                {% if article.author != blank %}
+                  <span>Di {{ article.author }}</span>
+                {% endif %}
                 <span>{{ article.published_at | date: "%d/%m/%Y" }}</span>
                 <span>{{ card_read_min }} min</span>
                 <span>{{ card_readers }} lettori</span>
