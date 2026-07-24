@@ -47,6 +47,9 @@
 {% assign role_tiktok = 0 %}
 {% assign role_youtube = 0 %}
 {% assign role_facebook = 0 %}
+{% assign role_telegram = 0 %}
+{% assign role_whatsapp = 0 %}
+{% assign role_twitch = 0 %}
 {% assign role_spotify = 0 %}
 {% assign role_linkedin = 0 %}
 {% assign role_pinterest = 0 %}
@@ -59,7 +62,23 @@
 {% assign role_amazon = 0 %}
 {% assign role_guides = 0 %}
 {% assign role_platforms = 0 %}
+{% assign role_growth = 0 %}
 {% assign role_other = 0 %}
+
+{% assign author_handle = author_name | handleize %}
+{% assign author_tag_matched = '' %}
+{% for t in blog.all_tags %}
+  {% assign t_handle = t | handleize %}
+  {% if t_handle == author_handle %}
+    {% assign author_tag_matched = t %}
+  {% endif %}
+{% endfor %}
+{% if author_tag_matched != blank %}
+  {% assign author_tag_handle = author_tag_matched | handleize %}
+  {% assign author_stat_url = blog.url | append: '/tagged/' | append: author_tag_handle %}
+{% else %}
+  {% assign author_stat_url = blog.url %}
+{% endif %}
 
 {% assign related_author_count = 0 %}
 {% capture related_author_block %}{% endcapture %}
@@ -76,28 +95,54 @@
 
       {% assign a_cat = '' %}
       {% if a.tags.size > 0 %}
-        {% assign a_cat = a.tags.first | handleize %}
+        {% assign a_cat = a.tags | join: ' ' | handleize %}
       {% endif %}
 
-      {% case a_cat %}
-        {% when 'instagram' %}{% assign role_instagram = role_instagram | plus: 1 %}
-        {% when 'tiktok' %}{% assign role_tiktok = role_tiktok | plus: 1 %}
-        {% when 'youtube' %}{% assign role_youtube = role_youtube | plus: 1 %}
-        {% when 'facebook' %}{% assign role_facebook = role_facebook | plus: 1 %}
-        {% when 'spotify' %}{% assign role_spotify = role_spotify | plus: 1 %}
-        {% when 'linkedin' %}{% assign role_linkedin = role_linkedin | plus: 1 %}
-        {% when 'pinterest' %}{% assign role_pinterest = role_pinterest | plus: 1 %}
-        {% when 'recensioni-google', 'trustpilot', 'tripadvisor' %}{% assign role_reviews = role_reviews | plus: 1 %}
-        {% when 'strumenti-gratuiti' %}{% assign role_tools = role_tools | plus: 1 %}
-        {% when 'assistenza', 'ordini' %}{% assign role_support = role_support | plus: 1 %}
-        {% when 'sicurezza' %}{% assign role_security = role_security | plus: 1 %}
-        {% when 'aziende', 'articoli-press-custom' %}{% assign role_business = role_business | plus: 1 %}
-        {% when 'creator', 'onlyfans' %}{% assign role_creator = role_creator | plus: 1 %}
-        {% when 'amazon' %}{% assign role_amazon = role_amazon | plus: 1 %}
-        {% when 'guide-operative' %}{% assign role_guides = role_guides | plus: 1 %}
-        {% when 'aggiornamenti-piattaforme' %}{% assign role_platforms = role_platforms | plus: 1 %}
-        {% else %}{% assign role_other = role_other | plus: 1 %}
-      {% endcase %}
+      {% if a_cat contains 'instagram' %}
+        {% assign role_instagram = role_instagram | plus: 1 %}
+      {% elsif a_cat contains 'tiktok' %}
+        {% assign role_tiktok = role_tiktok | plus: 1 %}
+      {% elsif a_cat contains 'youtube' %}
+        {% assign role_youtube = role_youtube | plus: 1 %}
+      {% elsif a_cat contains 'facebook' %}
+        {% assign role_facebook = role_facebook | plus: 1 %}
+      {% elsif a_cat contains 'telegram' %}
+        {% assign role_telegram = role_telegram | plus: 1 %}
+      {% elsif a_cat contains 'whatsapp' %}
+        {% assign role_whatsapp = role_whatsapp | plus: 1 %}
+      {% elsif a_cat contains 'twitch' %}
+        {% assign role_twitch = role_twitch | plus: 1 %}
+      {% elsif a_cat contains 'spotify' %}
+        {% assign role_spotify = role_spotify | plus: 1 %}
+      {% elsif a_cat contains 'linkedin' %}
+        {% assign role_linkedin = role_linkedin | plus: 1 %}
+      {% elsif a_cat contains 'pinterest' %}
+        {% assign role_pinterest = role_pinterest | plus: 1 %}
+      {% elsif a_cat contains 'onlyfans' %}
+        {% assign role_creator = role_creator | plus: 1 %}
+      {% elsif a_cat contains 'amazon' %}
+        {% assign role_amazon = role_amazon | plus: 1 %}
+      {% elsif a_cat contains 'recensioni' or a_cat contains 'trustpilot' or a_cat contains 'tripadvisor' or a_cat contains 'google' %}
+        {% assign role_reviews = role_reviews | plus: 1 %}
+      {% elsif a_cat contains 'strumenti' or a_cat contains 'tool' %}
+        {% assign role_tools = role_tools | plus: 1 %}
+      {% elsif a_cat contains 'assistenza' or a_cat contains 'ordini' or a_cat contains 'supporto' %}
+        {% assign role_support = role_support | plus: 1 %}
+      {% elsif a_cat contains 'sicurezza' %}
+        {% assign role_security = role_security | plus: 1 %}
+      {% elsif a_cat contains 'aziend' or a_cat contains 'business' or a_cat contains 'press' %}
+        {% assign role_business = role_business | plus: 1 %}
+      {% elsif a_cat contains 'creator' %}
+        {% assign role_creator = role_creator | plus: 1 %}
+      {% elsif a_cat contains 'guida' or a_cat contains 'guide' %}
+        {% assign role_guides = role_guides | plus: 1 %}
+      {% elsif a_cat contains 'piattaform' or a_cat contains 'aggiornament' %}
+        {% assign role_platforms = role_platforms | plus: 1 %}
+      {% elsif a_cat contains 'social' or a_cat contains 'strateg' or a_cat contains 'visibilit' or a_cat contains 'target' or a_cat contains 'crescit' or a_cat contains 'follower' or a_cat contains 'engagement' or a_cat contains 'like' or a_cat contains 'account' %}
+        {% assign role_growth = role_growth | plus: 1 %}
+      {% else %}
+        {% assign role_other = role_other | plus: 1 %}
+      {% endif %}
 
       {% if a.id != article.id and related_author_count < 3 %}
         {% assign related_author_count = related_author_count | plus: 1 %}
@@ -129,26 +174,30 @@
   {% endfor %}
 {% endpaginate %}
 
-{% assign role_label = 'Redattore CAME' %}
-{% assign role_topic = 'guide generali' %}
+{% assign role_label = 'Redattore' %}
+{% assign role_topic = '' %}
 {% assign role_best = 0 %}
 
 {% if role_instagram > role_best %}{% assign role_best = role_instagram %}{% assign role_label = 'Esperto Instagram' %}{% assign role_topic = 'Instagram' %}{% endif %}
 {% if role_tiktok > role_best %}{% assign role_best = role_tiktok %}{% assign role_label = 'Esperto TikTok' %}{% assign role_topic = 'TikTok' %}{% endif %}
 {% if role_youtube > role_best %}{% assign role_best = role_youtube %}{% assign role_label = 'Esperto YouTube' %}{% assign role_topic = 'YouTube' %}{% endif %}
 {% if role_facebook > role_best %}{% assign role_best = role_facebook %}{% assign role_label = 'Esperto Facebook' %}{% assign role_topic = 'Facebook' %}{% endif %}
+{% if role_telegram > role_best %}{% assign role_best = role_telegram %}{% assign role_label = 'Esperto Telegram' %}{% assign role_topic = 'Telegram' %}{% endif %}
+{% if role_whatsapp > role_best %}{% assign role_best = role_whatsapp %}{% assign role_label = 'Esperto WhatsApp' %}{% assign role_topic = 'WhatsApp' %}{% endif %}
+{% if role_twitch > role_best %}{% assign role_best = role_twitch %}{% assign role_label = 'Esperto Twitch' %}{% assign role_topic = 'Twitch' %}{% endif %}
 {% if role_spotify > role_best %}{% assign role_best = role_spotify %}{% assign role_label = 'Esperto Spotify' %}{% assign role_topic = 'Spotify' %}{% endif %}
 {% if role_linkedin > role_best %}{% assign role_best = role_linkedin %}{% assign role_label = 'Esperto LinkedIn' %}{% assign role_topic = 'LinkedIn' %}{% endif %}
 {% if role_pinterest > role_best %}{% assign role_best = role_pinterest %}{% assign role_label = 'Esperto Pinterest' %}{% assign role_topic = 'Pinterest' %}{% endif %}
 {% if role_reviews > role_best %}{% assign role_best = role_reviews %}{% assign role_label = 'Specialista Recensioni' %}{% assign role_topic = 'gestione delle recensioni' %}{% endif %}
-{% if role_tools > role_best %}{% assign role_best = role_tools %}{% assign role_label = 'Redattore Strumenti' %}{% assign role_topic = 'strumenti gratuiti' %}{% endif %}
+{% if role_tools > role_best %}{% assign role_best = role_tools %}{% assign role_label = 'Esperto Strumenti' %}{% assign role_topic = 'strumenti gratuiti' %}{% endif %}
 {% if role_support > role_best %}{% assign role_best = role_support %}{% assign role_label = 'Assistenza Clienti' %}{% assign role_topic = 'assistenza e ordini' %}{% endif %}
 {% if role_security > role_best %}{% assign role_best = role_security %}{% assign role_label = 'Esperto Sicurezza' %}{% assign role_topic = 'sicurezza dei profili' %}{% endif %}
-{% if role_business > role_best %}{% assign role_best = role_business %}{% assign role_label = 'Redattore Business' %}{% assign role_topic = 'aziende e press' %}{% endif %}
-{% if role_creator > role_best %}{% assign role_best = role_creator %}{% assign role_label = 'Redattore Creator' %}{% assign role_topic = 'creator e content' %}{% endif %}
+{% if role_business > role_best %}{% assign role_best = role_business %}{% assign role_label = 'Esperto Business' %}{% assign role_topic = 'aziende e press' %}{% endif %}
+{% if role_creator > role_best %}{% assign role_best = role_creator %}{% assign role_label = 'Esperto Creator' %}{% assign role_topic = 'creator e content' %}{% endif %}
 {% if role_amazon > role_best %}{% assign role_best = role_amazon %}{% assign role_label = 'Esperto Amazon' %}{% assign role_topic = 'Amazon' %}{% endif %}
 {% if role_guides > role_best %}{% assign role_best = role_guides %}{% assign role_label = 'Redattore Guide' %}{% assign role_topic = 'guide operative' %}{% endif %}
 {% if role_platforms > role_best %}{% assign role_best = role_platforms %}{% assign role_label = 'Analista Piattaforme' %}{% assign role_topic = 'aggiornamenti piattaforme' %}{% endif %}
+{% if role_growth > role_best %}{% assign role_best = role_growth %}{% assign role_label = 'Stratega Social Media' %}{% assign role_topic = 'strategie di crescita social' %}{% endif %}
 
 {% assign art_words = article.content | strip_html | split: ' ' | size %}
 {% assign art_read_min = art_words | divided_by: 200 %}
@@ -220,20 +269,23 @@
 
 {% comment %}
   Inline promo banners: split the article body on paragraph breaks and
-  interleave at most 2 non-modal banners promoting CAME's free tools,
-  support chat or custom-service page. Only kicks in on long enough
-  articles so short guides stay banner-free.
+  interleave non-modal banners promoting CAME's free tools, support chat,
+  custom-service page and press-custom articles. A banner is only placed
+  at a paragraph boundary where neither the paragraph just before nor the
+  one right after contains an <img>, so a banner never lands next to a
+  picture. Short articles stay banner-free.
 {% endcomment %}
 
-{% assign banner_every = 5 %}
-{% assign banner_max = 2 %}
+{% assign banner_every = 4 %}
+{% assign banner_max = 3 %}
 {% assign para_split = article.content | split: '</p>' %}
 {% assign para_count = para_split.size %}
 
 {% if para_count > 6 %}
-  {% assign promo_variants = 'tools,support,custom' | split: ',' %}
-  {% assign promo_start = article.id | modulo: 3 %}
+  {% assign promo_variants = 'tools,support,custom,press' | split: ',' %}
+  {% assign promo_start = article.id | modulo: 4 %}
   {% assign banners_inserted = 0 %}
+  {% assign paras_since_banner = 0 %}
   {% assign article_body = '' %}
 
   {% for part in para_split %}
@@ -244,11 +296,20 @@
       {% assign article_body = article_body | append: part | append: '</p>' %}
     {% endif %}
 
-    {% assign idx_mod = forloop.index | modulo: banner_every %}
-    {% if idx_mod == 0 and banners_inserted < banner_max and is_last == false %}
+    {% assign paras_since_banner = paras_since_banner | plus: 1 %}
+
+    {% assign this_has_img = part contains '<img' %}
+    {% assign next_part = para_split[forloop.index] %}
+    {% assign next_has_img = false %}
+    {% if next_part %}
+      {% assign next_has_img = next_part contains '<img' %}
+    {% endif %}
+
+    {% if paras_since_banner >= banner_every and this_has_img == false and next_has_img == false and is_last == false and banners_inserted < banner_max %}
       {% assign banners_inserted = banners_inserted | plus: 1 %}
+      {% assign paras_since_banner = 0 %}
       {% assign variant_index = promo_start | plus: banners_inserted %}
-      {% assign variant_index = variant_index | modulo: 3 %}
+      {% assign variant_index = variant_index | modulo: 4 %}
       {% assign variant = promo_variants[variant_index] %}
 
       {% case variant %}
@@ -274,6 +335,12 @@
           {% assign promo_text = 'Richiedi un servizio personalizzato in due minuti.' %}
           {% assign promo_cta = 'Richiedi ora' %}
           {% assign promo_url = 'https://www.camecompany.com/pages/richiedi-un-servizio' %}
+        {% when 'press' %}
+          {% assign promo_eyebrow = 'Articoli press custom' %}
+          {% assign promo_title = 'Vuoi un articolo su di te o sulla tua azienda?' %}
+          {% assign promo_text = 'Raccontiamo la tua storia con un contenuto editoriale dedicato.' %}
+          {% assign promo_cta = 'Scopri di più' %}
+          {% assign promo_url = 'https://www.camecompany.com/collections/articoli-press-custom' %}
       {% endcase %}
 
       {% capture promo_banner %}
@@ -294,6 +361,29 @@
 {% else %}
   {% assign article_body = article.content %}
 {% endif %}
+
+{% comment %} Shared author card markup, reused inline and inside the tap-to-open modal {% endcomment %}
+{% capture author_card_inner %}
+  <div class="came-author-card-top">
+    <div class="came-avatar came-avatar-lg" style="background: linear-gradient(135deg, {{ avatar_c1 }}, {{ avatar_c2 }});">{{ initials }}</div>
+    <div>
+      <span class="came-author-eyebrow">Chi ha scritto questa guida</span>
+      <h3 class="came-author-name">{{ author_name }}</h3>
+      <p class="came-author-bio">{{ author_name }} scrive per il blog CAME{% if role_topic != blank %}, soprattutto su {{ role_topic }}{% endif %} — {% if author_total == 1 %}questa è la prima guida pubblicata{% else %}finora ha pubblicato {{ author_total }} guide{% endif %}</p>
+      <div class="came-author-stats">
+        <span class="came-author-stat">{{ role_label }}</span>
+        <a class="came-author-stat came-author-stat-link" href="{{ author_stat_url }}">{{ author_total }} guide pubblicate ›</a>
+      </div>
+    </div>
+  </div>
+
+  {% if related_author_block != blank %}
+    <div class="came-author-more">
+      <span class="came-author-more-label">Altre guide di {{ author_name }}</span>
+      {{ related_author_block }}
+    </div>
+  {% endif %}
+{% endcapture %}
 
 <style>
   .came-article-page,
@@ -391,13 +481,33 @@
 
   .came-byline {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     margin-top: 22px;
   }
 
-  .came-byline-text {
-    min-width: 0;
+  .came-byline-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: 0;
+    padding: 2px;
+    margin: -2px;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 999px;
+  }
+
+  .came-byline-trigger:hover .came-byline-name {
+    text-decoration: underline;
+  }
+
+  .came-byline-trigger:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
   }
 
   .came-byline-name-row {
@@ -748,6 +858,77 @@
     font-weight: 850;
   }
 
+  .came-author-stat-link {
+    text-decoration: none;
+  }
+
+  .came-author-stat-link:hover {
+    background: rgba(255,255,255,.12);
+  }
+
+  .came-author-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+  }
+
+  .came-author-modal.is-open {
+    display: block;
+  }
+
+  .came-author-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .came-author-modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(480px, calc(100% - 32px));
+    margin: 9vh auto 0;
+    max-height: 82vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    animation: cameAuthorModalIn .18s ease;
+  }
+
+  @keyframes cameAuthorModalIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .came-author-modal-panel {
+      animation: none;
+    }
+  }
+
+  .came-author-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(0,0,0,.55);
+    color: #fff;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .came-author-card-modal {
+    margin-top: 0;
+  }
+
   .came-author-more {
     margin-top: 20px;
     padding-top: 18px;
@@ -965,20 +1146,30 @@
         {% endif %}
 
         <div class="came-byline">
-          <div class="came-avatar" style="background: linear-gradient(135deg, {{ avatar_c1 }}, {{ avatar_c2 }});">{{ initials }}</div>
-          <div class="came-byline-text">
+          <button type="button" class="came-byline-trigger" id="came-author-open" aria-haspopup="dialog" aria-controls="came-author-modal">
+            <div class="came-avatar" style="background: linear-gradient(135deg, {{ avatar_c1 }}, {{ avatar_c2 }});">{{ initials }}</div>
             <div class="came-byline-name-row">
               <span class="came-byline-name">{{ author_name }}</span>
               <span class="came-role-badge">{{ role_label }}</span>
             </div>
-            <div class="came-art-meta">
-              <span>{{ article.published_at | date: "%d/%m/%Y" }}</span>
-              <span>{{ art_read_min }} min di lettura</span>
-              <span>{{ art_readers }} lettori</span>
-            </div>
+          </button>
+          <div class="came-art-meta">
+            <span>{{ article.published_at | date: "%d/%m/%Y" }}</span>
+            <span>{{ art_read_min }} min di lettura</span>
+            <span>{{ art_readers }} lettori</span>
           </div>
         </div>
       </header>
+    </div>
+
+    <div class="came-author-modal" id="came-author-modal" aria-hidden="true">
+      <div class="came-author-modal-backdrop" data-came-author-close></div>
+      <div class="came-author-modal-panel" role="dialog" aria-modal="true" aria-label="Chi ha scritto questa guida">
+        <button type="button" class="came-author-modal-close" data-came-author-close aria-label="Chiudi">✕</button>
+        <div class="came-author-card came-author-card-modal">
+          {{ author_card_inner }}
+        </div>
+      </div>
     </div>
 
     <div class="came-art-hero">
@@ -1003,32 +1194,7 @@
       {% endif %}
 
       <div class="came-author-card">
-        <div class="came-author-card-top">
-          <div class="came-avatar came-avatar-lg" style="background: linear-gradient(135deg, {{ avatar_c1 }}, {{ avatar_c2 }});">{{ initials }}</div>
-          <div>
-            <span class="came-author-eyebrow">Chi ha scritto questa guida</span>
-            <h3 class="came-author-name">{{ author_name }}</h3>
-            <p class="came-author-bio">
-              {{ author_name }} scrive per il blog CAME, soprattutto su {{ role_topic }}.
-              {% if author_total == 1 %}
-                Questa è la prima guida pubblicata.
-              {% else %}
-                Finora ha pubblicato {{ author_total }} guide.
-              {% endif %}
-            </p>
-            <div class="came-author-stats">
-              <span class="came-author-stat">{{ role_label }}</span>
-              <span class="came-author-stat">{{ author_total }} guide pubblicate</span>
-            </div>
-          </div>
-        </div>
-
-        {% if related_author_block != blank %}
-          <div class="came-author-more">
-            <span class="came-author-more-label">Altre guide di {{ author_name }}</span>
-            {{ related_author_block }}
-          </div>
-        {% endif %}
+        {{ author_card_inner }}
       </div>
     </div>
 
@@ -1047,6 +1213,40 @@
 
   </div>
 </div>
+
+<script>
+  (function () {
+    var openBtn = document.getElementById('came-author-open');
+    var modal = document.getElementById('came-author-modal');
+    if (!openBtn || !modal) return;
+
+    var closers = modal.querySelectorAll('[data-came-author-close]');
+
+    function openModal() {
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var closeBtn = modal.querySelector('.came-author-modal-close');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closers.forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  })();
+</script>
 
 {% schema %}
 {
