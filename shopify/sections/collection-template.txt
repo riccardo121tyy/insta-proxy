@@ -1,0 +1,590 @@
+{% comment %}
+  sections/collection-template.liquid
+  Collection (category) page, same came- design system as home/guide/article.
+  Everything here is real Shopify data — products, prices, sort options and
+  filters all come straight from the collection object, nothing invented.
+{% endcomment %}
+
+{% paginate collection.products by 16 %}
+
+<style>
+  .came-coll,
+  .came-coll * {
+    box-sizing: border-box;
+  }
+
+  .came-coll {
+    --came-bg: #000;
+    --came-card: #101014;
+    --came-card-2: #15151b;
+    --came-text: #fff;
+    --came-muted: #d5d5df;
+    --came-soft: #9b9baa;
+    --came-border: rgba(255,255,255,.12);
+    --came-grad: linear-gradient(135deg,#E91CF9 0%,#00D8FF 100%);
+    width: 100%;
+    overflow: hidden;
+    background: var(--came-bg);
+    color: var(--came-text);
+    font-family: inherit;
+    padding-bottom: 90px;
+  }
+
+  .came-coll-wrap {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  .came-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 26px;
+    margin-bottom: 14px;
+    color: var(--came-soft);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .came-breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .came-coll-head {
+    padding-bottom: 8px;
+  }
+
+  .came-coll-title {
+    margin: 0;
+    max-width: 760px;
+    color: #fff;
+    font-size: clamp(32px, 5.6vw, 54px);
+    line-height: .98;
+    letter-spacing: -.065em;
+    font-weight: 950;
+  }
+
+  .came-coll-desc {
+    margin: 14px 0 0;
+    max-width: 680px;
+    color: var(--came-muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .came-coll-toolbar {
+    position: sticky;
+    top: 12px;
+    z-index: 8;
+    margin: 26px 0 24px;
+    border-radius: 20px;
+    background: rgba(12,12,16,.86);
+    border: 1px solid rgba(255,255,255,.13);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .came-coll-search {
+    position: relative;
+    flex: 1 1 220px;
+    min-width: 180px;
+  }
+
+  .came-coll-search input {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.055);
+    color: #fff;
+    padding: 0 16px 0 42px;
+    font-size: 13.5px;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .came-coll-search input::placeholder {
+    color: rgba(255,255,255,.5);
+  }
+
+  .came-coll-search svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.2;
+    pointer-events: none;
+  }
+
+  .came-sort-select {
+    min-height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.055);
+    color: #fff;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 850;
+    font-family: inherit;
+    flex: 0 0 auto;
+  }
+
+  .came-sort-select option {
+    background: #101014;
+    color: #fff;
+  }
+
+  .came-coll-count {
+    flex: 0 0 auto;
+    color: var(--came-soft);
+    font-size: 12.5px;
+    font-weight: 800;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  .came-filter-scroll {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-top: 2px;
+    scrollbar-width: thin;
+  }
+
+  .came-filter-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .came-filter-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.22);
+    border-radius: 999px;
+  }
+
+  .came-filter-pill {
+    min-height: 36px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 13px;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 850;
+    flex: 0 0 auto;
+  }
+
+  .came-filter-pill.is-active {
+    background: var(--came-grad);
+    border-color: transparent;
+  }
+
+  .came-product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .came-product-card {
+    display: block;
+    min-width: 0;
+    border-radius: 22px;
+    background: var(--came-card);
+    border: 1px solid var(--came-border);
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease;
+  }
+
+  .came-product-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.28);
+  }
+
+  .came-product-card.is-hidden {
+    display: none;
+  }
+
+  .came-product-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--came-card-2);
+    overflow: hidden;
+  }
+
+  .came-product-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .came-img-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 22% 24%, rgba(233,28,249,.46), transparent 34%),
+      radial-gradient(circle at 78% 76%, rgba(0,216,255,.42), transparent 38%),
+      linear-gradient(135deg,#111118,#050505);
+  }
+
+  .came-img-fallback span {
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-sale-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .came-sold-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.72);
+    border: 1px solid rgba(255,255,255,.22);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .came-product-body {
+    padding: 14px 16px 18px;
+  }
+
+  .came-product-vendor {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--came-soft);
+    font-size: 10.5px;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .came-product-title {
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.28;
+    letter-spacing: -.02em;
+    font-weight: 850;
+  }
+
+  .came-product-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .came-price {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 950;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .came-price-compare {
+    color: var(--came-soft);
+    font-size: 12.5px;
+    text-decoration: line-through;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .came-coll-empty {
+    display: none;
+    border-radius: 20px;
+    border: 1px solid var(--came-border);
+    background: rgba(255,255,255,.04);
+    padding: 30px;
+    text-align: center;
+    color: var(--came-muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .came-coll-empty.is-visible {
+    display: block;
+  }
+
+  .came-coll-empty a {
+    color: #fff;
+    font-weight: 900;
+    text-decoration: underline;
+  }
+
+  .came-pagination {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    padding: 30px 0 8px;
+  }
+
+  .came-pagination-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .came-pagination a,
+  .came-pagination span {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--came-border);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 850;
+    font-size: 13px;
+    padding: 0 14px;
+    background: rgba(255,255,255,.035);
+  }
+
+  .came-pagination .current {
+    background: var(--came-grad);
+    border-color: transparent;
+  }
+
+  @media (max-width: 1100px) {
+    .came-product-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 780px) {
+    .came-product-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .came-coll-wrap {
+      width: min(100% - 24px, 1180px);
+    }
+
+    .came-coll-title {
+      font-size: clamp(28px, 8.4vw, 38px);
+    }
+
+    .came-coll-toolbar {
+      top: 8px;
+    }
+
+    .came-coll-count {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .came-product-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+  }
+</style>
+
+<div class="came-coll">
+  <div class="came-coll-wrap">
+
+    <div class="came-breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>›</span>
+      <a href="{{ routes.all_collections_url }}">Collezioni</a>
+      <span>›</span>
+      <span>{{ collection.title }}</span>
+    </div>
+
+    <header class="came-coll-head">
+      <h1 class="came-coll-title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="came-coll-desc">{{ collection.description }}</div>
+      {% endif %}
+    </header>
+
+    {% if collection.products.size > 0 %}
+      <div class="came-coll-toolbar">
+        <label class="came-coll-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+          <input type="search" placeholder="Cerca in questa pagina" data-came-product-search>
+        </label>
+
+        <select class="came-sort-select" data-came-sort onchange="location.href=this.value">
+          {% for option in collection.sort_options %}
+            {% assign option_url = collection.url | append: '?sort_by=' | append: option.value %}
+            <option value="{{ option_url }}" {% if collection.sort_by == option.value or option.value == collection.default_sort_by and collection.sort_by == blank %}selected{% endif %}>{{ option.name }}</option>
+          {% endfor %}
+        </select>
+
+        <span class="came-coll-count">{{ collection.products.size }} di {{ collection.all_products_count | default: collection.products_count }} prodotti</span>
+
+        {% assign list_filter = collection.filters | where: 'type', 'list' | first %}
+        {% if list_filter %}
+          <div class="came-filter-scroll">
+            {% for value in list_filter.values %}
+              <a class="came-filter-pill{% if value.active %} is-active{% endif %}" href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}">
+                {{ value.label }} ({{ value.count }})
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="came-product-grid" data-came-product-grid>
+        {% for product in collection.products %}
+          {% assign p_search = product.title | append: ' ' | append: product.vendor | downcase | escape %}
+          <a class="came-product-card" href="{{ product.url }}" data-came-product-search="{{ p_search }}">
+            <div class="came-product-media">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy">
+              {% else %}
+                <div class="came-img-fallback"><span>CAME</span></div>
+              {% endif %}
+
+              {% if product.available == false %}
+                <span class="came-sold-badge">Esaurito</span>
+              {% elsif product.compare_at_price > product.price %}
+                <span class="came-sale-badge">Sconto</span>
+              {% endif %}
+            </div>
+
+            <div class="came-product-body">
+              {% if product.vendor != blank %}
+                <span class="came-product-vendor">{{ product.vendor }}</span>
+              {% endif %}
+              <h3 class="came-product-title">{{ product.title }}</h3>
+              <div class="came-product-price-row">
+                <span class="came-price">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <span class="came-price-compare">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      <div class="came-coll-empty" data-came-empty-search>
+        Nessun prodotto trovato in questa pagina con questo termine. <a href="{{ collection.url }}">Rimuovi la ricerca</a>
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="came-pagination" role="navigation" aria-label="Paginazione collezione">
+          <div class="came-pagination-row">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}">Precedente</a>
+            {% endif %}
+
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}">{{ part.title }}</a>
+              {% else %}
+                <span class="{% if part.title == paginate.current_page %}current{% endif %}">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}">Successiva</a>
+            {% endif %}
+          </div>
+        </nav>
+      {% endif %}
+
+    {% else %}
+      <div class="came-coll-empty is-visible">
+        Non ci sono ancora prodotti in questa collezione. <a href="{{ routes.all_collections_url }}">Vedi tutte le collezioni</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !root.classList.contains('came-coll')) {
+      root = document.querySelector('.came-coll');
+    }
+    if (!root) return;
+
+    var input = root.querySelector('[data-came-product-search]');
+    var grid = root.querySelector('[data-came-product-grid]');
+    var empty = root.querySelector('[data-came-empty-search]');
+    if (!input || !grid) return;
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('[data-came-product-search]'));
+
+    input.addEventListener('input', function () {
+      var query = input.value.trim().toLowerCase();
+      var visible = 0;
+
+      cards.forEach(function (card) {
+        var text = card.getAttribute('data-came-product-search') || '';
+        var match = !query || text.indexOf(query) !== -1;
+        card.classList.toggle('is-hidden', !match);
+        if (match) visible++;
+      });
+
+      if (empty) {
+        empty.classList.toggle('is-visible', visible === 0);
+      }
+    });
+  })();
+</script>
+
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}
