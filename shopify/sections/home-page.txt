@@ -1,0 +1,1221 @@
+{% comment %}
+  sections/home-page.liquid
+  High-conversion home page, same came- design system as /blogs/guide and
+  the article template. Business-specific facts (rating, review count,
+  steps, FAQ, platform links) are theme-editor settings/blocks rather than
+  hardcoded, so nothing here is a fabricated number — the merchant fills
+  in the real ones. The guides teaser pulls real, live articles.
+{% endcomment %}
+
+{% assign guides_blog = section.settings.guides_blog %}
+{% if guides_blog == blank %}
+  {% assign guides_blog = blogs['guide'] %}
+{% endif %}
+
+<style>
+  .came-home,
+  .came-home * {
+    box-sizing: border-box;
+  }
+
+  .came-home {
+    --came-bg: #000;
+    --came-card: #101014;
+    --came-card-2: #15151b;
+    --came-text: #fff;
+    --came-muted: #d5d5df;
+    --came-soft: #9b9baa;
+    --came-border: rgba(255,255,255,.12);
+    --came-grad: linear-gradient(135deg,#E91CF9 0%,#00D8FF 100%);
+    --came-shadow: 0 18px 58px rgba(0,0,0,.48);
+    width: 100%;
+    overflow: hidden;
+    background: var(--came-bg);
+    color: var(--came-text);
+    font-family: inherit;
+  }
+
+  .came-home-wrap {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  .came-home-section {
+    padding: 56px 0;
+  }
+
+  .came-eyebrow {
+    display: inline-flex;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-style: normal;
+    flex: 0 0 auto;
+  }
+
+  /* ---------- hero ---------- */
+
+  .came-hero {
+    position: relative;
+    padding: 84px 0 60px;
+    overflow: hidden;
+  }
+
+  .came-hero-glow {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 640px;
+    background:
+      radial-gradient(circle at 18% 20%, rgba(233,28,249,.24), transparent 40%),
+      radial-gradient(circle at 82% 30%, rgba(0,216,255,.2), transparent 42%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .came-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+  }
+
+  .came-hero-title {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(38px, 6.4vw, 72px);
+    line-height: .96;
+    letter-spacing: -.07em;
+    font-weight: 950;
+    text-wrap: balance;
+  }
+
+  .came-hero-title .came-hero-accent {
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-hero-sub {
+    margin: 20px 0 0;
+    max-width: 620px;
+    color: var(--came-muted);
+    font-size: clamp(16px, 2.2vw, 19px);
+    line-height: 1.55;
+  }
+
+  .came-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .came-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 0 26px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
+  .came-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.16);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .came-btn-secondary:hover {
+    background: rgba(255,255,255,.1);
+  }
+
+  .came-trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 34px;
+  }
+
+  .came-trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  .came-trust-badge:before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    flex: 0 0 auto;
+  }
+
+  /* ---------- section head ---------- */
+
+  .came-section-head {
+    max-width: 640px;
+    margin-bottom: 30px;
+  }
+
+  .came-section-title {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(26px, 4.6vw, 40px);
+    line-height: 1.02;
+    letter-spacing: -.055em;
+    font-weight: 950;
+    text-wrap: balance;
+  }
+
+  .came-section-sub {
+    margin: 12px 0 0;
+    color: var(--came-muted);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .came-section-head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- platform grid ---------- */
+
+  .came-platform-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .came-platform-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 22px;
+    background: var(--came-card);
+    border: 1px solid var(--came-border);
+    color: inherit;
+    text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease;
+  }
+
+  .came-platform-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.28);
+  }
+
+  .came-platform-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--came-grad);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 950;
+  }
+
+  .came-platform-title {
+    margin: 0;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 950;
+    letter-spacing: -.03em;
+  }
+
+  .came-platform-text {
+    margin: 0;
+    color: var(--came-muted);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .came-platform-go {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  /* ---------- steps ---------- */
+
+  .came-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .came-step {
+    padding: 26px 22px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--came-border);
+    position: relative;
+  }
+
+  .came-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.16);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 950;
+    margin-bottom: 18px;
+  }
+
+  .came-step-title {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 950;
+    letter-spacing: -.03em;
+  }
+
+  .came-step-text {
+    margin: 8px 0 0;
+    color: var(--came-muted);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  /* ---------- trust / stats ---------- */
+
+  .came-stats-band {
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 10% 16%, rgba(233,28,249,.14), transparent 34%),
+      radial-gradient(circle at 92% 84%, rgba(0,216,255,.12), transparent 38%),
+      linear-gradient(135deg,#15151b,#070709);
+    border: 1px solid var(--came-border);
+    padding: clamp(26px, 5vw, 40px);
+  }
+
+  .came-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+
+  .came-stat-value {
+    display: block;
+    color: #fff;
+    font-size: clamp(30px, 4.6vw, 44px);
+    line-height: 1;
+    letter-spacing: -.04em;
+    font-weight: 950;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .came-stat-label {
+    display: block;
+    margin-top: 8px;
+    color: var(--came-muted);
+    font-size: 13px;
+    font-weight: 760;
+  }
+
+  /* ---------- compare ---------- */
+
+  .came-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .came-compare-card {
+    padding: 26px;
+    border-radius: 22px;
+    border: 1px solid var(--came-border);
+  }
+
+  .came-compare-card.is-them {
+    background: rgba(255,255,255,.02);
+    color: var(--came-soft);
+  }
+
+  .came-compare-card.is-us {
+    background:
+      radial-gradient(circle at 85% 15%, rgba(0,216,255,.14), transparent 40%),
+      linear-gradient(135deg,#15151b,#070709);
+  }
+
+  .came-compare-label {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 11px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .came-compare-card.is-us .came-compare-label {
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-compare-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .came-compare-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .came-compare-card.is-us li {
+    color: #fff;
+  }
+
+  .came-compare-mark {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 950;
+    margin-top: 1px;
+  }
+
+  .came-compare-card.is-us .came-compare-mark {
+    background: var(--came-grad);
+    color: #fff;
+  }
+
+  .came-compare-card.is-them .came-compare-mark {
+    background: rgba(255,255,255,.08);
+    color: var(--came-soft);
+  }
+
+  /* ---------- guides teaser ---------- */
+
+  .came-guides-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .came-guide-card {
+    display: block;
+    border-radius: 22px;
+    background: var(--came-card);
+    border: 1px solid var(--came-border);
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .came-guide-media {
+    height: 150px;
+    background: var(--came-card-2);
+    overflow: hidden;
+  }
+
+  .came-guide-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .came-img-fallback {
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 22% 24%, rgba(233,28,249,.46), transparent 34%),
+      radial-gradient(circle at 78% 76%, rgba(0,216,255,.42), transparent 38%),
+      linear-gradient(135deg,#111118,#050505);
+  }
+
+  .came-img-fallback span {
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-guide-body {
+    padding: 16px 18px 20px;
+  }
+
+  .came-guide-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 950;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .came-guide-tag:before {
+    content: "";
+    width: 16px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--came-grad);
+  }
+
+  .came-guide-title {
+    margin: 8px 0 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 950;
+    letter-spacing: -.03em;
+    line-height: 1.2;
+  }
+
+  /* ---------- faq ---------- */
+
+  .came-faq-list {
+    display: grid;
+    gap: 10px;
+    max-width: 760px;
+  }
+
+  .came-faq-item {
+    border-radius: 18px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--came-border);
+    overflow: hidden;
+  }
+
+  .came-faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 18px 20px;
+    background: none;
+    border: 0;
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 850;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .came-faq-plus {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    line-height: 1;
+    transition: transform .18s ease;
+  }
+
+  .came-faq-item.is-open .came-faq-plus {
+    transform: rotate(45deg);
+    background: var(--came-grad);
+  }
+
+  .came-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .22s ease;
+  }
+
+  .came-faq-answer-inner {
+    padding: 0 20px 18px;
+    color: var(--came-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  /* ---------- final cta ---------- */
+
+  .came-final-cta {
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(233,28,249,.17), transparent 34%),
+      radial-gradient(circle at 90% 80%, rgba(0,216,255,.14), transparent 38%),
+      linear-gradient(135deg,#14141b,#060608);
+    border: 1px solid var(--came-border);
+    padding: clamp(28px, 5vw, 48px);
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .came-final-cta h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(28px, 4.6vw, 42px);
+    line-height: 1.02;
+    letter-spacing: -.055em;
+    font-weight: 950;
+    text-wrap: balance;
+  }
+
+  .came-final-cta p {
+    margin: 14px 0 0;
+    color: var(--came-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 480px;
+  }
+
+  .came-news-form {
+    display: flex;
+    gap: 10px;
+  }
+
+  .came-news-form input[type="email"] {
+    width: 100%;
+    min-height: 52px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.075);
+    color: #fff;
+    padding: 0 18px;
+    outline: none;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .came-news-form input[type="email"]::placeholder {
+    color: rgba(255,255,255,.55);
+  }
+
+  .came-news-form button {
+    min-height: 52px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0 24px;
+    background: var(--came-grad);
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 950;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .came-form-status,
+  .came-form-note {
+    margin-top: 10px;
+    color: var(--came-soft);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 1100px) {
+    .came-platform-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 980px) {
+    .came-steps,
+    .came-guides-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .came-compare,
+    .came-final-cta {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .came-home-wrap {
+      width: min(100% - 24px, 1180px);
+    }
+
+    .came-home-section {
+      padding: 42px 0;
+    }
+
+    .came-hero {
+      padding: 56px 0 40px;
+    }
+
+    .came-hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .came-btn-primary,
+    .came-btn-secondary {
+      justify-content: center;
+    }
+
+    .came-platform-grid,
+    .came-steps,
+    .came-guides-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .came-compare {
+      grid-template-columns: 1fr;
+    }
+
+    .came-news-form {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .came-platform-grid,
+    .came-steps,
+    .came-guides-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .came-platform-card,
+    .came-faq-plus,
+    .came-faq-answer {
+      transition: none;
+    }
+  }
+</style>
+
+<div class="came-home">
+
+  <section class="came-hero">
+    <div class="came-hero-glow" aria-hidden="true"></div>
+    <div class="came-home-wrap">
+      <div class="came-hero-inner">
+        {% if section.settings.hero_eyebrow != blank %}
+          <span class="came-eyebrow">{{ section.settings.hero_eyebrow }}</span>
+        {% endif %}
+
+        <h1 class="came-hero-title">{{ section.settings.hero_heading }}</h1>
+
+        {% if section.settings.hero_subheading != blank %}
+          <p class="came-hero-sub">{{ section.settings.hero_subheading }}</p>
+        {% endif %}
+
+        <div class="came-hero-actions">
+          {% if section.settings.hero_cta_label != blank %}
+            <a class="came-btn-primary" href="{{ section.settings.hero_cta_url | default: '#' }}">
+              {{ section.settings.hero_cta_label }} <i class="came-arrow">›</i>
+            </a>
+          {% endif %}
+          {% if section.settings.hero_secondary_label != blank %}
+            <a class="came-btn-secondary" href="{{ section.settings.hero_secondary_url | default: '#' }}">
+              {{ section.settings.hero_secondary_label }}
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="came-trust-strip">
+          {% if section.settings.rating_value != blank %}
+            <a class="came-trust-badge" href="{{ section.settings.rating_url | default: '#' }}">
+              {{ section.settings.rating_value }}/5 {% if section.settings.rating_count != blank %}· {{ section.settings.rating_count }} recensioni{% endif %}
+            </a>
+          {% endif %}
+          <span class="came-trust-badge">Assistenza reale, non automatica</span>
+          <span class="came-trust-badge">Attivazione rapida</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if section.blocks.size > 0 %}
+    {% assign has_platform_block = false %}
+    {% for block in section.blocks %}
+      {% if block.type == 'platform' %}
+        {% assign has_platform_block = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if has_platform_block %}
+      <section class="came-home-section">
+        <div class="came-home-wrap">
+          <div class="came-section-head">
+            <h2 class="came-section-title">{{ section.settings.platforms_title | default: 'Un servizio per ogni piattaforma' }}</h2>
+            {% if section.settings.platforms_sub != blank %}
+              <p class="came-section-sub">{{ section.settings.platforms_sub }}</p>
+            {% endif %}
+          </div>
+
+          <div class="came-platform-grid">
+            {% for block in section.blocks %}
+              {% if block.type == 'platform' %}
+                <a class="came-platform-card" href="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}" {{ block.shopify_attributes }}>
+                  <span class="came-platform-mark">{{ block.settings.mark | default: '•' }}</span>
+                  <h3 class="came-platform-title">{{ block.settings.title }}</h3>
+                  {% if block.settings.text != blank %}
+                    <p class="came-platform-text">{{ block.settings.text }}</p>
+                  {% endif %}
+                  <span class="came-platform-go">Scopri ›</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+  {% endif %}
+
+  {% assign has_step_block = false %}
+  {% for block in section.blocks %}
+    {% if block.type == 'step' %}
+      {% assign has_step_block = true %}
+    {% endif %}
+  {% endfor %}
+
+  {% if has_step_block %}
+    <section class="came-home-section">
+      <div class="came-home-wrap">
+        <div class="came-section-head">
+          <h2 class="came-section-title">{{ section.settings.steps_title | default: 'Come funziona' }}</h2>
+        </div>
+
+        <div class="came-steps">
+          {% assign step_index = 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'step' %}
+              {% assign step_index = step_index | plus: 1 %}
+              <div class="came-step" {{ block.shopify_attributes }}>
+                <span class="came-step-num">{{ step_index }}</span>
+                <h3 class="came-step-title">{{ block.settings.title }}</h3>
+                {% if block.settings.text != blank %}
+                  <p class="came-step-text">{{ block.settings.text }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% assign stat_count = 0 %}
+  {% for i in (1..4) %}
+    {% assign val_key = 'stat_' | append: i | append: '_value' %}
+    {% assign val = section.settings[val_key] %}
+    {% if val != blank %}
+      {% assign stat_count = stat_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% if stat_count > 0 %}
+    <section class="came-home-section">
+      <div class="came-home-wrap">
+        <div class="came-stats-band">
+          <div class="came-stats-grid">
+            {% for i in (1..4) %}
+              {% assign val_key = 'stat_' | append: i | append: '_value' %}
+              {% assign label_key = 'stat_' | append: i | append: '_label' %}
+              {% assign val = section.settings[val_key] %}
+              {% assign label = section.settings[label_key] %}
+              {% if val != blank %}
+                <div>
+                  <span class="came-stat-value" data-came-count-target="{{ val | escape }}">{{ val }}</span>
+                  {% if label != blank %}<span class="came-stat-label">{{ label }}</span>{% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="came-home-section">
+    <div class="came-home-wrap">
+      <div class="came-section-head">
+        <h2 class="came-section-title">{{ section.settings.compare_title | default: 'Perché non un bot automatico' }}</h2>
+      </div>
+
+      <div class="came-compare">
+        <div class="came-compare-card is-them">
+          <span class="came-compare-label">Servizi automatizzati generici</span>
+          <ul class="came-compare-list">
+            <li><span class="came-compare-mark">✕</span> Risposte automatiche senza contesto</li>
+            <li><span class="came-compare-mark">✕</span> Nessun controllo su cosa viene consegnato</li>
+            <li><span class="came-compare-mark">✕</span> Supporto lento o assente in caso di problemi</li>
+          </ul>
+        </div>
+        <div class="came-compare-card is-us">
+          <span class="came-compare-label">CAME</span>
+          <ul class="came-compare-list">
+            <li><span class="came-compare-mark">✓</span> Assistenza reale, gestita da persone</li>
+            <li><span class="came-compare-mark">✓</span> Ordini seguiti e verificabili</li>
+            <li><span class="came-compare-mark">✓</span> Guide gratuite per capire cosa stai comprando</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if guides_blog and guides_blog.articles.size > 0 %}
+    <section class="came-home-section">
+      <div class="came-home-wrap">
+        <div class="came-section-head-row">
+          <div class="came-section-head" style="margin-bottom:0;">
+            <h2 class="came-section-title">Guide gratuite</h2>
+            <p class="came-section-sub">Contenuti pratici su social, servizi digitali e strumenti gratuiti, aggiornati regolarmente.</p>
+          </div>
+          <a class="came-btn-secondary" href="{{ guides_blog.url }}">Tutte le guide ›</a>
+        </div>
+
+        <div class="came-guides-grid">
+          {% for article in guides_blog.articles limit: 3 %}
+            {% assign g_image = '' %}
+            {% if article.image %}
+              {% assign g_image = article.image | img_url: '600x' %}
+            {% elsif article.featured_image %}
+              {% assign g_image = article.featured_image | img_url: '600x' %}
+            {% endif %}
+
+            <a class="came-guide-card" href="{{ article.url }}">
+              <div class="came-guide-media">
+                {% if g_image != blank %}
+                  <img src="{{ g_image }}" alt="{{ article.title | escape }}" loading="lazy">
+                {% else %}
+                  <div class="came-img-fallback"><span>CAME</span></div>
+                {% endif %}
+              </div>
+              <div class="came-guide-body">
+                <div class="came-guide-tag">{% if article.tags.size > 0 %}{{ article.tags.first }}{% else %}Guide{% endif %}</div>
+                <h3 class="came-guide-title">{{ article.title }}</h3>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% assign faq_count = 0 %}
+  {% for block in section.blocks %}
+    {% if block.type == 'faq' %}
+      {% assign faq_count = faq_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% if faq_count > 0 %}
+    <section class="came-home-section">
+      <div class="came-home-wrap">
+        <div class="came-section-head">
+          <h2 class="came-section-title">{{ section.settings.faq_title | default: 'Domande frequenti' }}</h2>
+        </div>
+
+        <div class="came-faq-list" data-came-faq>
+          {% for block in section.blocks %}
+            {% if block.type == 'faq' %}
+              <div class="came-faq-item" {{ block.shopify_attributes }}>
+                <button type="button" class="came-faq-question" data-came-faq-toggle>
+                  <span>{{ block.settings.question }}</span>
+                  <span class="came-faq-plus">+</span>
+                </button>
+                <div class="came-faq-answer">
+                  <div class="came-faq-answer-inner">{{ block.settings.answer }}</div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if section.settings.faq_url != blank %}
+          <div style="margin-top:20px;">
+            <a class="came-btn-secondary" href="{{ section.settings.faq_url }}">Vedi tutte le domande ›</a>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="came-home-section">
+    <div class="came-home-wrap">
+      <div class="came-final-cta">
+        <div>
+          <h2>{{ section.settings.final_heading | default: 'Pronto a iniziare?' }}</h2>
+          {% if section.settings.final_text != blank %}
+            <p>{{ section.settings.final_text }}</p>
+          {% endif %}
+          {% if section.settings.hero_cta_label != blank %}
+            <div style="margin-top:22px;">
+              <a class="came-btn-primary" href="{{ section.settings.hero_cta_url | default: '#' }}">{{ section.settings.hero_cta_label }} <i class="came-arrow">›</i></a>
+            </div>
+          {% endif %}
+        </div>
+
+        <div>
+          {% form 'customer', id: 'came_home_newsletter' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="came-news-form">
+              <input type="email" name="contact[email]" placeholder="La tua email" autocorrect="off" autocapitalize="off" required>
+              <button type="submit">Iscrivimi</button>
+            </div>
+            {% if form.posted_successfully? %}
+              <div class="came-form-status">Iscrizione ricevuta correttamente</div>
+            {% endif %}
+            {% if form.errors %}
+              <div class="came-form-status">{{ form.errors | default_errors }}</div>
+            {% endif %}
+          {% endform %}
+          <div class="came-form-note">La tua privacy è importante</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !root.classList.contains('came-home')) {
+      root = document.querySelector('.came-home');
+    }
+    if (!root) return;
+
+    root.querySelectorAll('[data-came-faq-toggle]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.came-faq-item');
+        var answer = item.querySelector('.came-faq-answer');
+        var isOpen = item.classList.contains('is-open');
+
+        root.querySelectorAll('.came-faq-item.is-open').forEach(function (openItem) {
+          if (openItem !== item) {
+            openItem.classList.remove('is-open');
+            openItem.querySelector('.came-faq-answer').style.maxHeight = '';
+          }
+        });
+
+        if (isOpen) {
+          item.classList.remove('is-open');
+          answer.style.maxHeight = '';
+        } else {
+          item.classList.add('is-open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var statEls = Array.prototype.slice.call(root.querySelectorAll('[data-came-count-target]'));
+
+    if (statEls.length && !reduceMotion && window.IntersectionObserver) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          observer.unobserve(el);
+
+          var raw = el.getAttribute('data-came-count-target') || '';
+          var match = raw.match(/^([^\d]*)([\d.,]+)(.*)$/);
+          if (!match) return;
+
+          var prefix = match[1];
+          var numStr = match[2].replace(/\./g, '').replace(/,/g, '.');
+          var suffix = match[3];
+          var target = parseFloat(numStr);
+          if (isNaN(target)) return;
+
+          var duration = 900;
+          var start = null;
+
+          function step(ts) {
+            if (start === null) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var current = Math.round(target * progress);
+            el.textContent = prefix + current + suffix;
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              el.textContent = raw;
+            }
+          }
+
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.6 });
+
+      statEls.forEach(function (el) { observer.observe(el); });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Home page",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Eyebrow", "default": "CAME" },
+    { "type": "text", "id": "hero_heading", "label": "Titolo", "default": "Crescita reale sui social, senza scorciatoie rischiose" },
+    { "type": "textarea", "id": "hero_subheading", "label": "Sottotitolo", "default": "Servizi per Instagram, TikTok, YouTube e altre piattaforme, gestiti da persone vere, più guide gratuite per capire cosa stai comprando." },
+    { "type": "text", "id": "hero_cta_label", "label": "Testo pulsante principale", "default": "Richiedi un servizio" },
+    { "type": "url", "id": "hero_cta_url", "label": "Link pulsante principale" },
+    { "type": "text", "id": "hero_secondary_label", "label": "Testo pulsante secondario", "default": "Scopri le guide gratuite" },
+    { "type": "url", "id": "hero_secondary_url", "label": "Link pulsante secondario" },
+
+    { "type": "header", "content": "Valutazione (facoltativa)" },
+    { "type": "text", "id": "rating_value", "label": "Valutazione (es. 4.0)" },
+    { "type": "text", "id": "rating_count", "label": "Numero recensioni (es. 100+)" },
+    { "type": "url", "id": "rating_url", "label": "Link alla pagina recensioni" },
+
+    { "type": "header", "content": "Sezione piattaforme" },
+    { "type": "text", "id": "platforms_title", "label": "Titolo", "default": "Un servizio per ogni piattaforma" },
+    { "type": "textarea", "id": "platforms_sub", "label": "Sottotitolo" },
+
+    { "type": "header", "content": "Sezione come funziona" },
+    { "type": "text", "id": "steps_title", "label": "Titolo", "default": "Come funziona" },
+
+    { "type": "header", "content": "Statistiche (facoltative, fino a 4)" },
+    { "type": "text", "id": "stat_1_value", "label": "Valore 1" },
+    { "type": "text", "id": "stat_1_label", "label": "Etichetta 1" },
+    { "type": "text", "id": "stat_2_value", "label": "Valore 2" },
+    { "type": "text", "id": "stat_2_label", "label": "Etichetta 2" },
+    { "type": "text", "id": "stat_3_value", "label": "Valore 3" },
+    { "type": "text", "id": "stat_3_label", "label": "Etichetta 3" },
+    { "type": "text", "id": "stat_4_value", "label": "Valore 4" },
+    { "type": "text", "id": "stat_4_label", "label": "Etichetta 4" },
+
+    { "type": "header", "content": "Confronto" },
+    { "type": "text", "id": "compare_title", "label": "Titolo", "default": "Perché non un bot automatico" },
+
+    { "type": "header", "content": "Guide gratuite" },
+    { "type": "blog", "id": "guides_blog", "label": "Blog da mostrare (default: guide)" },
+
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_title", "label": "Titolo", "default": "Domande frequenti" },
+    { "type": "url", "id": "faq_url", "label": "Link a tutte le FAQ" },
+
+    { "type": "header", "content": "CTA finale" },
+    { "type": "text", "id": "final_heading", "label": "Titolo", "default": "Pronto a iniziare?" },
+    { "type": "textarea", "id": "final_text", "label": "Testo", "default": "Richiedi un servizio su misura o scrivici in chat per qualsiasi dubbio." }
+  ],
+  "blocks": [
+    {
+      "type": "platform",
+      "name": "Piattaforma",
+      "settings": [
+        { "type": "text", "id": "mark", "label": "Sigla (es. IG)", "default": "IG" },
+        { "type": "text", "id": "title", "label": "Nome", "default": "Instagram" },
+        { "type": "text", "id": "text", "label": "Descrizione breve" },
+        { "type": "collection", "id": "collection", "label": "Collezione collegata" }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Passaggio",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titolo" },
+        { "type": "textarea", "id": "text", "label": "Testo" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Domanda",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Domanda" },
+        { "type": "textarea", "id": "answer", "label": "Risposta" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home page",
+      "blocks": [
+        { "type": "platform" },
+        { "type": "platform" },
+        { "type": "platform" },
+        { "type": "platform" },
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}
