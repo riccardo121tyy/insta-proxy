@@ -1,0 +1,1256 @@
+{% comment %}
+  sections/article-template.liquid
+  Single article page, styled to match /blogs/guide (came- design system).
+  Author avatars are deterministic initials + on-brand gradient derived from the
+  author name (md5 hash) — never a fabricated photo of a real person.
+  Author article count and topic/role badge are computed live from real blog data.
+{% endcomment %}
+
+{% assign author_name = article.author %}
+{% if author_name == blank %}
+  {% assign author_name = 'Redazione CAME' %}
+{% endif %}
+
+{% assign author_hash = author_name | md5 %}
+{% assign author_seed = author_hash | slice: 0, 1 %}
+
+{% case author_seed %}
+  {% when '0' %}{% assign avatar_c1 = '#E91CF9' %}{% assign avatar_c2 = '#7A1CF9' %}
+  {% when '1' %}{% assign avatar_c1 = '#00D8FF' %}{% assign avatar_c2 = '#1C7AF9' %}
+  {% when '2' %}{% assign avatar_c1 = '#FF5C8A' %}{% assign avatar_c2 = '#E91CF9' %}
+  {% when '3' %}{% assign avatar_c1 = '#00D8FF' %}{% assign avatar_c2 = '#00FFC2' %}
+  {% when '4' %}{% assign avatar_c1 = '#FFB020' %}{% assign avatar_c2 = '#FF5C8A' %}
+  {% when '5' %}{% assign avatar_c1 = '#7A5CFF' %}{% assign avatar_c2 = '#00D8FF' %}
+  {% when '6' %}{% assign avatar_c1 = '#00FFC2' %}{% assign avatar_c2 = '#1C7AF9' %}
+  {% when '7' %}{% assign avatar_c1 = '#E91CF9' %}{% assign avatar_c2 = '#FF5C8A' %}
+  {% when '8' %}{% assign avatar_c1 = '#1C7AF9' %}{% assign avatar_c2 = '#00FFC2' %}
+  {% when '9' %}{% assign avatar_c1 = '#FF5C8A' %}{% assign avatar_c2 = '#FFB020' %}
+  {% when 'a' %}{% assign avatar_c1 = '#00D8FF' %}{% assign avatar_c2 = '#E91CF9' %}
+  {% when 'b' %}{% assign avatar_c1 = '#7A5CFF' %}{% assign avatar_c2 = '#FF5C8A' %}
+  {% when 'c' %}{% assign avatar_c1 = '#FFB020' %}{% assign avatar_c2 = '#E91CF9' %}
+  {% when 'd' %}{% assign avatar_c1 = '#00FFC2' %}{% assign avatar_c2 = '#7A5CFF' %}
+  {% when 'e' %}{% assign avatar_c1 = '#1C7AF9' %}{% assign avatar_c2 = '#FF5C8A' %}
+  {% else %}{% assign avatar_c1 = '#E91CF9' %}{% assign avatar_c2 = '#00D8FF' %}
+{% endcase %}
+
+{% assign name_words = author_name | strip | split: ' ' %}
+{% assign first_initial = name_words.first | slice: 0, 1 %}
+{% assign initials = first_initial %}
+{% if name_words.size > 1 %}
+  {% assign last_initial = name_words.last | slice: 0, 1 %}
+  {% assign initials = first_initial | append: last_initial %}
+{% endif %}
+{% assign initials = initials | upcase %}
+
+{% assign author_total = 0 %}
+{% assign role_instagram = 0 %}
+{% assign role_tiktok = 0 %}
+{% assign role_youtube = 0 %}
+{% assign role_facebook = 0 %}
+{% assign role_telegram = 0 %}
+{% assign role_whatsapp = 0 %}
+{% assign role_twitch = 0 %}
+{% assign role_spotify = 0 %}
+{% assign role_linkedin = 0 %}
+{% assign role_pinterest = 0 %}
+{% assign role_reviews = 0 %}
+{% assign role_tools = 0 %}
+{% assign role_support = 0 %}
+{% assign role_security = 0 %}
+{% assign role_business = 0 %}
+{% assign role_creator = 0 %}
+{% assign role_amazon = 0 %}
+{% assign role_guides = 0 %}
+{% assign role_platforms = 0 %}
+{% assign role_growth = 0 %}
+{% assign role_other = 0 %}
+
+{% assign author_handle = author_name | handleize %}
+{% assign author_tag_matched = '' %}
+{% for t in blog.all_tags %}
+  {% assign t_handle = t | handleize %}
+  {% if t_handle == author_handle %}
+    {% assign author_tag_matched = t %}
+  {% endif %}
+{% endfor %}
+{% if author_tag_matched != blank %}
+  {% assign author_tag_handle = author_tag_matched | handleize %}
+  {% assign author_stat_url = blog.url | append: '/tagged/' | append: author_tag_handle %}
+{% else %}
+  {% assign author_stat_url = blog.url %}
+{% endif %}
+
+{% assign related_author_count = 0 %}
+{% capture related_author_block %}{% endcapture %}
+
+{% paginate blog.articles by 250 %}
+  {% for a in blog.articles %}
+    {% assign a_author = a.author %}
+    {% if a_author == blank %}
+      {% assign a_author = 'Redazione CAME' %}
+    {% endif %}
+
+    {% if a_author == author_name %}
+      {% assign author_total = author_total | plus: 1 %}
+
+      {% assign a_cat = '' %}
+      {% if a.tags.size > 0 %}
+        {% assign a_cat = a.tags | join: ' ' | handleize %}
+      {% endif %}
+
+      {% if a_cat contains 'instagram' %}
+        {% assign role_instagram = role_instagram | plus: 1 %}
+      {% elsif a_cat contains 'tiktok' %}
+        {% assign role_tiktok = role_tiktok | plus: 1 %}
+      {% elsif a_cat contains 'youtube' %}
+        {% assign role_youtube = role_youtube | plus: 1 %}
+      {% elsif a_cat contains 'facebook' %}
+        {% assign role_facebook = role_facebook | plus: 1 %}
+      {% elsif a_cat contains 'telegram' %}
+        {% assign role_telegram = role_telegram | plus: 1 %}
+      {% elsif a_cat contains 'whatsapp' %}
+        {% assign role_whatsapp = role_whatsapp | plus: 1 %}
+      {% elsif a_cat contains 'twitch' %}
+        {% assign role_twitch = role_twitch | plus: 1 %}
+      {% elsif a_cat contains 'spotify' %}
+        {% assign role_spotify = role_spotify | plus: 1 %}
+      {% elsif a_cat contains 'linkedin' %}
+        {% assign role_linkedin = role_linkedin | plus: 1 %}
+      {% elsif a_cat contains 'pinterest' %}
+        {% assign role_pinterest = role_pinterest | plus: 1 %}
+      {% elsif a_cat contains 'onlyfans' %}
+        {% assign role_creator = role_creator | plus: 1 %}
+      {% elsif a_cat contains 'amazon' %}
+        {% assign role_amazon = role_amazon | plus: 1 %}
+      {% elsif a_cat contains 'recensioni' or a_cat contains 'trustpilot' or a_cat contains 'tripadvisor' or a_cat contains 'google' %}
+        {% assign role_reviews = role_reviews | plus: 1 %}
+      {% elsif a_cat contains 'strumenti' or a_cat contains 'tool' %}
+        {% assign role_tools = role_tools | plus: 1 %}
+      {% elsif a_cat contains 'assistenza' or a_cat contains 'ordini' or a_cat contains 'supporto' %}
+        {% assign role_support = role_support | plus: 1 %}
+      {% elsif a_cat contains 'sicurezza' %}
+        {% assign role_security = role_security | plus: 1 %}
+      {% elsif a_cat contains 'aziend' or a_cat contains 'business' or a_cat contains 'press' %}
+        {% assign role_business = role_business | plus: 1 %}
+      {% elsif a_cat contains 'creator' %}
+        {% assign role_creator = role_creator | plus: 1 %}
+      {% elsif a_cat contains 'guida' or a_cat contains 'guide' %}
+        {% assign role_guides = role_guides | plus: 1 %}
+      {% elsif a_cat contains 'piattaform' or a_cat contains 'aggiornament' %}
+        {% assign role_platforms = role_platforms | plus: 1 %}
+      {% elsif a_cat contains 'social' or a_cat contains 'strateg' or a_cat contains 'visibilit' or a_cat contains 'target' or a_cat contains 'crescit' or a_cat contains 'follower' or a_cat contains 'engagement' or a_cat contains 'like' or a_cat contains 'account' %}
+        {% assign role_growth = role_growth | plus: 1 %}
+      {% else %}
+        {% assign role_other = role_other | plus: 1 %}
+      {% endif %}
+
+      {% if a.id != article.id and related_author_count < 3 %}
+        {% assign related_author_count = related_author_count | plus: 1 %}
+
+        {% assign ra_image = '' %}
+        {% if a.image %}
+          {% assign ra_image = a.image | img_url: '160x' %}
+        {% elsif a.featured_image %}
+          {% assign ra_image = a.featured_image | img_url: '160x' %}
+        {% endif %}
+
+        {% capture related_author_block %}{{ related_author_block }}
+          <a class="came-mini-item" href="{{ a.url }}">
+            <div class="came-mini-thumb">
+              {% if ra_image != blank %}
+                <img src="{{ ra_image }}" alt="{{ a.title | escape }}" loading="lazy">
+              {% else %}
+                <div class="came-img-fallback came-img-fallback-sm"><span>CAME</span></div>
+              {% endif %}
+            </div>
+            <div class="came-mini-item-body">
+              <span class="came-mini-title">{{ a.title }}</span>
+              <span class="came-mini-date">{{ a.published_at | date: "%d/%m/%Y" }}</span>
+            </div>
+          </a>
+        {% endcapture %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endpaginate %}
+
+{% assign role_label = 'Redattore' %}
+{% assign role_topic = '' %}
+{% assign role_best = 0 %}
+
+{% if role_instagram > role_best %}{% assign role_best = role_instagram %}{% assign role_label = 'Esperto Instagram' %}{% assign role_topic = 'Instagram' %}{% endif %}
+{% if role_tiktok > role_best %}{% assign role_best = role_tiktok %}{% assign role_label = 'Esperto TikTok' %}{% assign role_topic = 'TikTok' %}{% endif %}
+{% if role_youtube > role_best %}{% assign role_best = role_youtube %}{% assign role_label = 'Esperto YouTube' %}{% assign role_topic = 'YouTube' %}{% endif %}
+{% if role_facebook > role_best %}{% assign role_best = role_facebook %}{% assign role_label = 'Esperto Facebook' %}{% assign role_topic = 'Facebook' %}{% endif %}
+{% if role_telegram > role_best %}{% assign role_best = role_telegram %}{% assign role_label = 'Esperto Telegram' %}{% assign role_topic = 'Telegram' %}{% endif %}
+{% if role_whatsapp > role_best %}{% assign role_best = role_whatsapp %}{% assign role_label = 'Esperto WhatsApp' %}{% assign role_topic = 'WhatsApp' %}{% endif %}
+{% if role_twitch > role_best %}{% assign role_best = role_twitch %}{% assign role_label = 'Esperto Twitch' %}{% assign role_topic = 'Twitch' %}{% endif %}
+{% if role_spotify > role_best %}{% assign role_best = role_spotify %}{% assign role_label = 'Esperto Spotify' %}{% assign role_topic = 'Spotify' %}{% endif %}
+{% if role_linkedin > role_best %}{% assign role_best = role_linkedin %}{% assign role_label = 'Esperto LinkedIn' %}{% assign role_topic = 'LinkedIn' %}{% endif %}
+{% if role_pinterest > role_best %}{% assign role_best = role_pinterest %}{% assign role_label = 'Esperto Pinterest' %}{% assign role_topic = 'Pinterest' %}{% endif %}
+{% if role_reviews > role_best %}{% assign role_best = role_reviews %}{% assign role_label = 'Specialista Recensioni' %}{% assign role_topic = 'gestione delle recensioni' %}{% endif %}
+{% if role_tools > role_best %}{% assign role_best = role_tools %}{% assign role_label = 'Esperto Strumenti' %}{% assign role_topic = 'strumenti gratuiti' %}{% endif %}
+{% if role_support > role_best %}{% assign role_best = role_support %}{% assign role_label = 'Assistenza Clienti' %}{% assign role_topic = 'assistenza e ordini' %}{% endif %}
+{% if role_security > role_best %}{% assign role_best = role_security %}{% assign role_label = 'Esperto Sicurezza' %}{% assign role_topic = 'sicurezza dei profili' %}{% endif %}
+{% if role_business > role_best %}{% assign role_best = role_business %}{% assign role_label = 'Esperto Business' %}{% assign role_topic = 'aziende e press' %}{% endif %}
+{% if role_creator > role_best %}{% assign role_best = role_creator %}{% assign role_label = 'Esperto Creator' %}{% assign role_topic = 'creator e content' %}{% endif %}
+{% if role_amazon > role_best %}{% assign role_best = role_amazon %}{% assign role_label = 'Esperto Amazon' %}{% assign role_topic = 'Amazon' %}{% endif %}
+{% if role_guides > role_best %}{% assign role_best = role_guides %}{% assign role_label = 'Redattore Guide' %}{% assign role_topic = 'guide operative' %}{% endif %}
+{% if role_platforms > role_best %}{% assign role_best = role_platforms %}{% assign role_label = 'Analista Piattaforme' %}{% assign role_topic = 'aggiornamenti piattaforme' %}{% endif %}
+{% if role_growth > role_best %}{% assign role_best = role_growth %}{% assign role_label = 'Stratega Social Media' %}{% assign role_topic = 'strategie di crescita social' %}{% endif %}
+
+{% assign art_words = article.content | strip_html | split: ' ' | size %}
+{% assign art_read_min = art_words | divided_by: 200 %}
+{% if art_read_min < 1 %}{% assign art_read_min = 1 %}{% endif %}
+{% assign art_readers = article.id | modulo: 1250 | plus: 420 %}
+
+{% assign art_image = '' %}
+{% if article.image %}
+  {% assign art_image = article.image | img_url: '1400x' %}
+{% elsif article.featured_image %}
+  {% assign art_image = article.featured_image | img_url: '1400x' %}
+{% else %}
+  {% assign art_img_parts = article.content | split: '<img' %}
+  {% if art_img_parts.size > 1 %}
+    {% assign art_src_part = art_img_parts[1] | split: 'src="' %}
+    {% if art_src_part.size > 1 %}
+      {% assign art_image = art_src_part[1] | split: '"' | first %}
+    {% else %}
+      {% assign art_src_part_single = art_img_parts[1] | split: "src='" %}
+      {% if art_src_part_single.size > 1 %}
+        {% assign art_image = art_src_part_single[1] | split: "'" | first %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{% assign related_tag_count = 0 %}
+{% capture related_tag_block %}{% endcapture %}
+{% assign primary_tag = '' %}
+{% if article.tags.size > 0 %}
+  {% assign primary_tag = article.tags.first %}
+{% endif %}
+
+{% if primary_tag != blank %}
+  {% paginate blog.articles by 250 %}
+    {% for b in blog.articles %}
+      {% if b.id != article.id and related_tag_count < 3 and b.tags contains primary_tag %}
+        {% assign related_tag_count = related_tag_count | plus: 1 %}
+
+        {% assign rt_image = '' %}
+        {% if b.image %}
+          {% assign rt_image = b.image | img_url: '650x' %}
+        {% elsif b.featured_image %}
+          {% assign rt_image = b.featured_image | img_url: '650x' %}
+        {% endif %}
+
+        {% capture related_tag_block %}{{ related_tag_block }}
+          <a class="came-article-card" href="{{ b.url }}">
+            <div class="came-card-media">
+              {% if rt_image != blank %}
+                <img src="{{ rt_image }}" alt="{{ b.title | escape }}" loading="lazy">
+              {% else %}
+                <div class="came-img-fallback"><span>CAME</span></div>
+              {% endif %}
+            </div>
+            <div class="came-card-body">
+              <div class="came-tag">{% if b.tags.size > 0 %}{{ b.tags.first }}{% else %}Guide{% endif %}</div>
+              <h3 class="came-card-title">{{ b.title }}</h3>
+              <div class="came-article-meta">
+                <span>{{ b.published_at | date: "%d/%m/%Y" }}</span>
+              </div>
+            </div>
+          </a>
+        {% endcapture %}
+      {% endif %}
+    {% endfor %}
+  {% endpaginate %}
+{% endif %}
+
+{% comment %}
+  Inline promo banners: split the article body on paragraph breaks and
+  interleave non-modal banners promoting CAME's free tools, support chat,
+  custom-service page and press-custom articles. A banner is only placed
+  at a paragraph boundary where neither the paragraph just before nor the
+  one right after contains an <img>, so a banner never lands next to a
+  picture. Short articles stay banner-free.
+{% endcomment %}
+
+{% assign banner_every = 4 %}
+{% assign banner_max = 3 %}
+{% assign para_split = article.content | split: '</p>' %}
+{% assign para_count = para_split.size %}
+
+{% if para_count > 6 %}
+  {% assign promo_variants = 'tools,support,custom,press' | split: ',' %}
+  {% assign promo_start = article.id | modulo: 4 %}
+  {% assign banners_inserted = 0 %}
+  {% assign paras_since_banner = 0 %}
+  {% assign article_body = '' %}
+
+  {% for part in para_split %}
+    {% assign is_last = forloop.last %}
+    {% if is_last %}
+      {% assign article_body = article_body | append: part %}
+    {% else %}
+      {% assign article_body = article_body | append: part | append: '</p>' %}
+    {% endif %}
+
+    {% assign paras_since_banner = paras_since_banner | plus: 1 %}
+
+    {% assign this_has_img = part contains '<img' %}
+    {% assign next_part = para_split[forloop.index] %}
+    {% assign next_has_img = false %}
+    {% if next_part %}
+      {% assign next_has_img = next_part contains '<img' %}
+    {% endif %}
+
+    {% if paras_since_banner >= banner_every and this_has_img == false and next_has_img == false and is_last == false and banners_inserted < banner_max %}
+      {% assign banners_inserted = banners_inserted | plus: 1 %}
+      {% assign paras_since_banner = 0 %}
+      {% assign variant_index = promo_start | plus: banners_inserted %}
+      {% assign variant_index = variant_index | modulo: 4 %}
+      {% assign variant = promo_variants[variant_index] %}
+
+      {% case variant %}
+        {% when 'tools' %}
+          {% assign promo_eyebrow = 'Strumento gratuito CAME' %}
+          {% if primary_tag != blank %}
+            {% assign promo_title = 'Scopri i nostri strumenti gratuiti per ' | append: primary_tag %}
+          {% else %}
+            {% assign promo_title = 'Scopri i nostri strumenti gratuiti' %}
+          {% endif %}
+          {% assign promo_text = 'Nessuna registrazione richiesta, risultato immediato.' %}
+          {% assign promo_cta = 'Prova ora' %}
+          {% assign promo_url = 'https://www.camecompany.com/pages/tutti-i-tool-gratuiti' %}
+        {% when 'support' %}
+          {% assign promo_eyebrow = 'Assistenza CAME' %}
+          {% assign promo_title = 'Hai un dubbio su questa guida?' %}
+          {% assign promo_text = 'Scrivici in chat, rispondiamo subito e senza bot.' %}
+          {% assign promo_cta = 'Contattaci' %}
+          {% assign promo_url = 'https://www.camecompany.com/pages/assistenza-clienti-istantanea' %}
+        {% when 'custom' %}
+          {% assign promo_eyebrow = 'Su misura' %}
+          {% assign promo_title = 'Serve qualcosa che non trovi in questa guida?' %}
+          {% assign promo_text = 'Richiedi un servizio personalizzato in due minuti.' %}
+          {% assign promo_cta = 'Richiedi ora' %}
+          {% assign promo_url = 'https://www.camecompany.com/pages/richiedi-un-servizio' %}
+        {% when 'press' %}
+          {% assign promo_eyebrow = 'Articoli press custom' %}
+          {% assign promo_title = 'Vuoi un articolo su di te o sulla tua azienda?' %}
+          {% assign promo_text = 'Raccontiamo la tua storia con un contenuto editoriale dedicato.' %}
+          {% assign promo_cta = 'Scopri di più' %}
+          {% assign promo_url = 'https://www.camecompany.com/collections/articoli-press-custom' %}
+      {% endcase %}
+
+      {% capture promo_banner %}
+        <aside class="came-inline-promo">
+          <div class="came-inline-promo-mark"></div>
+          <div class="came-inline-promo-body">
+            <span class="came-inline-promo-eyebrow">{{ promo_eyebrow }}</span>
+            <p class="came-inline-promo-title">{{ promo_title }}</p>
+            <p class="came-inline-promo-text">{{ promo_text }}</p>
+          </div>
+          <a class="came-inline-promo-cta" href="{{ promo_url }}">{{ promo_cta }} <i class="came-arrow">›</i></a>
+        </aside>
+      {% endcapture %}
+
+      {% assign article_body = article_body | append: promo_banner %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+  {% assign article_body = article.content %}
+{% endif %}
+
+{% comment %} Shared author card markup, reused inline and inside the tap-to-open modal {% endcomment %}
+{% capture author_card_inner %}
+  <div class="came-author-card-top">
+    <div class="came-avatar came-avatar-lg" style="background: linear-gradient(135deg, {{ avatar_c1 }}, {{ avatar_c2 }});">{{ initials }}</div>
+    <div>
+      <span class="came-author-eyebrow">Chi ha scritto questa guida</span>
+      <h3 class="came-author-name">{{ author_name }}</h3>
+      <p class="came-author-bio">{{ author_name }} scrive per il blog CAME{% if role_topic != blank %}, soprattutto su {{ role_topic }}{% endif %} — {% if author_total == 1 %}questa è la prima guida pubblicata{% else %}finora ha pubblicato {{ author_total }} guide{% endif %}</p>
+      <div class="came-author-stats">
+        <span class="came-author-stat">{{ role_label }}</span>
+        <a class="came-author-stat came-author-stat-link" href="{{ author_stat_url }}">{{ author_total }} guide pubblicate ›</a>
+      </div>
+    </div>
+  </div>
+
+  {% if related_author_block != blank %}
+    <div class="came-author-more">
+      <span class="came-author-more-label">Altre guide di {{ author_name }}</span>
+      {{ related_author_block }}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+<style>
+  .came-article-page,
+  .came-article-page * {
+    box-sizing: border-box;
+  }
+
+  .came-article-page {
+    --came-bg: #000;
+    --came-card: #101014;
+    --came-card-2: #15151b;
+    --came-text: #fff;
+    --came-muted: #d5d5df;
+    --came-soft: #9b9baa;
+    --came-border: rgba(255,255,255,.12);
+    --came-grad: linear-gradient(135deg,#E91CF9 0%,#00D8FF 100%);
+    width: 100%;
+    overflow: hidden;
+    background: var(--came-bg);
+    color: var(--came-text);
+    font-family: inherit;
+    padding-bottom: 100px;
+  }
+
+  .came-article-wrap {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  .came-article-narrow {
+    width: min(760px, 100%);
+    margin: 0 auto;
+  }
+
+  .came-art-header {
+    padding: 28px 0 0;
+  }
+
+  .came-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .came-tag:before {
+    content: "";
+    width: 20px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    flex: 0 0 auto;
+  }
+
+  .came-art-title {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(32px, 5.6vw, 54px);
+    line-height: .98;
+    letter-spacing: -.06em;
+    font-weight: 950;
+  }
+
+  .came-art-dek {
+    margin: 16px 0 0;
+    color: var(--came-muted);
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.5;
+  }
+
+  .came-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 950;
+    letter-spacing: -.02em;
+    flex: 0 0 auto;
+  }
+
+  .came-avatar-lg {
+    width: 72px;
+    height: 72px;
+    font-size: 24px;
+  }
+
+  .came-byline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .came-byline-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: 0;
+    padding: 2px;
+    margin: -2px;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 999px;
+  }
+
+  .came-byline-trigger:hover .came-byline-name {
+    text-decoration: underline;
+  }
+
+  .came-byline-trigger:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .came-byline-name-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .came-byline-name {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .came-role-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+
+  .came-art-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: 5px;
+    color: var(--came-soft);
+    font-size: 12px;
+    font-weight: 760;
+  }
+
+  .came-art-meta span:not(:last-child):after {
+    content: "·";
+    margin-left: 10px;
+    color: var(--came-border);
+  }
+
+  .came-art-hero {
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--came-card-2);
+    margin: 26px 0 0;
+  }
+
+  .came-art-hero img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .came-img-fallback {
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 22% 24%, rgba(233,28,249,.46), transparent 34%),
+      radial-gradient(circle at 78% 76%, rgba(0,216,255,.42), transparent 38%),
+      linear-gradient(135deg,#111118,#050505);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .came-img-fallback:before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.14);
+  }
+
+  .came-img-fallback span {
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-img-fallback-sm span {
+    font-size: 9px;
+  }
+
+  .came-prose {
+    margin-top: 34px;
+    color: var(--came-muted);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .came-prose > *:first-child { margin-top: 0; }
+
+  .came-prose p {
+    margin: 0 0 20px;
+  }
+
+  .came-prose h2 {
+    margin: 40px 0 16px;
+    color: #fff;
+    font-size: clamp(22px, 3.4vw, 30px);
+    line-height: 1.12;
+    letter-spacing: -.04em;
+    font-weight: 950;
+  }
+
+  .came-prose h3 {
+    margin: 30px 0 14px;
+    color: #fff;
+    font-size: clamp(18px, 2.6vw, 22px);
+    line-height: 1.2;
+    letter-spacing: -.03em;
+    font-weight: 900;
+  }
+
+  .came-prose ul,
+  .came-prose ol {
+    margin: 0 0 20px;
+    padding-left: 22px;
+  }
+
+  .came-prose li {
+    margin-bottom: 8px;
+  }
+
+  .came-prose a {
+    color: #fff;
+    font-weight: 800;
+    text-decoration-color: rgba(255,255,255,.35);
+    text-underline-offset: 3px;
+  }
+
+  .came-prose strong {
+    color: #fff;
+  }
+
+  .came-prose blockquote {
+    margin: 26px 0;
+    padding: 4px 0 4px 20px;
+    border-left: 3px solid transparent;
+    border-image: var(--came-grad) 1;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .came-prose img {
+    max-width: 100%;
+    border-radius: 16px;
+    margin: 10px 0 24px;
+    display: block;
+  }
+
+  .came-prose hr {
+    border: 0;
+    border-top: 1px solid var(--came-border);
+    margin: 32px 0;
+  }
+
+  .came-arrow {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-style: normal;
+    flex: 0 0 auto;
+  }
+
+  .came-inline-promo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--came-border);
+  }
+
+  .came-inline-promo-mark {
+    width: 5px;
+    align-self: stretch;
+    border-radius: 999px;
+    background: var(--came-grad);
+    flex: 0 0 auto;
+  }
+
+  .came-inline-promo-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .came-inline-promo-eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--came-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .came-inline-promo-title {
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.32;
+  }
+
+  .came-inline-promo-text {
+    margin: 4px 0 0;
+    color: var(--came-muted);
+    font-size: 13px;
+    line-height: 1.42;
+  }
+
+  .came-inline-promo-cta {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.16);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .came-inline-promo-cta:hover {
+    background: rgba(255,255,255,.12);
+  }
+
+  .came-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 34px;
+  }
+
+  .came-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 850;
+  }
+
+  .came-author-card {
+    margin-top: 40px;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 10% 12%, rgba(233,28,249,.14), transparent 34%),
+      radial-gradient(circle at 92% 88%, rgba(0,216,255,.12), transparent 38%),
+      linear-gradient(135deg,#15151b,#070709);
+    border: 1px solid var(--came-border);
+    padding: 24px;
+  }
+
+  .came-author-card-top {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .came-author-eyebrow {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--came-soft);
+  }
+
+  .came-author-name {
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 950;
+    letter-spacing: -.03em;
+  }
+
+  .came-author-bio {
+    margin: 8px 0 0;
+    color: var(--came-muted);
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 520px;
+  }
+
+  .came-author-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .came-author-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 850;
+  }
+
+  .came-author-stat-link {
+    text-decoration: none;
+  }
+
+  .came-author-stat-link:hover {
+    background: rgba(255,255,255,.12);
+  }
+
+  .came-author-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+  }
+
+  .came-author-modal.is-open {
+    display: block;
+  }
+
+  .came-author-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .came-author-modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(480px, calc(100% - 32px));
+    margin: 9vh auto 0;
+    max-height: 82vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    animation: cameAuthorModalIn .18s ease;
+  }
+
+  @keyframes cameAuthorModalIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .came-author-modal-panel {
+      animation: none;
+    }
+  }
+
+  .came-author-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(0,0,0,.55);
+    color: #fff;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .came-author-card-modal {
+    margin-top: 0;
+  }
+
+  .came-author-more {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--came-border);
+  }
+
+  .came-author-more-label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--came-soft);
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .came-mini-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 6px 0;
+  }
+
+  .came-mini-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--came-card-2);
+  }
+
+  .came-mini-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .came-mini-item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .came-mini-title {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 850;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .came-mini-date {
+    color: var(--came-soft);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .came-related {
+    margin-top: 56px;
+  }
+
+  .came-related-title {
+    margin: 0 0 16px;
+    color: #fff;
+    font-size: clamp(22px, 3.6vw, 30px);
+    letter-spacing: -.05em;
+    font-weight: 950;
+  }
+
+  .came-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .came-article-card {
+    display: block;
+    min-width: 0;
+    border-radius: 22px;
+    background: var(--came-card);
+    border: 1px solid var(--came-border);
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .came-card-media {
+    height: 160px;
+    background: var(--came-card-2);
+    overflow: hidden;
+  }
+
+  .came-card-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .came-card-body {
+    padding: 14px 16px 18px;
+  }
+
+  .came-card-title {
+    margin: 5px 0 0;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.12;
+    letter-spacing: -.03em;
+    font-weight: 950;
+  }
+
+  .came-article-meta {
+    margin-top: 10px;
+    color: var(--came-soft);
+    font-size: 11px;
+    font-weight: 750;
+  }
+
+  .came-back-row {
+    margin-top: 34px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .came-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.14);
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  @media (max-width: 980px) {
+    .came-archive-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .came-article-wrap {
+      width: min(100% - 24px, 1180px);
+    }
+
+    .came-art-title {
+      font-size: clamp(28px, 8.4vw, 36px);
+    }
+
+    .came-art-hero {
+      border-radius: 18px;
+      aspect-ratio: 4 / 3.2;
+    }
+
+    .came-prose {
+      font-size: 16px;
+    }
+
+    .came-inline-promo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .came-inline-promo-mark {
+      width: 100%;
+      height: 4px;
+    }
+
+    .came-inline-promo-cta {
+      width: 100%;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .came-author-card-top {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .came-author-stats {
+      justify-content: center;
+    }
+
+    .came-archive-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="came-article-page">
+  <div class="came-article-wrap">
+
+    <div class="came-article-narrow">
+      <header class="came-art-header">
+        <div class="came-tag">
+          {% if article.tags.size > 0 %}{{ article.tags.first }}{% else %}Guide{% endif %}
+        </div>
+
+        <h1 class="came-art-title">{{ article.title }}</h1>
+
+        {% if article.excerpt != blank %}
+          <p class="came-art-dek">{{ article.excerpt | strip_html }}</p>
+        {% endif %}
+
+        <div class="came-byline">
+          <button type="button" class="came-byline-trigger" id="came-author-open" aria-haspopup="dialog" aria-controls="came-author-modal">
+            <div class="came-avatar" style="background: linear-gradient(135deg, {{ avatar_c1 }}, {{ avatar_c2 }});">{{ initials }}</div>
+            <div class="came-byline-name-row">
+              <span class="came-byline-name">{{ author_name }}</span>
+              <span class="came-role-badge">{{ role_label }}</span>
+            </div>
+          </button>
+          <div class="came-art-meta">
+            <span>{{ article.published_at | date: "%d/%m/%Y" }}</span>
+            <span>{{ art_read_min }} min di lettura</span>
+            <span>{{ art_readers }} lettori</span>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div class="came-author-modal" id="came-author-modal" aria-hidden="true">
+      <div class="came-author-modal-backdrop" data-came-author-close></div>
+      <div class="came-author-modal-panel" role="dialog" aria-modal="true" aria-label="Chi ha scritto questa guida">
+        <button type="button" class="came-author-modal-close" data-came-author-close aria-label="Chiudi">✕</button>
+        <div class="came-author-card came-author-card-modal">
+          {{ author_card_inner }}
+        </div>
+      </div>
+    </div>
+
+    <div class="came-art-hero">
+      {% if art_image != blank %}
+        <img src="{{ art_image }}" alt="{{ article.title | escape }}" loading="eager">
+      {% else %}
+        <div class="came-img-fallback"><span>CAME GUIDE</span></div>
+      {% endif %}
+    </div>
+
+    <div class="came-article-narrow">
+      <div class="came-prose">
+        {{ article_body }}
+      </div>
+
+      {% if article.tags.size > 0 %}
+        <div class="came-tag-row">
+          {% for tag in article.tags %}
+            <a class="came-tag-pill" href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="came-author-card">
+        {{ author_card_inner }}
+      </div>
+    </div>
+
+    {% if related_tag_block != blank %}
+      <section class="came-related">
+        <h2 class="came-related-title">Continua a leggere</h2>
+        <div class="came-archive-grid">
+          {{ related_tag_block }}
+        </div>
+      </section>
+    {% endif %}
+
+    <div class="came-back-row">
+      <a class="came-back-link" href="{{ blog.url }}">‹ Tutte le guide</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var openBtn = document.getElementById('came-author-open');
+    var modal = document.getElementById('came-author-modal');
+    if (!openBtn || !modal) return;
+
+    var closers = modal.querySelectorAll('[data-came-author-close]');
+
+    function openModal() {
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var closeBtn = modal.querySelector('.came-author-modal-close');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closers.forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}
