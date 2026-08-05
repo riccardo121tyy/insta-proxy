@@ -110,6 +110,14 @@
     outline: none;
   }
 
+  .came-coll-search input:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0,216,255,.4);
+  }
+
+  .came-sort-select:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0,216,255,.4);
+  }
+
   .came-coll-search input::placeholder {
     color: rgba(255,255,255,.5);
   }
@@ -457,10 +465,15 @@
           <input type="search" placeholder="Cerca in questa pagina" data-came-product-search>
         </label>
 
+        {% assign active_sort = collection.sort_by %}
+        {% if active_sort == blank %}
+          {% assign active_sort = collection.default_sort_by %}
+        {% endif %}
+
         <select class="came-sort-select" data-came-sort onchange="location.href=this.value">
           {% for option in collection.sort_options %}
             {% assign option_url = collection.url | append: '?sort_by=' | append: option.value %}
-            <option value="{{ option_url }}" {% if collection.sort_by == option.value or option.value == collection.default_sort_by and collection.sort_by == blank %}selected{% endif %}>{{ option.name }}</option>
+            <option value="{{ option_url }}" {% if option.value == active_sort %}selected{% endif %}>{{ option.name }}</option>
           {% endfor %}
         </select>
 

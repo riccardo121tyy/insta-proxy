@@ -7,6 +7,16 @@
   editor is hidden rather than shown as a placeholder.
 {% endcomment %}
 
+{% assign first_channel_url = '' %}
+{% assign first_channel_cta = '' %}
+{% for block in section.blocks %}
+  {% if block.type == 'channel' and first_channel_url == '' and block.settings.url != blank %}
+    {% assign first_channel_url = block.settings.url %}
+    {% assign first_channel_cta = block.settings.cta | default: 'Scrivici' %}
+    {% assign first_channel_cta = first_channel_cta | append: ' su ' | append: block.settings.title %}
+  {% endif %}
+{% endfor %}
+
 <style>
   .came-support,
   .came-support * {
@@ -88,12 +98,34 @@
     line-height: 1.55;
   }
 
+  .came-hero-actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .came-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    background: var(--came-grad);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
   .came-hours-badge {
     display: inline-flex;
     align-items: center;
     gap: 9px;
     min-height: 40px;
-    margin-top: 24px;
     padding: 0 16px;
     border-radius: 999px;
     background: rgba(255,255,255,.05);
@@ -223,6 +255,63 @@
     color: var(--came-muted);
     font-size: 13.5px;
     line-height: 1.5;
+  }
+
+  .came-prose {
+    max-width: 760px;
+    color: var(--came-muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .came-prose > *:first-child {
+    margin-top: 0;
+  }
+
+  .came-prose p {
+    margin: 0 0 18px;
+  }
+
+  .came-prose h2 {
+    margin: 32px 0 14px;
+    color: #fff;
+    font-size: clamp(20px, 3vw, 26px);
+    letter-spacing: -.035em;
+    font-weight: 950;
+  }
+
+  .came-prose h3 {
+    margin: 26px 0 12px;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: -.025em;
+    font-weight: 900;
+  }
+
+  .came-prose ul,
+  .came-prose ol {
+    margin: 0 0 18px;
+    padding-left: 20px;
+  }
+
+  .came-prose li {
+    margin-bottom: 7px;
+  }
+
+  .came-prose a {
+    color: #fff;
+    font-weight: 800;
+  }
+
+  .came-prose strong {
+    color: #fff;
+  }
+
+  .came-prose img {
+    max-width: 100%;
+    border-radius: 14px;
+    margin: 8px 0 18px;
+    display: block;
   }
 
   .came-faq-list {
@@ -368,8 +457,16 @@
       {% if section.settings.subheading != blank %}
         <p class="came-support-sub">{{ section.settings.subheading }}</p>
       {% endif %}
-      {% if section.settings.hours != blank %}
-        <span class="came-hours-badge">{{ section.settings.hours }}</span>
+
+      {% if first_channel_url != blank or section.settings.hours != blank %}
+        <div class="came-hero-actions-row">
+          {% if first_channel_url != blank %}
+            <a class="came-btn-primary" href="{{ first_channel_url }}">{{ first_channel_cta }} <i class="came-arrow">›</i></a>
+          {% endif %}
+          {% if section.settings.hours != blank %}
+            <span class="came-hours-badge">{{ section.settings.hours }}</span>
+          {% endif %}
+        </div>
       {% endif %}
     </section>
 
@@ -426,7 +523,7 @@
 
     {% if section.settings.page_content and page.content != blank %}
       <section class="came-support-section">
-        <div class="came-prose" style="color:var(--came-muted); font-size:15px; line-height:1.7; max-width:760px;">
+        <div class="came-prose">
           {{ page.content }}
         </div>
       </section>

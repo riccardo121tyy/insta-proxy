@@ -105,13 +105,6 @@
     text-wrap: balance;
   }
 
-  .came-hero-title .came-hero-accent {
-    background: var(--came-grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
   .came-hero-sub {
     margin: 20px 0 0;
     max-width: 620px;
@@ -657,6 +650,10 @@
     outline: none;
     font-size: 14px;
     font-family: inherit;
+  }
+
+  .came-news-form input[type="email"]:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0,216,255,.4);
   }
 
   .came-news-form input[type="email"]::placeholder {
