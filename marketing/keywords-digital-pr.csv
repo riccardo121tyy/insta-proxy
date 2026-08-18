@@ -1,0 +1,25 @@
+cluster,keyword,intent,funnel_stage,volume_tier,notes
+A - Ufficio stampa,ufficio stampa online,commercial investigation,MOFU,alto,
+A - Ufficio stampa,invio comunicati stampa a testate giornalistiche,transactional,MOFU,medio,
+A - Ufficio stampa,comunicato stampa prezzo,transactional,BOFU,alto,pricing-intent page candidate
+A - Ufficio stampa,pubblicare comunicato stampa online,commercial,MOFU,medio,
+A - Ufficio stampa,distribuzione comunicati stampa italia,commercial,MOFU,medio,
+A - Ufficio stampa,come scrivere un comunicato stampa efficace,informational,TOFU,alto,link-earning content
+B - Articoli sponsorizzati,articoli sponsorizzati prezzo,transactional,BOFU,medio,
+B - Articoli sponsorizzati,pubblicare articolo sponsorizzato,transactional,MOFU,medio,
+B - Articoli sponsorizzati,guest post seo italia,commercial,MOFU,medio,
+B - Articoli sponsorizzati,backlink da testate giornalistiche,commercial investigation,TOFU/MOFU,alto,editorial caution: no ranking guarantees in copy
+C - Digital PR,cos'è la digital pr,informational,TOFU,medio,pillar/link magnet
+C - Digital PR,posizionamento google news,informational,TOFU/MOFU,basso,
+C - Digital PR,strategia digital pr pmi,commercial,MOFU,basso,
+D - Report social,audit gratuito instagram,transactional (tool),TOFU lead-gen,alto,requires a working free-audit tool
+D - Report social,report analisi account instagram,commercial investigation,MOFU,medio,
+D - Report social,come leggere insight instagram,informational,TOFU,alto,
+D - Report social,analisi competitor social media,commercial investigation,MOFU,medio,
+D - Report social,audit gratuito instagram,transactional (tool),TOFU lead-gen,alto,LIVE: /pages/analizza-profilo-instagram
+D - Report social,report analisi account instagram,commercial investigation,MOFU,medio,LIVE tools: /pages/analizza-engagement /pages/simulatore-di-crescita-camecompany
+E - Strumenti gratuiti,generatore qr code gratis,transactional (tool),TOFU lead-gen,alto,LIVE: /pages/generatore-qr-code-gratis-illimitato
+E - Strumenti gratuiti,comprimere immagini online gratis,transactional (tool),TOFU lead-gen,alto,LIVE: /pages/compressore-immagini-online-gratis-illimitato
+E - Strumenti gratuiti,generatore hashtag instagram gratis,transactional (tool),TOFU lead-gen,alto,LIVE: /pages/generatore-di-hashtag-per-social-gratuito
+E - Strumenti gratuiti,trascrizione audio gratis online,transactional (tool),TOFU lead-gen,medio,LIVE: /pages/trascrizione-audio-ai-gratis-illimitata
+E - Strumenti gratuiti,rimuovere metadati foto online,transactional (tool),TOFU lead-gen,basso,LIVE: /pages/metadata-remover-gratis-online
