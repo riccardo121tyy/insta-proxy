@@ -59,10 +59,22 @@ Ogni pezzo linka la pagina servizio pertinente con anchor text descrittivo; ogni
 - **E-E-A-T**: bio autore con credenziali reali, portfolio pubblico e verificabile delle testate su cui sono stati effettivamente pubblicati articoli.
 - **Interlinking**: nessun articolo isolato senza un percorso verso una pagina di conversione.
 
-## Limiti di questa versione
+## Verificato contro il sitemap reale (2026-08-18)
 
-Costruito su ricerca di mercato pubblica, non su audit tecnico del sito: `camecompany.com` non è raggiungibile dalla rete di questo ambiente, e non c'è accesso API a Keyword Planner o Search Console. Prima di eseguire il calendario servirebbe:
+L'utente ha incollato il contenuto di `it-us/sitemap_pages_1.xml`. Mancano ancora `sitemap_collections_1.xml` e `sitemap_blogs_1.xml` (l'URL commerciale esatto del servizio Digital PR/comunicati stampa non è tra le pagine statiche — è probabilmente in una collection).
 
-1. Crawl reale del sito per verificare quali articoli esistono già ed evitare duplicati.
-2. Dati Keyword Planner per sostituire le fasce qualitative con volumi reali.
-3. Accesso Search Console per capire quali query già portano traffico organico.
+**Conferma diretta della classificazione RED.** La sitemap contiene, senza ambiguità: `perche-comprare-follower-per-instagram`, `perche-comprare-like-per-instagram`, `come-comprare-like-per-tiktok`, `perche-comprare-follower-tik-tok`, le pagine di configurazione ordine per piattaforma (`link-post-instagram`, `link-video-tiktok`, `link-twitch`, `link-youtube`, `link-facebook`, `link-spotify`), e una guida per rendere pubblico un account Instagram (passaggio necessario per ricevere follower/like acquistati). Le pagine `link-*` sono quasi certamente ciò che il proxy `insta-check.js` di questo repository serve realmente: la validazione del link/username incollato durante l'ordine.
+
+Riscontro più diretto: esiste `importante-aggiornamento-sull-algoritmo-di-instagram-cosa-significa-per-i-nostri-servizi-e-come-adeguarsi` — una pagina che spiega come i servizi si adattano ai cambiamenti dell'algoritmo anti-fake-engagement di Instagram. Non più un'inferenza dal nome del repository: è testo pubblicato dal sito stesso, coerente col pattern "adeguarsi per evitare i blocchi".
+
+**Nuovo cluster E — Strumenti gratuiti (già live).** Suite di tool generici, slegati dal prodotto follower/engagement: `generatore-qr-code-gratis-illimitato`, `compressore-immagini-online-gratis-illimitato`, `generatore-di-hashtag-per-social-gratuito`, `trascrizione-audio-ai-gratis-illimitata`, `metadata-remover-gratis-online`, `generatore-di-testi-fantasia`, `generatore-contenuti-social-gratis`, `pulitore-testo-invisibile-gratis`, `generatore-link-whatsapp-personalizzati`, `generatore-di-link-per-google`. Aggiunti a `keywords-digital-pr.csv`.
+
+**Cluster D corretto.** Il tool per la settimana 9 del calendario ("Audit gratuito Instagram") esiste già: `/pages/analizza-profilo-instagram`, `/pages/analizza-engagement`, `/pages/simulatore-di-crescita-camecompany`. Il contenuto deve linkarli, non descriverne uno ipotetico.
+
+**Igiene tecnica.** Pagine che sembrano test/duplicati mai ripuliti, da noindexare o rimuovere: `prova-1`, `verifica`, `aaa`, `o-12`, `menu2`, `copia-di-trasporti`, `copia-di-assistenza-clienti-istantanea`, `copia-di-app-ios`.
+
+**Da chiarire con l'utente.** Pagine senza relazione apparente con social media o Digital PR: `accesso_rete`, `accesso-rete-bar`, `accesso-rete-pubblica`, `accesso-rete-3-0/4-0/5-0`, `macchinette`, `trasporti-mobilita`. Non c'è contenuto sufficiente per capire cosa siano; se appartengono a un'altra attività sullo stesso store Shopify vanno escluse da questo piano.
+
+## Limiti residui
+
+Non c'è ancora accesso API a Keyword Planner o Search Console — le fasce di volume restano stime qualitative da ricerca pubblica. Mancano `sitemap_collections_1.xml` e `sitemap_blogs_1.xml` per: individuare l'URL commerciale esatto del servizio Digital PR, ed evitare duplicati nel calendario editoriale rispetto agli articoli già pubblicati.
