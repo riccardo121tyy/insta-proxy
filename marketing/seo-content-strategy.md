@@ -1,0 +1,68 @@
+# CAME COMPANY — Strategia SEO Digital PR & Social Report
+
+Data: 2026-08-18
+Mercato: Italia, lingua italiana
+Metodo: ricerca di mercato pubblica (WebSearch), nessun accesso diretto a `camecompany.com` o a Google Keyword Planner/Search Console da questo ambiente.
+
+Versione presentata: `seo-digital-pr-strategy.html` (pubblicata come Artifact), dati keyword in `keywords-digital-pr.csv`.
+
+## Ambito
+
+**Incluso:** comunicati stampa / ufficio stampa online, articoli sponsorizzati / guest post, Digital PR e posizionamento editoriale, report e analisi su profili social.
+
+**Escluso:** pacchetti follower, like, visualizzazioni, commenti, interazioni ed eventuali recensioni a pagamento. Questa esclusione vale per qualunque canale di acquisizione (SEO/content incluso), non solo per Google Ads — la vendita di engagement/recensioni fittizie è vietata dalla policy Google Ads "Enabling dishonest behavior" ed è comunque fuori da quello che questo lavoro costruisce, indipendentemente dal canale.
+
+## Perché queste due linee
+
+Comunicati stampa, articoli sponsorizzati, Digital PR e report/analisi social sono prodotti reali e distinti dal resto del catalogo, venduti apertamente da concorrenti diretti sullo stesso mercato italiano (Kynetic, Notiziabile, Press AI, PosizioneUno, Linking Agency, OpenRANK). Il blog di CAME COMPANY ha già contenuti coerenti con questo posizionamento:
+
+- "Differenze tra articoli sponsorizzati e articoli giornalistici nella pubblicità editoriale"
+- "Guida pratica per articoli sponsorizzati su magazine internazionali affidabili"
+- "Strategie vincenti per pubblicare comunicati stampa su giornali online affidabili"
+
+Il piano editoriale sotto rinforza e amplia questo filone esistente. Dove un titolo in calendario sovrappone un contenuto già pubblicato, va trattato come refresh/consolidamento (aggiornare, interlinkare, non duplicare).
+
+## Architettura keyword
+
+Quattro cluster (dettaglio completo in `keywords-digital-pr.csv`):
+
+- **A — Ufficio stampa & comunicati stampa**: intento prevalentemente commerciale/transazionale, MOFU-BOFU.
+- **B — Articoli sponsorizzati & guest post**: commerciale, con un avvertimento editoriale — vendere visibilità/autorevolezza è legittimo, promettere manipolazione del ranking ("primo posto garantito") no. Rischio reputazionale e attrito con le spam policy di Google Search sui link a pagamento.
+- **C — Digital PR & posizionamento editoriale**: prevalentemente informational/TOFU, contenuti pillar per link earning.
+- **D — Report & analisi social**: mix informational/commercial, con un tool di audit gratuito come magnete lead-gen verso il report a pagamento.
+
+I volumi sono stimati per fascia qualitativa (alto/medio/basso) dal panorama competitivo osservato via ricerca web, non da Keyword Planner — l'ambiente non ha accesso API a Google Ads/Keyword Planner. Da ricalibrare con dati reali appena disponibili.
+
+## Calendario editoriale — 12 settimane
+
+| Sett. | Titolo | Cluster | Keyword target | Obiettivo |
+|---|---|---|---|---|
+| 1 | Quanto costa un ufficio stampa online nel 2026: guida ai prezzi in Italia | A | ufficio stampa online prezzi | conversione |
+| 2 | Come pubblicare un comunicato stampa su testate italiane: guida passo passo | A | pubblicare comunicato stampa online | conversione |
+| 3 | Comunicato stampa efficace: struttura, esempi e errori da evitare | A | come scrivere un comunicato stampa efficace | autorevolezza |
+| 4 | Articoli sponsorizzati: quanto costano e su quali testate pubblicare | B | articoli sponsorizzati prezzo | conversione |
+| 5 | Backlink da testate giornalistiche: cosa sono e come sceglierli senza rischi SEO | B | backlink testate giornalistiche | autorevolezza |
+| 6 | Guest post SEO in Italia: come funziona e differenza con gli articoli sponsorizzati | B | guest post seo italia | conversione |
+| 7 | Cos'è la Digital PR e perché ne ha bisogno la tua azienda nel 2026 | C | cos'è la digital pr | autorevolezza / link magnet |
+| 8 | PMI e Digital PR: 7 strategie per guadagnare visibilità senza ufficio stampa interno | C | strategia digital pr pmi | conversione |
+| 9 | Audit gratuito del tuo profilo Instagram: come leggere i dati che contano | D | audit gratuito instagram | lead-gen (tool) |
+| 10 | Come leggere gli insight di Instagram (e i 5 errori più comuni) | D | come leggere insight instagram | autorevolezza |
+| 11 | Analisi competitor sui social: la guida pratica per capire chi vince nel tuo settore | D | analisi competitor social media | conversione |
+| 12 | Come funziona il posizionamento su Google News: guida per aziende e professionisti | C | posizionamento google news | autorevolezza |
+
+Ogni pezzo linka la pagina servizio pertinente con anchor text descrittivo; ogni pagina servizio richiama 2-3 guide correlate.
+
+## Raccomandazioni on-page & tecniche
+
+- **Title/meta**: keyword primaria a sinistra nel title; meta description con un dato concreto (prezzo, numero testate, tempistica) invece di aggettivi non verificabili.
+- **Schema**: `Article`/`BlogPosting` sulle guide, `Organization` a livello sito; per l'idoneità a Google News, byline coerente, dateline, sitemap news dedicata.
+- **E-E-A-T**: bio autore con credenziali reali, portfolio pubblico e verificabile delle testate su cui sono stati effettivamente pubblicati articoli.
+- **Interlinking**: nessun articolo isolato senza un percorso verso una pagina di conversione.
+
+## Limiti di questa versione
+
+Costruito su ricerca di mercato pubblica, non su audit tecnico del sito: `camecompany.com` non è raggiungibile dalla rete di questo ambiente, e non c'è accesso API a Keyword Planner o Search Console. Prima di eseguire il calendario servirebbe:
+
+1. Crawl reale del sito per verificare quali articoli esistono già ed evitare duplicati.
+2. Dati Keyword Planner per sostituire le fasce qualitative con volumi reali.
+3. Accesso Search Console per capire quali query già portano traffico organico.
