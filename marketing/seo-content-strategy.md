@@ -75,6 +75,22 @@ Riscontro più diretto: esiste `importante-aggiornamento-sull-algoritmo-di-insta
 
 **Da chiarire con l'utente.** Pagine senza relazione apparente con social media o Digital PR: `accesso_rete`, `accesso-rete-bar`, `accesso-rete-pubblica`, `accesso-rete-3-0/4-0/5-0`, `macchinette`, `trasporti-mobilita`. Non c'è contenuto sufficiente per capire cosa siano; se appartengono a un'altra attività sullo stesso store Shopify vanno escluse da questo piano.
 
+## Collezioni reali verificate (2026-08-18)
+
+L'utente ha incollato anche `it-us/sitemap_collections_1.xml` (~80 collezioni). La maggioranza — follower, like, commenti, visualizzazioni, iscritti, condivisioni, retweet, reazioni, salvataggi, impression, membri, su Instagram/TikTok/Facebook/YouTube/X/Spotify/Telegram/WhatsApp/LinkedIn/Twitch/Threads/Snapchat, spesso segmentati "italiani" vs "internazionali" — conferma quantitativamente l'esclusione: non è un segmento del catalogo, è la maggioranza.
+
+**URL commerciali reali** da usare per interlinking nel calendario editoriale, al posto dei placeholder:
+- `/collections/articoli-press-custom` ("Digital PR e Articoli") — cluster B/C
+- `/collections/analisi-report-social` ("Analisi e Report Social") — cluster D
+
+**Due nuove esclusioni confermate:**
+- `traffico-web`, `traffico-web-geo-target`, `traffico-web-mirato` — traffico web fittizio, esplicitamente "invalid clicks" nella policy Google Ads.
+- `onlyfans` — crescita iscritti/engagement per creator OnlyFans, stessa logica delle altre.
+
+**Da trattare con cautela, distinto da Digital PR e Articoli:** `backlink-e-link-building` — vendita di backlink a fini di ranking, collezione separata da `articoli-press-custom`. Se venduta come "compra posizionamento" è link scheme secondo le spam policies di Google Search (non solo Ads policy). Nessun contenuto di acquisizione costruito per questa finché non è chiaro come viene presentata.
+
+**Da verificare:** `content-pack-service` ("Content Pack") — nome insufficiente per classificare; se è creazione contenuti/copywriting per clienti potrebbe essere un'altra linea conforme da aggiungere.
+
 ## Limiti residui
 
 Non c'è ancora accesso API a Keyword Planner o Search Console — le fasce di volume restano stime qualitative da ricerca pubblica. Mancano `sitemap_collections_1.xml` e `sitemap_blogs_1.xml` per: individuare l'URL commerciale esatto del servizio Digital PR, ed evitare duplicati nel calendario editoriale rispetto agli articoli già pubblicati.
