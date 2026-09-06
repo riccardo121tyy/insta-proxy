@@ -1,0 +1,17 @@
+{
+  "name": "rizzup-carousel-downloader",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Analizza ed esporta i video pubblici della sezione carosello 'Watch RizzUp In Action' di una landing page",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node download-rizzup-videos.mjs",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0"
+  }
+}
