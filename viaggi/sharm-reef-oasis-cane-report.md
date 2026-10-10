@@ -291,3 +291,49 @@ Per presentare combinazioni realmente prenotabili servono prezzi letti dal check
 4. Periodo preferito o vincoli di ferie.
 5. Budget massimo totale.
 6. Preferenza tra un resort vivace "all'italiana" (Domina, Veraclub) e uno più tranquillo.
+
+---
+
+## AGGIORNAMENTO 2 (10/10/2026): niente Reef Oasis, il cane viene con noi. Hotel o appartamento?
+
+**Decisione dei viaggiatori.** Si rinuncia a Reef Oasis pur di portare il cane. Si cercano hotel o appartamenti tipo Airbnb che accettino il cane, con il miglior rapporto qualità/prezzo.
+
+**Il cane non c'è ancora.** Il calendario della sezione precedente parte dal giorno in cui il cucciolo arriva a casa:
+- il vaccino antirabbico si può fare a partire dalle 12 settimane di età;
+- servono circa 7–8 settimane tra vaccino, titolazione, esito e certificato;
+- quindi bisogna aggiungere circa 2 mesi alla data di arrivo del cucciolo, e il vaccino si fa non prima delle 12 settimane di età.
+- **Esempio:** cucciolo a casa a fine ottobre con almeno 12 settimane → partenza a metà o fine dicembre (evitando Natale), oppure gennaio 2027, quando i prezzi sono più bassi.
+
+### Strutture che accettano cani (tutte DA VERIFICARE per scritto)
+
+| Struttura | Tipo e zona | Prezzo indicativo | Policy cane dichiarata | Fonte |
+|---|---|---|---|---|
+| **Domina Coral Bay** (anche le sezioni Harem e Sultan) | Resort 5*, all inclusive, Coral Bay, con barriera e pontile | circa 90–130 € a notte in doppia AI (stima) | 1 cane fino a 10 kg, 13 USD a notte; per Harem "on request" | [Hotels.com](https://www.hotels.com/ho217375), [Kayak Harem](https://www.ca.kayak.com/Sharm-el-Sheikh-Hotels-Domina-Coral-Bay-Harem.482132.ksp) |
+| **Novotel Sharm** | Hotel 4*, Naama Bay | circa 80–130 € a notte | fino a 3–5 kg, gratis o 5 USD a notte (fonti discordanti); niente spiaggia né ristoranti | doc. hotel 2025, [BringFido](https://www.bringfido.co.uk/lodging/city/sharm_el_sheikh_eg/) |
+| **Herrmes** | Hotel/residence con piscina, Hadaba | **da circa 44 USD a notte** (voto 8,7/10, 79 recensioni) | pet friendly | [Kayak](https://www.kayak.com/Sharm-el-Sheikh-Hotels_Pet-Friendly.Hpe.20452.hotel.ksp) |
+| **Delta Sharm Relax** | Appartamenti, Hadaba, 12 piscine, spiaggia con navetta | circa 35–60 € a notte | pet friendly | [Kayak](https://www.kayak.com/Sharm-el-Sheikh-Hotels_Pet-Friendly.Hpe.20452.hotel.ksp), [Airbnb Delta Sharm](https://www.airbnb.ca/rooms/31705579) |
+| **Gardenia Plaza** | Hotel 4*, Hadaba | circa 60–70 € a notte | cani di ogni taglia, nessun costo extra | [BringFido](https://www.bringfido.co.uk/lodging/city/sharm_el_sheikh_eg/) |
+| Appartamento Riviera Sharm | 2 camere, Naama Bay | circa 238 £ (periodo non indicato) | cani di ogni taglia, gratis | [BringFido](https://www.bringfido.co.uk/lodging/city/sharm_el_sheikh_eg/) |
+| Airbnb (Domina, Delta Sharm, Hadaba, Nabq) | Appartamenti in residence con piscina | circa 30–60 € a notte | **dipende dal singolo host**; molti annunci dicono "no pets" | [Airbnb](https://www.airbnb.com.au/rooms/38726811), [Expedia](https://www.expedia.com/es/Sharm-El-Sheikh-Hoteles-Beautiful-Apartment-In-Egyptian-Experience-Resort.h108441011.Informacion-Hotel) |
+| ~~Mövenpick Naama Bay~~ | — | — | cani **non ammessi** | [BringFido](https://www.bringfido.com/lodging/20145) |
+
+### Confronto dei costi: 10 notti a dicembre o gennaio, 2 adulti + cane (stime)
+
+| Voce | **H: Domina Coral Bay AI** | **A: Appartamento o Herrmes, senza pasti** |
+|---|---|---|
+| Voli Air Cairo BGY A/R per 2 persone | 500–700 € | 500–700 € |
+| Cane sul volo, andata e ritorno | circa 140 € | circa 140 € |
+| Alloggio, 10 notti | 900–1.300 € | 400–600 € |
+| Supplemento cane | circa 120 € | 0–50 € |
+| Pasti | inclusi | 300–450 € (supermercato e ristoranti a Naama/Hadaba) |
+| Taxi, spiaggia e navette | circa 50 € | 100–150 € (spiagge con ingresso a pagamento e taxi) |
+| Transfer aeroporto | 50–70 € | 30–50 € |
+| Documenti del cane | 170–300 € | 170–300 € |
+| Assicurazione per 2 persone | 80–150 € | 80–150 € |
+| Auto e parcheggio a BGY | circa 110 € | circa 110 € |
+| **Totale** | **≈ 2.100–2.940 €** | **≈ 1.830–2.700 €** |
+
+**Conclusione.** L'appartamento fa risparmiare solo circa 250–300 €, perché i pasti e gli spostamenti compensano quasi del tutto il risparmio sull'alloggio. In cambio si perdono la spiaggia sulla barriera, il pontile e la comodità dell'all inclusive.
+- **Prima scelta:** Domina Coral Bay, se conferma il cane per scritto.
+- **Seconda scelta, la più economica:** Herrmes o Delta Sharm a Hadaba, se il budget è davvero stretto.
+- Gennaio costa in genere meno di dicembre, sia per i voli sia per gli hotel.
