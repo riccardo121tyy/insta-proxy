@@ -9,7 +9,56 @@ Legenda dello stato: **CONFERMATO** (fonte ufficiale o più fonti concordi) · *
 
 ---
 
-## 0. In sintesi: il viaggio è fattibile?
+## AGGIORNAMENTO del 10/10/2026 con i dati dei viaggiatori
+
+**Dati ricevuti**
+- Viaggiatori: 2 adulti, R.C. (26 anni) e S.P. (22 anni).
+- Partenza da Brescia.
+- Cane: barboncino toy da 1,5 kg con passaporto UE valido, **ancora da vaccinare contro la rabbia**.
+- Occasione: compleanno di S.P. il **30 ottobre**.
+- Durata: 7–10 notti.
+- Budget: il più contenuto possibile.
+
+### Normativa UE in vigore dal 22 aprile 2026
+
+Il Reg. delegato (UE) **2026/131** ha sostituito il 576/2013.
+- L'attesa dopo il prelievo per chi entra da Paesi non listati è ora di **90 giorni**.
+- Resta però l'esenzione per gli animali UE che **fanno vaccino e titolazione prima di lasciare l'UE**, registrati sul passaporto: possono rientrare in qualsiasi momento finché il vaccino è valido.
+- Fonti: [Jordbruksverket (autorità svedese)](https://jordbruksverket.se/languages/english/swedish-board-of-agriculture/animals/pets---trade-and-travel/movement-of-dogs-cats-and-ferrets-to-sweden/movement-of-dogs-cats-and-ferrets-from-countries-outside-the-eu-where-the-rabies-situation-is-not-under-control), [Commissione UE](https://food.ec.europa.eu/animals/live-animal-movements/dogs-cats-and-ferrets/bringing-pet-eu-non-eu-country_en). CONFERMATO.
+- Laboratorio: IZS Venezie, circa 55 € IVA inclusa (tariffa per clienti esteri), tel. 049 8084359 ([IZSVe](https://www.izsvenezie.com/activities-services/rabies-antibody-titration/)).
+
+### Calendario del cane, partendo da zero
+
+| Data indicativa | Passo |
+|---|---|
+| **13–17 ottobre** | Vaccino antirabbico, registrato sul passaporto. Il cane deve avere almeno 12 settimane |
+| circa 7 novembre | Vaccino valido (21 giorni) |
+| **≥ 14–17 novembre** | Prelievo per la titolazione, almeno 30 giorni dopo il vaccino |
+| fine novembre – inizio dicembre | Esito ≥ 0,5 UI/ml registrato sul passaporto |
+| da T-10 a T-2 giorni | Certificato sanitario per l'Egitto, vistato dall'ASL |
+| **≥ 6–10 dicembre** | **Prima partenza realistica con il cane** |
+
+Se la titolazione esce sotto 0,5 UI/ml: richiamo, nuovo prelievo dopo 30 giorni, partenza a **fine gennaio–febbraio 2027**.
+
+**Di conseguenza, il 30 ottobre con il cane è impossibile**, sia per l'ingresso in Egitto (servono 21–30 giorni dal vaccino) sia per il rientro in UE (la titolazione dev'essere fatta prima di partire).
+
+### Le due strade
+
+| | **Strada 1: compleanno a Sharm SENZA cane** | **Strada 2: con il cane a dicembre** |
+|---|---|---|
+| Date | circa 28/30 ott – 6/7 nov 2026 | circa 6–16 dicembre 2026 (prima di Natale) |
+| Resort | Reef Oasis è possibile (Veraclub) oppure resort economici | Domina Coral Bay o Novotel (cane da confermare); Reef Oasis solo con un'eccezione |
+| Esempi di prezzo (DA VERIFICARE) | Veraclub Reef Oasis Beach, partenze anche da BGY: 30/10–05/11 (6 notti) **1.020 € a persona**, 30/10–07/11 (7 notti) **1.085 € a persona** ([iosiplustravel](https://iosiplustravel.it/offerta/Veraclub-Reef-Oasis-Beach-Resort-vt33990)). Alternative più economiche: Faraana Reef da 559 € a persona ([Haraka](https://www.harakaviaggi.it/destinations/egitto/sharm-el-sheikh/)), Veraclub Sharm in partenza da BGY il 31/10 da 890 € a persona ([Demidoff](https://www.demidoffviaggi.com/vacanze/africa/egitto/sharm-el-sheikh/sharm-el-sheikh/mese/ottobre/)) | Volo e hotel separati: Air Cairo BGY (2 × circa 250–400 € A/R) + hotel 4–5 stelle all inclusive |
+| Totale stimato per 2 persone | **circa 1.300–1.500 €** (pacchetto economico) · **circa 2.300–2.500 €** (Reef Oasis) | **circa 1.800–2.600 €** con 7 notti · **circa 2.100–3.000 €** con 10 notti |
+| In più | Pet sitter o famiglia per il cane (0–250 €) | Cane: circa 140 € di voli e 170–300 € di documenti |
+
+**7 o 10 notti?** Volo, transfer, documenti del cane e parcheggio si pagano una volta sola. Le 3 notti in più costano solo l'hotel, circa 150–300 € per 2 in un 4 stelle all inclusive, cioè circa il 10–15 % del totale per il 43 % di vacanza in più. **Per la Strada 2 le 10 notti convengono.** Inoltre Air Cairo da BGY vola circa 2 volte a settimana (orari dell'inverno da confermare), quindi una combinazione tipo domenica–mercoledì dà naturalmente 10 notti.
+
+**Raccomandazione per il budget.** La strada più economica in assoluto è la 1 con un resort da circa 560–650 € a persona, senza cane. Se il cane è irrinunciabile (vincolo prioritario del brief), conviene la **Strada 2**: Air Cairo da BGY intorno al 6–16 dicembre, 10 notti in Domina Coral Bay o Novotel, festeggiando il compleanno in ritardo.
+
+---
+
+## 0. In sintesi: il viaggio è fattibile? (analisi iniziale)
 
 **Sì, ma non a Reef Oasis, salvo un'eccezione scritta della direzione, oggi molto improbabile.**
 
@@ -38,7 +87,7 @@ Legenda dello stato: **CONFERMATO** (fonte ufficiale o più fonti concordi) · *
   - risultato ≥ 0,5 UI/ml;
   - analisi in un laboratorio approvato dall'UE (in Italia l'IZS delle Venezie);
   - esito registrato nel passaporto dal veterinario.
-- **Attesa di 3 mesi.** Di norma l'animale può entrare nell'UE solo 3 mesi dopo il prelievo. Il Reg. 576/2013, Allegato IV, prevede però che il termine **non si applichi al rientro di un animale il cui passaporto attesta che la titolazione è stata eseguita con esito positivo prima di lasciare l'Unione**. Per questo **la titolazione va fatta in Italia, prima di partire**. Se si parte senza, il cane non può rientrare prima di 3 mesi dal prelievo, oppure va in quarantena o viene respinto. *Stato:* CONFERMATO come norma, ma non ho potuto aprire il testo ufficiale. Chiedere conferma all'ASL.
+- **Attesa di 3 mesi.** Di norma l'animale può entrare nell'UE solo 3 mesi (dal 22/4/2026: 90 giorni, Reg. 2026/131) dopo il prelievo. Il Reg. 576/2013, Allegato IV, prevede però che il termine **non si applichi al rientro di un animale il cui passaporto attesta che la titolazione è stata eseguita con esito positivo prima di lasciare l'Unione**. Per questo **la titolazione va fatta in Italia, prima di partire**. Se si parte senza, il cane non può rientrare prima di 3 mesi dal prelievo, oppure va in quarantena o viene respinto. *Stato:* CONFERMATO come norma, ma non ho potuto aprire il testo ufficiale. Chiedere conferma all'ASL.
 - **Validità.** La titolazione resta valida per tutta la vita del cane, purché i richiami antirabbici siano fatti senza interruzioni.
 - **Punto di ingresso.** Bisogna rientrare da un "punto di entrata dei viaggiatori" designato. Nell'elenco del Ministero della Salute pubblicato dalla Commissione UE compaiono sia **Bergamo Orio al Serio** sia **Milano Malpensa** ([elenco Min. Salute](https://food.ec.europa.eu/system/files/2021-01/pm_non-com_entry_ita.pdf)). *Stato:* CONFERMATO; il documento è del 2021, va verificata la versione corrente.
 - **Dichiarazione all'arrivo.** Bisogna presentare il cane e i documenti al controllo doganale o veterinario all'arrivo, senza passare dal canale "niente da dichiarare".
