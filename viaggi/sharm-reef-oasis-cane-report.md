@@ -347,3 +347,50 @@ Per presentare combinazioni realmente prenotabili servono prezzi letti dal check
 4. **Subito:** verificare sul sito Air Cairo se esiste il volo BGY–SSH a dicembre e gennaio. In alternativa, Neos MXP–SSH.
 5. **Date obiettivo:** circa **10–20 gennaio 2027**, 10 notti. Alternativa: circa 6–16 dicembre 2026, se i voli costano poco.
 6. **Si prenota solo quando ci sono:** l'esito della titolazione, la conferma scritta dell'hotel e il posto per il cane su entrambi i voli.
+
+---
+
+## AGGIORNAMENTO 3: opzioni più economiche, meteo e tempi di viaggio
+
+### Meteo nei mesi possibili con il cane (medie indicative)
+
+| Periodo | Aria di giorno | Sera | Mare | Note |
+|---|---|---|---|---|
+| **Inizio dicembre (fino al 13)** | circa 24–25 °C | circa 17–18 °C | **circa 24–25 °C** | Il migliore tra i mesi possibili, poco vento. **Bassa stagione** |
+| Dal 14 dicembre al 6 gennaio | circa 23 °C | circa 16 °C | circa 23–24 °C | Prezzi di Natale e Capodanno |
+| Gennaio | circa 21–22 °C | circa 14–15 °C | circa 22–23 °C | Sere fresche, a volte vento. Serve una muta corta per lo snorkeling |
+| Febbraio | circa 22 °C | circa 14–15 °C | circa 22 °C (il più freddo) | Ventoso |
+| Marzo (esclusa la Pasqua, 28/3/2027) | circa 23–26 °C | circa 15–16 °C | circa 22–23 °C | Aria piacevole, mare ancora fresco |
+
+Fonti: [Avionero dicembre](https://avionero.com/New-York_NYC-Sharm-el-Sheikh_SSH/weather/december), [Avionero gennaio](https://avionero.com/New-York-Sharm-el-Sheikh.NYC-SSH/weather/january), [Magnificent Travel marzo](https://magnificenttravel.com/en/blog/egypt/sharm-el-sheikh-weather-in-march).
+
+**Per il meteo vince la prima metà di dicembre**, che è anche bassa stagione. Ad esempio, nel listino del Domina Harem si nota un aumento di prezzo a partire dal 14/12.
+
+### Tempi di viaggio da Brescia
+
+| Tratta | Auto fino all'aeroporto | Volo | Note |
+|---|---|---|---|
+| BGY → SSH | circa 45 min | circa 4h10, diretto | Dall'arrivo a Sharm al resort: Naama/Hadaba circa 15 min, Coral Bay/Nabq circa 15–20 min |
+| MXP → SSH | circa 1h40 | circa 4h05, diretto | 1 ora di auto in più per tratta |
+
+I voli charter dei pacchetti partono spesso all'alba o di notte: il primo e l'ultimo giorno rendono poco. Con 10 notti l'effetto pesa meno.
+
+### Alternative più economiche con servizi uguali o migliori
+
+| Opzione | Servizi | Prezzo trovato | Cane | Giudizio |
+|---|---|---|---|---|
+| **Pacchetto Domina Coral Bay**, volo + 7 notti AI | 5*, barriera, spiaggia, piscine | **da 730 € a persona con volo**, partenze novembre–marzo ([Blu Vacanze](https://bluvacanzealpignano.it/sharm-el-sheikh-domina-coral-bay-7-notti-da-novembre-a-marzo-con-volo-da-e730-p-p/)) | Hotel: sì (13 USD a notte). **Volo charter: da far confermare dal tour operator** | **La migliore come prezzo e servizi**, se il charter accetta il cane |
+| Domina Coral Bay Harem (pacchetto) | 5*, sezione più curata | 1.250 € a persona dal 14/12 al 17/01, 1.150 € dal 18/01 ([Evolution Travel](https://marrosso.evolutiontravel.it/it_IT/tab/34519_domina-coral-bay-harem-resort-spa-5-stelle.html)) | "on request" | Più caro, utile solo per avere una camera migliore |
+| Domina Coral Bay, volo e hotel separati | come sopra | circa 2.100–2.900 € in due per 10 notti | sì | Più flessibile sul volo, ma costa di più |
+| Herrmes / Delta Sharm (Hadaba) | Appartamento con piscine, **niente AI, niente spiaggia propria** | circa 40–60 € a notte | sì | Servizi inferiori, risparmio piccolo |
+| Viking Club (Naama) | 4*, AI su alcune tariffe | economico | cani di ogni taglia, gratis | **Scartato**: recensioni tra 3,4 e 6,8 su 10 |
+| Dessole Nesco Joyous / Waves | 4–5*, AI | — | "on request", fonti in contraddizione | Da verificare, solo come riserva |
+
+**Il pacchetto Domina da circa 730 € a persona (circa 1.460 € in due, 7 notti con volo) è la soluzione più economica trovata con servizi da 5 stelle.** Con il cane in cabina sul charter (circa 200 € A/R se Neos), il suo supplemento in hotel (circa 90 €), i documenti (circa 250 €), l'assicurazione e l'auto, il totale stimato è **circa 2.100–2.300 € in due per 7 notti**, a pari prezzo con la soluzione fai-da-te ma con meno organizzazione. Il prezzo "da 730 €" va verificato sulle date reali.
+
+### Raccomandazione finale aggiornata
+
+- **Quando:** prima metà di dicembre 2026, con partenza intorno al 6–7 dicembre e rientro **entro il 13–14 dicembre** (prima dell'aumento di Natale). Mare più caldo e prezzi da bassa stagione.
+- **Dove:** Domina Coral Bay, in pacchetto se il tour operator conferma il cane sul charter, altrimenti volo Air Cairo da BGY più hotel separato.
+- **Condizione:** l'esito della titolazione deve arrivare entro fine novembre, quindi **vaccino entro il 13–15 ottobre**.
+- **Piano B:** 18–28 gennaio 2027, che rientra nella fascia di prezzo più bassa del listino Domina.
