@@ -298,11 +298,12 @@ Per presentare combinazioni realmente prenotabili servono prezzi letti dal check
 
 **Decisione dei viaggiatori.** Si rinuncia a Reef Oasis pur di portare il cane. Si cercano hotel o appartamenti tipo Airbnb che accettino il cane, con il miglior rapporto qualità/prezzo.
 
-**Il cane non c'è ancora.** Il calendario della sezione precedente parte dal giorno in cui il cucciolo arriva a casa:
-- il vaccino antirabbico si può fare a partire dalle 12 settimane di età;
-- servono circa 7–8 settimane tra vaccino, titolazione, esito e certificato;
-- quindi bisogna aggiungere circa 2 mesi alla data di arrivo del cucciolo, e il vaccino si fa non prima delle 12 settimane di età.
-- **Esempio:** cucciolo a casa a fine ottobre con almeno 12 settimane → partenza a metà o fine dicembre (evitando Natale), oppure gennaio 2027, quando i prezzi sono più bassi.
+**Il cane c'è già** (barboncino toy da 1,5 kg con passaporto UE), ma deve ancora fare l'antirabbica. Vale quindi il calendario della sezione precedente: vaccino subito e **partenza possibile da circa il 6–10 dicembre 2026**.
+
+**Voli: attenzione ai prezzi e all'operatività**
+- Airpaz (dati aggiornati a settembre 2026) indica Air Cairo BGY→SSH da circa 110 USD in ottobre, circa 213 USD in novembre e **circa 522 USD in dicembre** ([Airpaz](https://www.airpaz.com/it/airlines/SM-Air-Cairo/city-city/bergamo-it-sharm-el-sheikh-eg)). Kayak riporta un prezzo medio A/R di circa 288 € ([Kayak](https://www.kayak.it/voli/Air-Cairo-Italia-IT0/Sharm-El-Sheikh-Aeroporto-Internazionale-di-Sharm-el-Sheikh-SSH.b.SM.ksp)).
+- Non c'è conferma che Air Cairo voli da BGY in inverno: storicamente la rotta era stagionale, da marzo a ottobre. **Se non vola, il piano B è Neos da MXP** (100 € a tratta per il cane, massimo 2 animali per volo).
+- Quindi **gennaio 2027** (dopo l'Epifania) è probabilmente il periodo più conveniente. Dà anche margine se la titolazione andasse ripetuta.
 
 ### Strutture che accettano cani (tutte DA VERIFICARE per scritto)
 
@@ -337,3 +338,12 @@ Per presentare combinazioni realmente prenotabili servono prezzi letti dal check
 - **Prima scelta:** Domina Coral Bay, se conferma il cane per scritto.
 - **Seconda scelta, la più economica:** Herrmes o Delta Sharm a Hadaba, se il budget è davvero stretto.
 - Gennaio costa in genere meno di dicembre, sia per i voli sia per gli hotel.
+
+### Piano consigliato (10/10/2026)
+
+1. **Questa settimana:** antirabbica dal veterinario.
+2. **A metà novembre:** prelievo per la titolazione (almeno 30 giorni dopo il vaccino).
+3. **Subito:** chiedere per scritto a Domina Coral Bay la conferma del cane, con le tariffe AI per 10 notti a gennaio e a dicembre.
+4. **Subito:** verificare sul sito Air Cairo se esiste il volo BGY–SSH a dicembre e gennaio. In alternativa, Neos MXP–SSH.
+5. **Date obiettivo:** circa **10–20 gennaio 2027**, 10 notti. Alternativa: circa 6–16 dicembre 2026, se i voli costano poco.
+6. **Si prenota solo quando ci sono:** l'esito della titolazione, la conferma scritta dell'hotel e il posto per il cane su entrambi i voli.
